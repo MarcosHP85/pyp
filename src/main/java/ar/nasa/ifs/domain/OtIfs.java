@@ -1,6 +1,4 @@
-package ar.nasa.pyp.domain;
-
-import java.util.Date;
+package ar.nasa.ifs.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,48 +6,38 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ot_ifs")
+@Table(name = "ACTIVE_SEPARATE_OVERVIEW")
 public class OtIfs {
 
 	@Id
-	@Column(name = "num_ot")
+	@Column(name = "WO_NO")
 	private Integer numOt;
-	@Column(name = "semana_plan")
+	@Column(name = "PLANNED_WEEK")
 	private Integer semanaPlan;
-	@Column(name = "planta_ot")
+	@Column(name = "CONTRACT")
 	private Integer plantaOt;
-	@Column(name = "org_mant")
+	@Column(name = "ORG_CODE")
 	private String orgMant;
-	@Column(name = "ot_madre")
-	private Integer otMadre;
-	@Column(name = "componente")
+	@Column(name = "WO_NO_MADRE")
+	private String otMadre;
+	@Column(name = "MCH_CODE")
 	private String componente;
-	@Column(name = "tarea")
+	@Column(name = "TAREA")
 	private String tarea;
-	@Column(name = "posicion")
+	@Column(name = "MCH_POS")
 	private String posicion;
-	@Column(name = "planifica")
+	@Column(name = "PREPARED_BY")
 	private String planifica;
-	@Column(name = "requiere_paq_trabajo")
+	@Column(name = "REQ_PAQ_TAB")
 	private String requierePaqTrabajo;
-	@Column(name = "resp_tarea")
+	@Column(name = "WORK_LEADER_SIGN")
 	private String respTarea;
-	@Column(name = "estado_ot")
+	@Column(name = "STATE")
 	private String estadoOt;
-	@Column(name = "tipo_trabajo")
+	@Column(name = "WORK_TYPE_ID")
 	private String tipoTrabajo;
-	@Column(name = "prioridad")
+	@Column(name = "PRIORITY_ID")
 	private String prioridad;
-	@Column(name = "inicio_prog")
-	private Date inicioProg;
-
-	public Date getInicioProg() {
-		return inicioProg;
-	}
-
-	public void setInicioProg(Date inicioProg) {
-		this.inicioProg = inicioProg;
-	}
 
 	public String getPrioridad() {
 		return prioridad;
@@ -81,14 +69,6 @@ public class OtIfs {
 
 	public void setOrgMant(String orgMant) {
 		this.orgMant = orgMant;
-	}
-
-	public Integer getOtMadre() {
-		return otMadre;
-	}
-
-	public void setOtMadre(Integer otMadre) {
-		this.otMadre = otMadre;
 	}
 
 	public String getComponente() {

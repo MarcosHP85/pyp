@@ -2,7 +2,7 @@ package ar.nasa.pyp.service;
 
 import java.util.List;
 
-import ar.nasa.pyp.domain.OtIfs;
+import ar.nasa.ifs.domain.OtIfs;
 
 
 public interface OtIfsService {

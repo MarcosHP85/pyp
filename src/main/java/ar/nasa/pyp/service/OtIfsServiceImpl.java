@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import ar.nasa.pyp.domain.OtIfs;
-import ar.nasa.pyp.domain.OtIfsRepository;
+import ar.nasa.ifs.domain.OtIfs;
+import ar.nasa.ifs.domain.OtIfsRepository;
 
 
 @Service

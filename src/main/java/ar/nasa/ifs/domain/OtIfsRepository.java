@@ -1,4 +1,4 @@
-package ar.nasa.pyp.domain;
+package ar.nasa.ifs.domain;
 
 import java.util.List;
 

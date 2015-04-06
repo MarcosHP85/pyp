@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ar.nasa.pyp.service.UserServiceImpl;
 
-@Configuration
+//@Configuration
 public class AuthenticationManagerConfig extends
 		GlobalAuthenticationConfigurerAdapter {
 
