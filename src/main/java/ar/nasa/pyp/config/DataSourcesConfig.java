@@ -30,12 +30,21 @@ public class DataSourcesConfig {
 	
 
 	@Bean(name="entityManagerFactory")
+	@Primary
+	public LocalContainerEntityManagerFactoryBean pypEntityManagerFactory(
+	        EntityManagerFactoryBuilder builder) {
+	    return builder
+	            .dataSource(pypDataSource())
+	            .packages("ar.nasa.pyp.domain")
+	            .build();
+	}
+	
+	@Bean
 	public LocalContainerEntityManagerFactoryBean ifsEntityManagerFactory(
 	        EntityManagerFactoryBuilder builder) {
 	    return builder
 	            .dataSource(ifsDataSource())
 	            .packages(OtIfs.class)
-//	            .persistenceUnit("ifsPersistenceUnit")
 	            .build();
 	}
 	
