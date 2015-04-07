@@ -21,13 +21,15 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.rememberMe()
+        		.key("kdiaovnfawvioanvavclkcnwq")
+        		.and()
             .authorizeRequests()
             	.antMatchers("/resources/**").permitAll()
 //            	.antMatchers("/indicadores/**").permitAll()
             	.antMatchers("/about").permitAll()
             	.antMatchers("/admin/**").hasRole("ADMIN")
-            	.antMatchers("/**").hasRole("ADMIN")   
+            	.antMatchers("/**").hasRole("ADMIN")
             	.antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
                 .anyRequest().authenticated()
                 .and()

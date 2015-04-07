@@ -36,7 +36,7 @@ public class PypDataSourceConfig {
 	        EntityManagerFactoryBuilder builder) {
 	    return builder
 	            .dataSource(pypDataSource())
-	            .persistenceUnit("persistencePyp")
+	            .persistenceUnit("PypDataSource")
 	            .packages("ar.nasa.pyp.domain")
 	            .build();
 	}

@@ -33,7 +33,7 @@ public class IfsDataSourceConfig {
 	        EntityManagerFactoryBuilder builder) {
 	    return builder
 	            .dataSource(ifsDataSource())
-	            .persistenceUnit("persistenceIfs")
+	            .persistenceUnit("IfsDataSource")
 	            .packages("ar.nasa.ifs.domain")
 	            .build();
 	}

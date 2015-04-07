@@ -12,8 +12,24 @@
 <script th:src="@{/resources/Chart.js/Chart.min.js}"></script>
 <script th:src="@{/resources/sockjs-0.3.4.js}"></script>
 <script th:src="@{/resources/stomp.js}"></script>
-<script type="text/javascript">
-	var stompClient = null;
+</head>
+<body>
+<div>
+    <div>
+        <button id="connect">Connect</button>
+        <button id="disconnect" disabled="disabled">Disconnect</button>
+    </div>
+    <div id="conversationDiv">
+        <label>What is your name?</label><input type="text" id="name" />
+        <button id="sendName">Send</button>
+        <p id="response"></p>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+/*<![CDATA[*/
+  	var stompClient = null;
+  	var username = null;
 
 	function setConnected(connected) {
 		document.getElementById('connect').disabled = connected;
@@ -43,8 +59,8 @@
 		console.log("Disconnected");
 	}
 
-	function sendName() {
-		var name = document.getElementById('name').value;
+	function sendName(username) {
+		var name = username + ": " + document.getElementById('name').value;
 		stompClient.send("/app/hello", {}, JSON.stringify({
 			'name' : name
 		}));
@@ -57,20 +73,18 @@
 		p.appendChild(document.createTextNode(message));
 		response.appendChild(p);
 	}
-</script>
+$(document).ready(function() {
 
-</head>
-<body onload="disconnect()">
-<div>
-    <div>
-        <button id="connect" onclick="connect();">Connect</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-    </div>
-    <div id="conversationDiv">
-        <label>What is your name?</label><input type="text" id="name" />
-        <button id="sendName" onclick="sendName();">Send</button>
-        <p id="response"></p>
-    </div>
-</div>
-</body>
+    username = /*[[${#authentication.name}]]*/ 'Invitado';
+	
+	
+	disconnect();
+	$('#connect').click(connect);
+	$('#disconnect').click(disconnect);
+	$('#sendName').click(function(){
+		sendName(username);
+	});
+});
+/*]]>*/
+</script>
 </html>
