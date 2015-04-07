@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ACTIVE_SEPARATE_OVERVIEW")
+@Table(name = "ACTIVE_SEPARATE_OVERVIEW", schema = "IFSATA")
 public class OtIfs {
 
 	@Id
