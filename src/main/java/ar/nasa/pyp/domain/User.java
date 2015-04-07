@@ -53,7 +53,7 @@ public class User implements UserDetails {
 		
 		if(roles != null) {
 			for(Role role: roles) {
-				System.out.println(role);
+				System.out.println(role.getName());
 				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
 				authorities.add(authority);
 			}
