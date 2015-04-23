@@ -6,11 +6,12 @@ import ar.nasa.ifs.domain.OtIfs;
 
 
 public interface OtIfsService {
+	
+	public OtIfs getByOtId(Integer id);
+	
 	public List<OtIfs> list();
 	public Long listCount();
 	public List<OtIfs> listPage(Integer page);
-	
-	public OtIfs get(int id);
 	
 	public void saveOrUpdate(OtIfs ot);
 	

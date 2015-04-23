@@ -50,9 +50,8 @@ public class OtIfsServiceImpl implements OtIfsService {
 	}
 
 	@Override
-	public OtIfs get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public OtIfs getByOtId(Integer id) {
+		return otIfsRepository.findOne(id);
 	}
 
 	@Override
