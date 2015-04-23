@@ -11,7 +11,7 @@ public class OtIfs {
 
 	@Id
 	@Column(name = "WO_NO")
-	private Integer numOt;
+	private Integer otId;
 	@Column(name = "PLANNED_WEEK")
 	private Integer semanaPlan;
 	@Column(name = "CONTRACT")
@@ -47,12 +47,12 @@ public class OtIfs {
 		this.prioridad = prioridad;
 	}
 
-	public Integer getNumOt() {
-		return numOt;
+	public Integer getOtId() {
+		return otId;
 	}
 
-	public void setNumOt(Integer numOt) {
-		this.numOt = numOt;
+	public void setOtId(Integer numOt) {
+		this.otId = numOt;
 	}
 
 	public Integer getSemanaPlan() {
@@ -113,7 +113,7 @@ public class OtIfs {
 
 	@Override
 	public String toString() {
-		return "Ot [numOt=" + numOt + ", semanaPlan=" + semanaPlan
+		return "Ot [numOt=" + otId + ", semanaPlan=" + semanaPlan
 				+ ", orgMant=" + orgMant + ", otMadre=" + otMadre
 				+ ", componente=" + componente + ", tarea=" + tarea
 				+ ", requierePaqTrabajo=" + requierePaqTrabajo + ", respTarea="

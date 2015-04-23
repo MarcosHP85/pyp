@@ -8,7 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 public interface OtIfsRepository extends PagingAndSortingRepository<OtIfs, Integer> {
-
+	
 	@Query("select o from OtIfs o where o.planifica = 'MPARODI'")
 	List<OtIfs> findAllMio();
 	
