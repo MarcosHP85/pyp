@@ -13,7 +13,7 @@
 <body>
 <div>
     <h2>Nueva programación</h2>
-    <form th:action="@{/programacion/guardar}" th:method="post" th:object="${programacion}">
+    <form th:action="@{/programacion/nueva}" th:method="post" th:object="${programacion}">
     	<div class="form-group">
     		<label for="inputTitulo" class="control-label">Titulo</label>
     		<input type="text" id="inputTitulo" class="form-control" th:field="*{titulo}"></input>
@@ -33,9 +33,11 @@
     		<label for="inputFeFin" class="control-label">Fecha de Finalización</label>
     		<input type="text" id="inputFeFin" class="form-control" placeholder="DD/MM/AAAA" th:field="*{fechaFin}"></input>
     	</div>
+    	
     	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    	<button type="submit" name="addOt">Agregar OT</button>
     	<div class="form-group">
-    		<button type="submit" class="btn btn-primary">Guardar</button>
+    		<button type="submit" name="guardar" class="btn btn-primary">Guardar</button>
     	</div>
     </form>
 </div>

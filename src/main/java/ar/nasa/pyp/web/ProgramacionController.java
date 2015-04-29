@@ -5,9 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +34,14 @@ public class ProgramacionController {
 	private OtIfsService otIfsService;
 	@Autowired
 	private OtService otService;
+	
+	@ModelAttribute("allPlantas")
+	public List<Integer> allPlantas() {
+		List<Integer> allPlantas = new ArrayList<Integer>();
+		allPlantas.add(2000);
+		allPlantas.add(4000);
+		return allPlantas;
+	}
 	
 	@RequestMapping(value = "/programacion")
 	public ModelAndView index() {
@@ -66,12 +78,9 @@ public class ProgramacionController {
 	@PreAuthorize("hasRole('SUP_PLAN')")
 	@RequestMapping(value = "/programacion/nueva")
 	public ModelAndView programacion() {
-		List<Integer> allPlantas = new ArrayList<Integer>();
-		allPlantas.add(2000);
-		allPlantas.add(4000);
+		
 		
 		ModelAndView model = new ModelAndView("ProgramacionNuevaView");
-		model.addObject("allPlantas", allPlantas);
 		
 		Programacion programacion = new Programacion();
 		model.addObject("programacion", programacion);
@@ -79,7 +88,14 @@ public class ProgramacionController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/programacion/guardar", method = RequestMethod.POST)
+	@RequestMapping(value = "/programacion/nueva", params = {"addOt"})
+	public ModelAndView addOt(@ModelAttribute Programacion programacion, BindingResult bindingResult, Model model) {
+//		programacion.getOts().add(new Ot());
+		System.out.println("holaaa  " + programacion.getTitulo());
+		return new ModelAndView("ProgramacionNuevaView");
+	}
+	
+	@RequestMapping(value = "/programacion/nueva", params = {"guardar"}, method = RequestMethod.POST)
 	public ModelAndView programacionGuardar(@ModelAttribute Programacion programacion) {
 		programacionService.save(programacion);
 		
