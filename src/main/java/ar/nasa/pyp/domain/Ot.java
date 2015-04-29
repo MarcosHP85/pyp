@@ -17,7 +17,7 @@ public class Ot {
 
 	private Integer id;
 	private String componente;
-	private String prioridad;
+	private Character prioridad;
 	private String orgMant;
 	private String tipoTrabajo;
 	private String tarea;
@@ -41,10 +41,10 @@ public class Ot {
 	}
 	
 	@Column(name = "prioridad")
-	public String getPrioridad() {
+	public Character getPrioridad() {
 		return prioridad;
 	}
-	public void setPrioridad(String prioridad) {
+	public void setPrioridad(Character prioridad) {
 		this.prioridad = prioridad;
 	}
 	
@@ -85,7 +85,7 @@ public class Ot {
 		this.paquete = paquete;
 	}
 	
-	public Ot(Integer id, String componente, String prioridad,
+	public Ot(Integer id, String componente, Character prioridad,
 			String orgMant, String tipoTrabajo, String tarea) {
 		super();
 		this.id = id;

@@ -1,6 +1,7 @@
 package ar.nasa.pyp.domain;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ public class Programacion {
 	private Integer planta;
 	private Date fechaInicio;
 	private Date fechaFin;
-	private Set<Ot> ots;
+	private List<Ot> ots;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -43,10 +44,10 @@ public class Programacion {
 			joinColumns = @JoinColumn(name = "programacion_id"),
 			inverseJoinColumns = @JoinColumn(name = "ot_id")
 	)
-	public Set<Ot> getOts() {
+	public List<Ot> getOts() {
 		return ots;
 	}
-	public void setOts(Set<Ot> ots) {
+	public void setOts(List<Ot> ots) {
 		this.ots = ots;
 	}
 	
