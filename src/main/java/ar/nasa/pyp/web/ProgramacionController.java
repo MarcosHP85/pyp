@@ -8,6 +8,9 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,13 +92,21 @@ public class ProgramacionController {
 	}
 	
 	@RequestMapping(value = "/programacion/nueva", params = {"addOt"})
-	public ModelAndView addOt(@ModelAttribute Programacion programacion, BindingResult bindingResult, Model model) {
+	public ModelAndView addOt(final Programacion programacion) {
 //		programacion.getOts().add(new Ot());
-		System.out.println("holaaa  " + programacion.getTitulo());
+		Integer semana = Integer.valueOf(programacion.getTitulo().substring(1));
+		Pageable page = new PageRequest(0,5);
+		Page<OtIfs> ots = otIfsService.getServicioNormalIycSemana(semana,page);
+		
+		System.out.println("totalElements: " + ots.getTotalElements() + "\n"
+				+ "numberOfElements: " + ots.getNumberOfElements() + "\n"
+				+ "totalPages: " + ots.getTotalPages());
+		for (OtIfs ot: ots)
+			System.out.println(ot.getOtId() + "\t|\t" + ot.getComponente());
 		return new ModelAndView("ProgramacionNuevaView");
 	}
 	
-	@RequestMapping(value = "/programacion/nueva", params = {"guardar"}, method = RequestMethod.POST)
+	@RequestMapping(value = "/programacion/nueva", params = {"guardar"})
 	public ModelAndView programacionGuardar(@ModelAttribute Programacion programacion) {
 		programacionService.save(programacion);
 		

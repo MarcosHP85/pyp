@@ -1,10 +1,14 @@
 package ar.nasa.pyp.service;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ar.nasa.ifs.domain.OtIfs;
@@ -64,6 +68,16 @@ public class OtIfsServiceImpl implements OtIfsService {
 	public void delete(int id) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Page<OtIfs> getServicioNormalIycSemana(Integer semana, Pageable pageable) {
+		Collection<Character> prioridades = new HashSet<Character>();
+		prioridades.add('2');
+		prioridades.add('3');
+		prioridades.add('4');
+		return otIfsRepository.findByPrioridadInAndOrgMantStartingWithAndSemanaPlan(prioridades, 'C', semana, pageable);
+		
 	}
 
 }

@@ -37,13 +37,13 @@ public class OtIfs {
 	@Column(name = "WORK_TYPE_ID")
 	private String tipoTrabajo;
 	@Column(name = "PRIORITY_ID")
-	private String prioridad;
+	private Character prioridad;
 
-	public String getPrioridad() {
+	public Character getPrioridad() {
 		return prioridad;
 	}
 
-	public void setPrioridad(String prioridad) {
+	public void setPrioridad(Character prioridad) {
 		this.prioridad = prioridad;
 	}
 

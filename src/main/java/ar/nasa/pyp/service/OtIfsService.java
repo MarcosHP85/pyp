@@ -2,6 +2,9 @@ package ar.nasa.pyp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ar.nasa.ifs.domain.OtIfs;
 
 
@@ -16,4 +19,6 @@ public interface OtIfsService {
 	public void saveOrUpdate(OtIfs ot);
 	
 	public void delete(int id);
+
+	public Page<OtIfs> getServicioNormalIycSemana(Integer semana, Pageable pageable);
 }
