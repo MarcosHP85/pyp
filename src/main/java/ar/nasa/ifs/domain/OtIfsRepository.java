@@ -1,10 +1,7 @@
 package ar.nasa.ifs.domain;
 
-import java.util.Collection;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -25,11 +22,5 @@ public interface OtIfsRepository extends PagingAndSortingRepository<OtIfs, Integ
 	
 	@Procedure("IFSATA.CHECK_PRIVILEGIES")
 	void getObject();
-	
-//	List<OtIfs> findByPrioridadInAndOrgMantStartingWithAndSemanaPlan(
-//			Collection<Character> prioridad, char sector, Integer semana, Pageable pageable);
-	
-	Page<OtIfs> findByPrioridadInAndOrgMantStartingWithAndSemanaPlan(
-			Collection<Character> prioridad, char sector, Integer semana, Pageable pageable);
 	
 }

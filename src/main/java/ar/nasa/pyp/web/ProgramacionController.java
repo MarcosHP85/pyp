@@ -1,16 +1,15 @@
 package ar.nasa.pyp.web;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +47,7 @@ public class ProgramacionController {
 	
 	@RequestMapping(value = "/programacion")
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("IndexView");
+		ModelAndView model = new ModelAndView("ProgramacionView");
 		
 //		Programacion programacion = new Programacion();
 //		programacion.setTitulo("S1520");
@@ -82,31 +81,23 @@ public class ProgramacionController {
 	@RequestMapping(value = "/programacion/nueva")
 	public ModelAndView programacion() {
 		
-		
 		ModelAndView model = new ModelAndView("ProgramacionNuevaView");
 		
 		Programacion programacion = new Programacion();
 		model.addObject("programacion", programacion);
-		
+		System.out.println(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+		System.out.println(Calendar.getInstance(Locale.FRANCE).getFirstDayOfWeek());
 		return model;
 	}
 	
-	@RequestMapping(value = "/programacion/nueva", params = {"addOt"})
-	public ModelAndView addOt(final Programacion programacion) {
+	@RequestMapping(value = "/programacion/nueva", params = {"addOt"}, method = RequestMethod.POST)
+	public ModelAndView addOt(@ModelAttribute Programacion programacion, BindingResult bindingResult, Model model) {
 //		programacion.getOts().add(new Ot());
-		Integer semana = Integer.valueOf(programacion.getTitulo().substring(1));
-		Pageable page = new PageRequest(0,5);
-		Page<OtIfs> ots = otIfsService.getServicioNormalIycSemana(semana,page);
-		
-		System.out.println("totalElements: " + ots.getTotalElements() + "\n"
-				+ "numberOfElements: " + ots.getNumberOfElements() + "\n"
-				+ "totalPages: " + ots.getTotalPages());
-		for (OtIfs ot: ots)
-			System.out.println(ot.getOtId() + "\t|\t" + ot.getComponente());
+		System.out.println("holaaa  " + programacion.getTitulo());
 		return new ModelAndView("ProgramacionNuevaView");
 	}
 	
-	@RequestMapping(value = "/programacion/nueva", params = {"guardar"})
+	@RequestMapping(value = "/programacion/nueva", params = {"guardar"}, method = RequestMethod.POST)
 	public ModelAndView programacionGuardar(@ModelAttribute Programacion programacion) {
 		programacionService.save(programacion);
 		
