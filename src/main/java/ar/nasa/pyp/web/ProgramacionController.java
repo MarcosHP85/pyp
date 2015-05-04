@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import scala.annotation.meta.setter;
 import ar.nasa.ifs.domain.OtIfs;
 import ar.nasa.pyp.domain.Ot;
 import ar.nasa.pyp.domain.Paquete;
@@ -48,7 +47,7 @@ public class ProgramacionController {
 	
 	@RequestMapping(value = "/programacion")
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("IndexView");
+		ModelAndView model = new ModelAndView("ProgramacionView");
 		
 //		Programacion programacion = new Programacion();
 //		programacion.setTitulo("S1520");
