@@ -16,4 +16,8 @@ public interface OtIfsService {
 	public void saveOrUpdate(OtIfs ot);
 	
 	public void delete(int id);
+
+	public List<OtIfs> getByPlantaYSemana(Integer planta, Integer semana);
+
+	public List<OtIfs> getParadaByPlantaYSemana(Integer planta, Integer semana);
 }

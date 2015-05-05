@@ -10,7 +10,7 @@
 	<meta name="description" content="" />
     <meta name="author" content="Parodi, Marcos" />
 	
-	<title>PyP - Programación</title>
+	<title th:text="PyP - Programación S ${semana}">PyP - Programación</title>
 	
 	<link rel="stylesheet" type="text/css" media="all"
 		th:href="@{/resources/bootstrap-3.3.4-dist/css/bootstrap.min.css}"
@@ -18,10 +18,6 @@
 	<style>
 	.h1,h1 {
 		margin-bottom : 40px
-	}
-	.pagination {
-		margin : 0;
-		cursor : pointer
 	}
 	</style>
 </head>
@@ -41,7 +37,7 @@
 
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="./programacion">Programación <span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="../programacion">Programación <span class="sr-only">(current)</span></a></li>
 						<li><a href="./planificacion">Planificación</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -52,14 +48,32 @@
 		</nav><!-- navbar -->
 
 		<div class="jumbotron">
-			<h1>Programación semanal <small th:text="(${planta} == 2000) ? 'Unidad I' : 'Unidad II'">Unidad I</small></h1>
+			<h1 th:text="Semana + ' ' + ${semana}">Semana 1501</h1>
 			<div class="row">
-				<div id="programaciones-sn2000" class="col-sm-12 col-md-6">
-					<h3>Servicio normal</h3>
-				</div>
-				<div id="programaciones-sn4000" class="col-sm-12 col-md-6">
-					<h3>Parada programada</h3>
-				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Ot</th>
+							<th>Componente</th>
+							<th>Prio.</th>
+							<th>Mant.</th>
+							<th>Tipo</th>
+							<th>Tarea</th>
+							<th>Planifica</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ot : *{ots}">
+							<td th:text="*{ot.otId}" />
+							<td th:text="*{ot.componente}" />
+							<td th:text="*{ot.prioridad}" />
+							<td th:text="*{ot.orgMant}" />
+							<td th:text="*{ot.tipoTrabajo}" />
+							<td th:text="*{ot.tarea}" />
+							<td th:text="*{ot.planifica}" />
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div><!-- container -->
