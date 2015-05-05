@@ -1,5 +1,6 @@
 package ar.nasa.ifs.domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,7 @@ public interface OtIfsRepository extends PagingAndSortingRepository<OtIfs, Integ
 	
 	@Procedure("IFSATA.CHECK_PRIVILEGIES")
 	void getObject();
+
+	List<OtIfs> findByPlantaOtAndSemanaPlanAndPrioridadIn(Integer planta, Integer semana, Collection<Character> prioridades);
 	
 }

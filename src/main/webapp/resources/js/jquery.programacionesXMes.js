@@ -12,17 +12,18 @@ function getThead(){
 	);
 }
 
-function getTbodyMes(difMeses){
+function getTbodyMes(difMeses,estado){
 	var mes = moment().add(difMeses,'months'),
 		dia = moment().add(difMeses,'months').startOf('month').startOf('isoWeek'),
 		ultimoDia = moment().add(difMeses,'months').endOf('month').endOf('isoWeek'),
 		$tbody = $('<tbody>');
 
 	while (dia < ultimoDia) {
-		var indice = dia.isoWeek() - moment().isoWeek() + (dia.year()-moment().year()) * moment().weeksInYear();
+		var indice = dia.isoWeek() - moment().isoWeek() + (dia.year()-moment().year()) * moment().weeksInYear(); // Falla si se adelanta mas de un año
+			semana = (dia.year()+'').substring(2) + ((dia.isoWeek()<10) ? '0' : '') + dia.isoWeek();
 			$linea = $('<tr>')
 				.append($('<th class="text-right">').text((indice > 0) ? '+' + indice : indice))
-				.append($('<td>').text('S' + (dia.year()+'').substring(2) + ((dia.isoWeek()<10) ? '0' : '') + dia.isoWeek()));
+				.append($('<td>').append($('<a>').text('S' + semana).attr('href','./programacion/editar?semana='+semana+'&estado='+estado)));
 		
 		for (var j = 0; j < 7; j++) {
 			var tmp = $('<td>').text(dia.date());
@@ -35,16 +36,19 @@ function getTbodyMes(difMeses){
 }
 
 function getCaption(){
-	var $caption = $('<caption>').append($('<nav>')
-		.append($('<ul class="pagination">')
-			.append($('<li class="btnPrev">')
-				.append($('<a aria-label="Previous">')
-					.append($('<span aria-hidden="true">').text('<'))))
-			.append($('<li class="btnNow">')
-				.append($('<a>').text(moment().format('LL'))))
-			.append($('<li class="btnNext">')
-				.append($('<a aria-label="next">')
-					.append($('<span aria-hidden="true">').text('>'))
+	var $caption = $('<caption>').append($('<div class="row">').append($('<div class="col-md-5">')
+			.append($('<p class="mes-en-vista">').text(moment().format('MMMM YYYY'))))
+		.append($('<nav>')
+			.append($('<ul class="pagination">')
+				.append($('<li class="btnPrev">')
+					.append($('<a aria-label="Previous">')
+						.append($('<span aria-hidden="true">').text('<'))))
+				.append($('<li class="btnNow">')
+					.append($('<a>').text(moment().format('ll'))))
+				.append($('<li class="btnNext">')
+					.append($('<a aria-label="next">')
+						.append($('<span aria-hidden="true">').text('>'))
+						)
 					)
 				)
 			)
@@ -54,30 +58,44 @@ function getCaption(){
 
 (function($){
 	$.fn.extend({
-		programacionesXMes : function(){
+		programacionesXMes : function(options){
+			var self = this;
+			var defaults = {
+					planta : 2000,
+					estado : 'normal'
+			};
+			options = $.extend(defaults, options);
+			
 			moment.locale('es');
-			return this.each(function(){
-				var mesActivo = 0;
-				var $table = $('<table class="table">')
-					.append(getCaption())
-					.append(getThead())
-					.append(getTbodyMes(mesActivo));
-				$table.find('.btnNext').click(function(){
-					$table.find('tbody').remove();
-					mesActivo++;
-					$table.append(getTbodyMes(mesActivo));
+			self.mesActivo = 0;
+			self.tabla = $('<table class="table">')
+				.append(getCaption())
+				.append(getThead())
+				.append(getTbodyMes(self.mesActivo,options.estado));
+			
+			return self.each(function(){
+				console.log('hola '+options.estado);
+				
+				self.tabla.find('.btnNext').click(function(){
+					self.tabla.find('tbody').remove();
+					self.mesActivo++;
+					self.tabla.find('.mes-en-vista').text(moment().add(self.mesActivo,'months').format('MMMM YYYY'));
+					self.tabla.append(getTbodyMes(self.mesActivo,options.estado));
 				});
-				$table.find('.btnPrev').click(function(){
-					$table.find('tbody').remove();
-					mesActivo--;
-					$table.append(getTbodyMes(mesActivo));
+				self.tabla.find('.btnPrev').click(function(){
+					self.tabla.find('tbody').remove();
+					self.mesActivo--;
+					self.tabla.find('.mes-en-vista').text(moment().add(self.mesActivo,'months').format('MMMM YYYY'));
+					self.tabla.append(getTbodyMes(self.mesActivo,options.estado));
 				});
-				$table.find('.btnNow').click(function(){
-					$table.find('tbody').remove();
-					$table.append(getTbodyMes(0));
+				self.tabla.find('.btnNow').click(function(){
+					self.tabla.find('tbody').remove();
+					self.mesActivo=0;
+					self.tabla.find('.mes-en-vista').text(moment().format('MMMM YYYY'));
+					self.tabla.append(getTbodyMes(0));
 				});
 
-				$(this).append($table);
+				$(self).append(self.tabla);
 			});
 		}
 	});

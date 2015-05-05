@@ -1,5 +1,7 @@
 package ar.nasa.pyp.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -64,6 +66,24 @@ public class OtIfsServiceImpl implements OtIfsService {
 	public void delete(int id) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<OtIfs> getByPlantaYSemana(Integer planta, Integer semana) {
+		Collection<Character> prioridades = new ArrayList<Character>();
+		prioridades.add('2');
+		prioridades.add('3');
+		prioridades.add('4');
+		return otIfsRepository.findByPlantaOtAndSemanaPlanAndPrioridadIn(planta, semana, prioridades);
+	}
+	
+	@Override
+	public List<OtIfs> getParadaByPlantaYSemana(Integer planta, Integer semana) {
+		Collection<Character> prioridades = new ArrayList<Character>();
+		prioridades.add('B');
+		prioridades.add('C');
+		prioridades.add('D');
+		return otIfsRepository.findByPlantaOtAndSemanaPlanAndPrioridadIn(planta, semana, prioridades);
 	}
 
 }
