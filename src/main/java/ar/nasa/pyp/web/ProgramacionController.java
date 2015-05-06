@@ -1,11 +1,11 @@
 package ar.nasa.pyp.web;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.nasa.ifs.domain.OtIfs;
-import ar.nasa.pyp.domain.Ot;
-import ar.nasa.pyp.domain.Paquete;
 import ar.nasa.pyp.domain.Programacion;
+import ar.nasa.pyp.service.OtDoceService;
 import ar.nasa.pyp.service.OtIfsService;
 import ar.nasa.pyp.service.OtService;
 import ar.nasa.pyp.service.ProgramacionService;
@@ -35,6 +34,8 @@ public class ProgramacionController {
 	private ProgramacionService programacionService;
 	@Autowired
 	private OtIfsService otIfsService;
+	@Autowired
+	private OtDoceService otDoceService;
 	@Autowired
 	private OtService otService;
 	
@@ -89,16 +90,17 @@ public class ProgramacionController {
 		
 		ModelAndView model = new ModelAndView("ProgramacionEditarView");
 		
-		List<OtIfs> ots;
-		
-		if (estado.equals("parada"))
-			ots = otIfsService.getParadaByPlantaYSemana(planta, semana);
-		else
-			ots = otIfsService.getByPlantaYSemana(planta,semana);
+//		List<OtIfs> ots;
+//		
+//		if (estado.equals("parada"))
+//			ots = otIfsService.getParadaByPlantaYSemana(planta, semana);
+//		else
+//			ots = otIfsService.getByPlantaYSemana(planta,semana);
 
 		model.addObject("planta", planta);
 		model.addObject("semana", semana);
-		model.addObject("ots", ots);
+		model.addObject("estado", estado);
+		model.addObject("ots", otDoceService.findBySemana(semana));
 		
 		return model;
 	}
@@ -128,5 +130,12 @@ public class ProgramacionController {
 		programacionService.save(programacion);
 		
 		return new ModelAndView("redirect:/programacion");
+	}
+	
+	@RequestMapping(value = "/doce")
+	public ModelAndView poiBean() throws FileNotFoundException, IOException {
+		ModelAndView model = new ModelAndView("ProgramacionView");
+		otDoceService.findBySemana(1520);
+		return model;
 	}
 }

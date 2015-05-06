@@ -10,14 +10,14 @@
 	<meta name="description" content="" />
     <meta name="author" content="Parodi, Marcos" />
 	
-	<title>PyP - Programación</title>
+	<title th:text="'PyP - Programación - S' + ${semana}">PyP - Programación - S1501</title>
 	
 	<link rel="stylesheet" type="text/css" media="all"
 		th:href="@{/resources/bootstrap-3.3.4-dist/css/bootstrap.min.css}"
 		href="../resources/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
 	<style>
-	.h1,h1 {
-		margin-bottom : 40px
+	.row {
+		margin-top : 40px
 	}
 	</style>
 </head>
@@ -48,10 +48,12 @@
 		</nav><!-- navbar -->
 
 		<div class="jumbotron">
-			<h1 th:text="Semana + ' ' + ${semana}">Semana 1501</h1>
+			<h1 th:text="'Semana ' + ${semana}">Semana 1501</h1>
+			<h2 th:text="(${planta} == 2000) ? 'Unidad I' : 'Unidad II'">Unidad I</h2>
+			<h3 th:text="(${estado} == 'normal') ? 'Serivicio normal' : 'Parada programada'">Serivicio normal</h3>
 			<div class="row">
 				<table class="table">
-					<thead>
+					<!-- <thead>
 						<tr>
 							<th>Ot</th>
 							<th>Componente</th>
@@ -71,6 +73,32 @@
 							<td th:text="*{ot.tipoTrabajo}" />
 							<td th:text="*{ot.tarea}" />
 							<td th:text="*{ot.planifica}" />
+						</tr>
+					</tbody> -->
+					<thead>
+						<tr>
+							<th>Ot</th>
+							<th>Observaciones</th>
+							<th>Lu</th>
+							<th>Ma</th>
+							<th>Mi</th>
+							<th>Ju</th>
+							<th>Vi</th>
+							<th>Sa</th>
+							<th>Do</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ot : *{ots}">
+							<td th:text="*{ot.id}" />
+							<td th:text="*{ot.observaciones}" />
+							<td th:class="(*{ot.lunes}) ? 'danger' : 'active'" />
+							<td th:class="(*{ot.martes}) ? 'danger' : 'active'" />
+							<td th:class="(*{ot.miercoles}) ? 'danger' : 'active'" />
+							<td th:class="(*{ot.jueves}) ? 'danger' : 'active'" />
+							<td th:class="(*{ot.viernes}) ? 'danger' : 'active'" />
+							<td th:class="(*{ot.sabado}) ? 'danger' : ''" />
+							<td th:class="(*{ot.domingo}) ? 'danger' : ''" />
 						</tr>
 					</tbody>
 				</table>

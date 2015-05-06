@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +20,7 @@ import ar.nasa.pyp.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -38,7 +40,7 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 //            	.antMatchers("/indicadores/**").permitAll()
             	.antMatchers("/about").permitAll()
             	.antMatchers("/admin/**").hasRole("ADMIN")
-            	.antMatchers("/**").hasRole("ADMIN")
+            	.antMatchers("/**").hasAnyRole("ADMIN","SUP_PLAN")//.hasRole("ADMIN")
             	.antMatchers("/db/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_DBA')")
                 .anyRequest().authenticated()
                 .and()
