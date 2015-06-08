@@ -71,19 +71,26 @@ public class OtDoceServiceImpl implements OtDoceService {
 	    		ot.setSemana((int)row.getCell(settings.getColSemana()).getNumericCellValue());
 	    	if(row.getCell(settings.getColObservaciones()).getCellType() == Cell.CELL_TYPE_STRING)
 	    		ot.setObservaciones(row.getCell(settings.getColObservaciones()).getStringCellValue());
-	    	if(row.getCell(settings.getColLu()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColLu()).getStringCellValue().equals("X"))
 	    		ot.setLunes(true);
-	    	if(row.getCell(settings.getColMa()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColMa()).getStringCellValue().equals("X"))
 	    		ot.setMartes(true);
-	    	if(row.getCell(settings.getColMi()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColMi()).getStringCellValue().equals("X"))
 	    		ot.setMiercoles(true);
-	    	if(row.getCell(settings.getColJu()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColJu()).getStringCellValue().equals("X"))
 	    		ot.setJueves(true);
-	    	if(row.getCell(settings.getColVi()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColVi()).getStringCellValue().equals("X"))
 	    		ot.setViernes(true);
-	    	if(row.getCell(settings.getColSa()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColSa()).getStringCellValue().equals("X"))
 	    		ot.setSabado(true);
-	    	if(row.getCell(settings.getColDo()).getStringCellValue().equals("X"))
+	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
+	    			&& row.getCell(settings.getColDo()).getStringCellValue().equals("X"))
 	    		ot.setDomingo(true);
     	}
     	

@@ -2,6 +2,7 @@ package ar.nasa.pyp.web;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.nasa.ifs.domain.OtIfs;
 import ar.nasa.pyp.domain.Programacion;
+import ar.nasa.pyp.domain.User;
 import ar.nasa.pyp.service.OtDoceService;
 import ar.nasa.pyp.service.OtIfsService;
 import ar.nasa.pyp.service.OtService;
@@ -49,8 +54,11 @@ public class ProgramacionController {
 	
 	@RequestMapping
 	public ModelAndView index(
+			@AuthenticationPrincipal User authUser,
 			@PathVariable("planta") Integer planta) {
 		ModelAndView model = new ModelAndView("ProgramacionView");
+		
+		System.out.println(authUser.toString());
 		
 		model.addObject("planta",planta);
 		
