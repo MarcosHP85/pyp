@@ -21,8 +21,8 @@ public interface OtIfsRepository extends PagingAndSortingRepository<OtIfs, Integ
 			+ "WHERE o.orgMant like 'C%' and o.estadoOt = 'Planificacion' and o.tipoTrabajo in ('COR','ELE','OTR','TAP') and o.prioridad in ('A','B','C','D','E')")
 	List<OtIfs> findOtIycPlanificacionParada();
 	
-	@Procedure("IFSATA.CHECK_PRIVILEGIES")
-	void getObject();
+//	@Procedure("IFSATA.CHECK_PRIVILEGIES")
+//	void getObject();
 
 	List<OtIfs> findByPlantaOtAndSemanaPlanAndPrioridadIn(Integer planta, Integer semana, Collection<Character> prioridades);
 	
