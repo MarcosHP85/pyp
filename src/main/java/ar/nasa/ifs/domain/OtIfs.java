@@ -13,7 +13,7 @@ public class OtIfs {
 	@Column(name = "WO_NO")
 	private Integer otId;
 	@Column(name = "PLANNED_WEEK")
-	private Integer semanaPlan;
+	private String semanaPlan;
 	@Column(name = "CONTRACT")
 	private Integer plantaOt;
 	@Column(name = "ORG_CODE")
@@ -55,11 +55,11 @@ public class OtIfs {
 		this.otId = numOt;
 	}
 
-	public Integer getSemanaPlan() {
+	public String getSemanaPlan() {
 		return semanaPlan;
 	}
 
-	public void setSemanaPlan(Integer semanaPlan) {
+	public void setSemanaPlan(String semanaPlan) {
 		this.semanaPlan = semanaPlan;
 	}
 

@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="" />
     <meta name="author" content="Parodi, Marcos" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 	
 	<title>PyP - Etiquetas</title>
 	
@@ -83,20 +85,30 @@
 		src="../resources/momentjs-2.10.2/moment-with-locales.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$(".etiqueta").draggable({
-				// connectWith: ".posicion",
-				revert: "invalid",
-				containment: "document",
-				// helper: "clone",
-				cursor: "move"
-			});
+			$(".etiqueta")
+				.draggable({
+					revert: "invalid",
+					containment: "document",
+					cursor: "move"
+				});
 
-			$(".posicion").droppable({
-				accept: ".etiqueta",
-				drop: function(event, ui) {
-					$(this).append(ui.draggable.css({left: 0, top: 0}));
-				}
-			})
+			$(".posicion")
+				.droppable({
+					accept: ".etiqueta",
+					drop: function(event, ui) {
+						$(this).append(ui.draggable.css({left: 0, top: 0}));
+					}
+				})
+				.click(function() {
+					$this = $(this);
+					if ($this.droppable("option", "disabled")) {
+						$this.removeClass("posicion-usada");
+						$this.droppable("enable");
+					} else {
+						$this.addClass("posicion-usada");
+						$this.droppable("disable");
+					}
+				});
 		});
 	</script>
 </body>

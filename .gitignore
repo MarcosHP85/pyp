@@ -1,3 +1,4 @@
 /target/
 /.apt_generated/
 /.DS_Store
+/.classpath

@@ -13,7 +13,10 @@
 	min-height: 170px;
 	max-height: 170px;
 	border: 1px solid black;
-	background-color: gray
+	background-color: white
+}
+.posicion-usada {
+	background-color: grey
 }
 .etiqueta {
 	background-color: white;
