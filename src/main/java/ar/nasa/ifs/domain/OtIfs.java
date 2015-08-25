@@ -3,114 +3,143 @@ package ar.nasa.ifs.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ACTIVE_SEPARATE_OVERVIEW", schema = "IFSATA")
 public class OtIfs {
 
-	@Id
-	@Column(name = "WO_NO")
 	private Integer otId;
-	@Column(name = "PLANNED_WEEK")
-	private Integer semanaPlan;
-	@Column(name = "CONTRACT")
+	private String semanaPlan;
 	private Integer plantaOt;
-	@Column(name = "ORG_CODE")
-	private String orgMant;
-	@Column(name = "WO_NO_MADRE")
+	private OrgMantIfs orgMant;
 	private String otMadre;
-	@Column(name = "MCH_CODE")
 	private String componente;
-	@Column(name = "TAREA")
 	private String tarea;
-	@Column(name = "MCH_POS")
 	private String posicion;
-	@Column(name = "PREPARED_BY")
 	private String planifica;
-	@Column(name = "REQ_PAQ_TAB")
 	private String requierePaqTrabajo;
-	@Column(name = "WORK_LEADER_SIGN")
 	private String respTarea;
-	@Column(name = "STATE")
 	private String estadoOt;
-	@Column(name = "WORK_TYPE_ID")
 	private String tipoTrabajo;
-	@Column(name = "PRIORITY_ID")
 	private Character prioridad;
 
-	public Character getPrioridad() {
-		return prioridad;
-	}
-
-	public void setPrioridad(Character prioridad) {
-		this.prioridad = prioridad;
-	}
-
+	@Id
+	@Column(name = "WO_NO")
 	public Integer getOtId() {
 		return otId;
 	}
-
 	public void setOtId(Integer numOt) {
 		this.otId = numOt;
 	}
 
-	public Integer getSemanaPlan() {
+	@Column(name = "PLANNED_WEEK")
+	public String getSemanaPlan() {
 		return semanaPlan;
 	}
-
-	public void setSemanaPlan(Integer semanaPlan) {
+	public void setSemanaPlan(String semanaPlan) {
 		this.semanaPlan = semanaPlan;
 	}
 
-	public String getOrgMant() {
+	@ManyToOne
+	@JoinColumn(name="ORG_CODE")
+	public OrgMantIfs getOrgMant() {
 		return orgMant;
 	}
-
-	public void setOrgMant(String orgMant) {
+	public void setOrgMant(OrgMantIfs orgMant) {
 		this.orgMant = orgMant;
 	}
 
+	@Column(name = "MCH_CODE")
 	public String getComponente() {
 		return componente;
 	}
-
 	public void setComponente(String componente) {
 		this.componente = componente;
 	}
 
+	@Column(name = "WO_NO_MADRE")
+	public String getOtMadre() {
+		return otMadre;
+	}
+	public void setOtMadre(String otMadre) {
+		this.otMadre = otMadre;
+	}
+
+	@Column(name = "TAREA")
 	public String getTarea() {
 		return tarea;
 	}
-
 	public void setTarea(String tarea) {
 		this.tarea = tarea;
 	}
 
+	@Column(name = "REQ_PAQ_TAB")
 	public String getRequierePaqTrabajo() {
 		return requierePaqTrabajo;
 	}
-
 	public void setRequierePaqTrabajo(String requierePaqTrabajo) {
 		this.requierePaqTrabajo = requierePaqTrabajo;
 	}
 
+	@Column(name = "WORK_LEADER_SIGN")
 	public String getRespTarea() {
 		return respTarea;
 	}
-
 	public void setRespTarea(String respTarea) {
 		this.respTarea = respTarea;
 	}
 
+	@Column(name = "STATE")
 	public String getEstadoOt() {
 		return estadoOt;
 	}
-
 	public void setEstadoOt(String estadoOt) {
 		this.estadoOt = estadoOt;
 	}
 
+	@Column(name = "CONTRACT")
+	public Integer getPlantaOt() {
+		return plantaOt;
+	}
+	public void setPlantaOt(Integer plantaOt) {
+		this.plantaOt = plantaOt;
+	}
+
+	@Column(name = "MCH_POS")
+	public String getPosicion() {
+		return posicion;
+	}
+	public void setPosicion(String posicion) {
+		this.posicion = posicion;
+	}
+
+	@Column(name = "WORK_TYPE_ID")
+	public String getTipoTrabajo() {
+		return tipoTrabajo;
+	}
+	public void setTipoTrabajo(String tipoTrabajo) {
+		this.tipoTrabajo = tipoTrabajo;
+	}
+
+	@Column(name = "PREPARED_BY")
+	public String getPlanifica() {
+		return planifica;
+	}
+	public void setPlanifica(String planifica) {
+		this.planifica = planifica;
+	}
+	
+	@Column(name = "PRIORITY_ID")
+	public Character getPrioridad() {
+		return prioridad;
+	}
+	public void setPrioridad(Character prioridad) {
+		this.prioridad = prioridad;
+	}
+	
 	@Override
 	public String toString() {
 		return "Ot [numOt=" + otId + ", semanaPlan=" + semanaPlan
@@ -118,37 +147,5 @@ public class OtIfs {
 				+ ", componente=" + componente + ", tarea=" + tarea
 				+ ", requierePaqTrabajo=" + requierePaqTrabajo + ", respTarea="
 				+ respTarea + ", estadoOt=" + estadoOt + "]";
-	}
-
-	public Integer getPlantaOt() {
-		return plantaOt;
-	}
-
-	public void setPlantaOt(Integer plantaOt) {
-		this.plantaOt = plantaOt;
-	}
-
-	public String getPosicion() {
-		return posicion;
-	}
-
-	public void setPosicion(String posicion) {
-		this.posicion = posicion;
-	}
-
-	public String getTipoTrabajo() {
-		return tipoTrabajo;
-	}
-
-	public void setTipoTrabajo(String tipoTrabajo) {
-		this.tipoTrabajo = tipoTrabajo;
-	}
-
-	public String getPlanifica() {
-		return planifica;
-	}
-
-	public void setPlanifica(String planifica) {
-		this.planifica = planifica;
 	}
 }
