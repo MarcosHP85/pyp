@@ -101,7 +101,7 @@ public class Ot {
 		this.id = otIfs.getOtId();
 		this.componente = otIfs.getComponente();
 		this.prioridad = otIfs.getPrioridad();
-		this.orgMant = otIfs.getOrgMant();
+		this.orgMant = otIfs.getOrgMant().getOrgMantId();
 		this.tipoTrabajo = otIfs.getTipoTrabajo();
 		this.tarea = otIfs.getTarea();
 	}
