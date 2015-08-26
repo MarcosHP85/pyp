@@ -52,18 +52,18 @@
 			<h1>Etiquetas</h1>
 			<div class="row">
 				<div class="columna">
-					<div class="posicion">
-						<div class="etiqueta">AAA00AA000</div>
-					</div>
+					<textarea id="inputOts"></textarea>
+					<button id="cargarOts">Cargar OT's</button>
+				</div>
+				<div class="columna">
+					<div class="posicion"></div>
 					<div class="posicion"></div>
 					<div class="posicion"></div>
 					<div class="posicion"></div>
 					<div class="posicion"></div>
 				</div>
 				<div class="columna">
-					<div class="posicion">
-						<div class="etiqueta">AAA00AA000</div>
-					</div>
+					<div class="posicion"></div>
 					<div class="posicion"></div>
 					<div class="posicion"></div>
 					<div class="posicion"></div>
@@ -84,38 +84,76 @@
 	<script>
 		// <![CDATA[
 		$(function() {
-			$(".etiqueta")
-				.draggable({
-					revert: "invalid",
-					containment: "document",
-					cursor: "move"
-				});
+			var $etiquetas = $(".etiqueta"),
+				$posiciones = $(".posicion");
 
-			$(".posicion")
-				.droppable({
-					accept: ".etiqueta",
-					drop: function(event, ui) {
-						$(this).append(ui.draggable.css({left: 0, top: 0}));
-					}
-				})
-				.click(function() {
-					$this = $(this);
-					if ($this.droppable("option", "disabled")) {
-						$this.removeClass("posicion-usada");
-						$this.droppable("enable");
-					} else {
-						$this.addClass("posicion-usada");
-						$this.droppable("disable");
-					}
-				});
-		});
-		
-		function posicionLibre() {
-			$(".posicion")
-				.each(function(i,j) {
-					if ( !($(j).droppable("option","disabled")) && ($(j).html() == "") )
-						return j;
+			$etiquetas.draggable({
+				revert: "invalid",
+				containment: "document",
+				cursor: "move"
+			});
+
+			$posiciones.droppable({
+				accept: ".etiqueta",
+				drop: function( event, ui ) {
+					$(this).append(ui.draggable.css({left: 0, top: 0}));
+					// $(this).addClass("posicion-usada");
+				},
+				out: function( event, ui ) {
+					$(this).removeClass("posicion-usada")
+				},
+				over: function( event, ui ) {
+					$(this).addClass("posicion-usada")
+				}
+			}).click( function() {
+				$this = $(this);
+				if ( $this.droppable("option", "disabled") )
+					enablePosicion( $this );
+				else
+					disablePosition( $this );
+			});
+
+			function enablePosicion( $posicion ) {
+				$posicion.removeClass("posicion-usada");
+				$posicion.droppable("enable");
+			}
+
+			function disablePosition( $posicion ) {
+				$posicion.addClass("posicion-usada");
+				$posicion.droppable("disable");
+			}
+
+			$("#cargarOts").click( function() {
+				$("#inputOts").val().split("\n")
+					.forEach( function( ot ) {
+						if ( ot != "" )
+							$.get("http://localhost:8080/json/" + ot )
+								.done( function( jsonOt ) {
+									crearEtiqueta( jsonOt );
+								});
 					});
+			});
+
+		});
+
+		function crearEtiqueta( jsonOt ) {
+		var $pos = $(".posicion:not(.posicion-usada)")
+			.first()
+			.addClass("posicion-usada");
+		$pos.append($("<div class='etiqueta'>")
+			.append($("<div>")
+					.html( jsonOt.componente )
+					.css({ "font-size":"1.3em" }))
+			.append($("<div>")
+					.html( jsonOt.otId ))
+			.append($("<div>")
+					.html( jsonOt.orgMant.orgMantId + " - " + jsonOt.orgMant.descripcion )
+					.css({ "font-size":"0.5em" }))
+			.draggable({
+				revert: "invalid",
+				containment: "document",
+				cursor: "move"
+			}));
 		}
 		// ]]>
 	</script>
