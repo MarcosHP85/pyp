@@ -18,6 +18,9 @@
 .posicion-usada {
 	background-color: grey
 }
+.posicion-hover {
+	background-color: blue
+}
 .etiqueta {
 	background-color: white;
 	width: 100%;
