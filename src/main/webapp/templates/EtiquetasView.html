@@ -84,50 +84,27 @@
 	<script>
 		// <![CDATA[
 		$(function() {
-			var $etiquetas = $(".etiqueta"),
-				$posiciones = $(".posicion");
 
-			$etiquetas.draggable({
-				revert: "invalid",
-				containment: "document",
-				cursor: "move"
-			});
-
-			$posiciones.droppable({
+			$( ".posicion" ).droppable({
 				accept: ".etiqueta",
+				hoverClass: "posicion-hover",
 				drop: function( event, ui ) {
 					$(this).append(ui.draggable.css({left: 0, top: 0}));
-					// $(this).addClass("posicion-usada");
-				},
-				out: function( event, ui ) {
-					$(this).removeClass("posicion-usada")
-				},
-				over: function( event, ui ) {
-					$(this).addClass("posicion-usada")
+					$(this).addClass( "posicion-usada" );
 				}
 			}).click( function() {
 				$this = $(this);
-				if ( $this.droppable("option", "disabled") )
-					enablePosicion( $this );
+				if ( $this.hasClass( "posicion-usada" ) )
+					$this.removeClass( "posicion-usada" );
 				else
-					disablePosition( $this );
+					$this.addClass( "posicion-usada" );
 			});
 
-			function enablePosicion( $posicion ) {
-				$posicion.removeClass("posicion-usada");
-				$posicion.droppable("enable");
-			}
-
-			function disablePosition( $posicion ) {
-				$posicion.addClass("posicion-usada");
-				$posicion.droppable("disable");
-			}
-
-			$("#cargarOts").click( function() {
-				$("#inputOts").val().split("\n")
+			$( "#cargarOts" ).click( function() {
+				$( "#inputOts" ).val().split( "\n" )
 					.forEach( function( ot ) {
 						if ( ot != "" )
-							$.get("http://localhost:8080/json/" + ot )
+							$.get( "json/" + ot )
 								.done( function( jsonOt ) {
 									crearEtiqueta( jsonOt );
 								});
@@ -137,23 +114,27 @@
 		});
 
 		function crearEtiqueta( jsonOt ) {
-		var $pos = $(".posicion:not(.posicion-usada)")
-			.first()
-			.addClass("posicion-usada");
-		$pos.append($("<div class='etiqueta'>")
-			.append($("<div>")
-					.html( jsonOt.componente )
-					.css({ "font-size":"1.3em" }))
-			.append($("<div>")
-					.html( jsonOt.otId ))
-			.append($("<div>")
-					.html( jsonOt.orgMant.orgMantId + " - " + jsonOt.orgMant.descripcion )
-					.css({ "font-size":"0.5em" }))
-			.draggable({
-				revert: "invalid",
-				containment: "document",
-				cursor: "move"
-			}));
+
+			$(".posicion:not(.posicion-usada)").first()
+				.addClass("posicion-usada");
+				.append($("<div class='etiqueta'>")
+					.append($("<div>")
+						.html( jsonOt.componente )
+						.css({ "font-size":"1.3em" }))
+					.append($("<div>")
+						.html( jsonOt.otId ))
+					.append($("<div>")
+						.html( jsonOt.orgMant.orgMantId + " - " + jsonOt.orgMant.descripcion )
+						.css({ "font-size":"0.5em" }))
+					.draggable({
+						revert: "invalid",
+						containment: "document",
+						cursor: "move",
+						start: function( event, ui ) {
+							$(this).parent().removeClass( "posicion-usada" );
+						}
+					})
+				);
 		}
 		// ]]>
 	</script>
