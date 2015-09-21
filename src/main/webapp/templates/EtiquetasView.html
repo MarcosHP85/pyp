@@ -57,6 +57,7 @@
 					<button id="usadaTodas">Usadas Todas</button>
 					<button id="usadaNinguna">Usadas Ninguna</button>
 					<button id="usadaInvertir">Usadas Invertir</button>
+					<button id="limpiar">Limpiar</button>
 				</div>
 				<div class="columna">
 					<div class="posicion"></div>
@@ -88,42 +89,59 @@
 		// <![CDATA[
 		$(function() {
 			var otsCargadas = [],
-				$posiciones = $( ".posicion" );
+				$posiciones = $( ".posicion" ),
+				$inputOts = $( "#inputOts" ),
+				$cargarOts = $( "#cargarOts" );
 			
 			$posiciones.droppable({
 				accept: ".etiqueta",
 				hoverClass: "posicion-hover",
 				drop: function( event, ui ) {
-					$( this ).append( ui.draggable.css( {left: 0, top: 0} ) );
+					$( this ).append( ui.draggable.css({ left: 0, top: 0 }));
 					$( this ).addClass( "posicion-usada" );
 				}
 			}).click( function() {
-				$this = $(this);
+				$this = $( this );
 				if ( $this.hasClass( "posicion-usada" ) )
 					$this.removeClass( "posicion-usada" );
 				else
 					$this.addClass( "posicion-usada" );
 			});
 
-			$( "#cargarOts" ).click( function() {
-				var $this = $( this );
-				$this.css( {cursor: "wait"} );
-				$( "body" ).css( {cursor: "wait"} );
-				$( "#inputOts" ).val().split( "\n" )
-					.forEach( function( ot, i, ots ) {
+			$inputOts.focus()
+				.on( "paste", function() {
+					$cargarOts.focus();
+			});
+			
+			$cargarOts.click( function() {
+				
+				var deferreds = [];
+				
+				$cargarOts.css({ cursor: "wait" });
+				$( "button" ).addClass( "disabled" );
+				$( "body" ).css({ cursor: "wait" });
+				$inputOts
+					.addClass( "disabled" )
+					.val().split( "\n" )
+					.forEach( function( ot ) {
 						if ( ot != "" && ( otsCargadas.indexOf( ot ) == -1 ) ) {
 							otsCargadas.push( ot );
-							$.get( "json/" + ot )
-								.done( function( jsonOt ) {
-									if ( jsonOt != "" )
-										crearEtiqueta( jsonOt );
-								})
-								.always( function() {
-									// alert((i+1) + " " + ots.length);
-									$this.css( {cursor: "default"} );
-									$( "body" ).css( {cursor: "default"} );
-								});
+							deferreds.push(
+								$.get( "json/" + ot )
+									.success( function( jsonOt ) {
+										if ( jsonOt != "" )
+											crearEtiqueta( jsonOt );
+									})
+							);
 						}
+					});
+
+				$.when.apply( null, deferreds )
+					.done( function() {
+						$cargarOts.css({ cursor: "pointer" });
+						$( "button" ).removeClass( "disabled" );
+						$( "body" ).css({ cursor: "auto" });
+						$inputOts.val("").removeClass( "disabled" );
 					});
 			});
 
@@ -144,20 +162,47 @@
 						$p.addClass( "posicion-usada" );
 				});
 			});
+
+			$( "#limpiar" ).click( function() {
+				$( ".etiqueta" ).remove();
+				$( ".posicion-usada" ).removeClass( "posicion-usada" );
+				otsCargadas = [];
+			});
 			
 			function crearEtiqueta( jsonOt ) {
 
-				$(".posicion:not(.posicion-usada)").first()
-					.addClass("posicion-usada")
-					.append($("<div class='etiqueta'>")
-						.append($("<div>")
+				var $iconRemove = $( "<span class='text-danger glyphicon glyphicon-remove'>" )
+					.css({ cursor: "pointer" })
+					.click( function() {
+						var $e = $( this ).parent().parent(),
+							o = $e.data( "ot" ).toString(),
+							index = otsCargadas.indexOf( o );
+
+						otsCargadas.splice( index, 1 );
+						$e.remove();
+					})
+					.hide();
+				
+				$( ".posicion:not(.posicion-usada)" ).first()
+					.addClass( "posicion-usada" )
+					.append($( "<div class='etiqueta'>" ).data( "ot", jsonOt.otId )
+						.append($( "<div>" )
 							.html( jsonOt.componente )
-							.css({ "font-size":"1.3em" }))
-						.append($("<div>")
+							.css({ "font-size": "1.3em" }))
+						.append($( "<div>" )
 							.html( jsonOt.otId ))
-						.append($("<div>")
+						.append($( "<div>" )
 							.html( jsonOt.orgMant.orgMantId + " - " + jsonOt.orgMant.descripcion )
-							.css({ "font-size":"0.5em" }))
+							.css({ "font-size": "0.5em" }))
+						.append($( "<div>" )
+							.css({ position: "absolute", top: "5px", right: "10px" })
+							.append( $iconRemove ))
+						.hover( function() {
+								$iconRemove.show();
+							} , function() {
+								$iconRemove.hide();
+							}
+						)
 						.draggable({
 							revert: "invalid",
 							containment: "document",
