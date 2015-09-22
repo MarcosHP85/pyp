@@ -33,7 +33,7 @@ public class ReportController {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 		      // 1) Load Docx file by filling Velocity template engine and cache it to the registry
-		      InputStream in = ReportController.class.getResourceAsStream("report.odt");
+		      InputStream in = ReportController.class.getResourceAsStream("LVER.docx");
 		      IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in,TemplateEngineKind.Velocity);
 
 		      // 2) Create context Java model
