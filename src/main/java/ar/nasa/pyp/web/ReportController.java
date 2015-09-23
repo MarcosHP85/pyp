@@ -28,12 +28,37 @@ public class ReportController {
 	@Autowired
 	private OtIfsService otIfsService;
 	
-	@RequestMapping(value="{ot}", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+	@RequestMapping(value="{ot}-lver.docx", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 	public @ResponseBody byte[] getReport(@PathVariable Integer ot){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 		      // 1) Load Docx file by filling Velocity template engine and cache it to the registry
 		      InputStream in = ReportController.class.getResourceAsStream("LVER.docx");
+		      IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in,TemplateEngineKind.Velocity);
+
+		      // 2) Create context Java model
+		      IContext context = report.createContext();
+		      context.put("ot", this.otIfsService.getByOtId(ot));
+		      context.put("check1", true);
+		      context.put("check2", false);
+
+		      // 3) Generate report by merging Java model with the Docx
+		      report.process(context, out);
+
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    } catch (XDocReportException e) {
+		      e.printStackTrace();
+		    }
+		return out.toByteArray();
+	}
+	
+	@RequestMapping(value="{ot}-pacc.docx", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+	public @ResponseBody byte[] getPacc(@PathVariable Integer ot){
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+		      // 1) Load Docx file by filling Velocity template engine and cache it to the registry
+		      InputStream in = ReportController.class.getResourceAsStream("PACC.docx");
 		      IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in,TemplateEngineKind.Velocity);
 
 		      // 2) Create context Java model
