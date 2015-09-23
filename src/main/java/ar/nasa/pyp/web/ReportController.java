@@ -28,7 +28,7 @@ public class ReportController {
 	@Autowired
 	private OtIfsService otIfsService;
 	
-	@RequestMapping(value="{ot}", method = RequestMethod.GET, produces = "application/vnd.oasis.opendocument.text")
+	@RequestMapping(value="{ot}", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 	public @ResponseBody byte[] getReport(@PathVariable Integer ot){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
