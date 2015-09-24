@@ -46,6 +46,10 @@ public class User implements UserDetails {
 	private String password;
 	@Column(name = "enabled")
 	private Boolean enabled;
+	@Column(name = "nombre")
+	private String nombre;
+	@Column(name = "apellido")
+	private String apellido;
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_role",
@@ -79,6 +83,14 @@ public class User implements UserDetails {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
 	}
 
 	@Override

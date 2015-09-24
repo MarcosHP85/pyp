@@ -7,12 +7,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ar.nasa.pyp.domain.User;
 import ar.nasa.pyp.service.OtIfsService;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.core.io.internal.ByteArrayOutputStream;
@@ -29,7 +31,7 @@ public class ReportController {
 	private OtIfsService otIfsService;
 	
 	@RequestMapping(value="{ot}-lver.docx", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-	public @ResponseBody byte[] getReport(@PathVariable Integer ot){
+	public @ResponseBody byte[] getReport(@PathVariable Integer ot, @AuthenticationPrincipal User activeUser){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 		      // 1) Load Docx file by filling Velocity template engine and cache it to the registry
@@ -39,6 +41,7 @@ public class ReportController {
 		      // 2) Create context Java model
 		      IContext context = report.createContext();
 		      context.put("ot", this.otIfsService.getByOtId(ot));
+		      context.put("planifica", activeUser);
 		      context.put("check1", true);
 		      context.put("check2", false);
 
@@ -54,7 +57,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="{ot}-pacc.docx", method = RequestMethod.GET, produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-	public @ResponseBody byte[] getPacc(@PathVariable Integer ot){
+	public @ResponseBody byte[] getPacc(@PathVariable Integer ot, @AuthenticationPrincipal User activeUser){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 		      // 1) Load Docx file by filling Velocity template engine and cache it to the registry
@@ -64,6 +67,7 @@ public class ReportController {
 		      // 2) Create context Java model
 		      IContext context = report.createContext();
 		      context.put("ot", this.otIfsService.getByOtId(ot));
+		      context.put("planifica", activeUser);
 		      context.put("check1", true);
 		      context.put("check2", false);
 
