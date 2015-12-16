@@ -25,11 +25,13 @@ public class OtDoceServiceImpl implements OtDoceService {
 	private DoceSemanasSettings settings;
 		
 	@Override
-	public List<OtDoce> findBySemana(Integer semana) {
+	public List<OtDoce> findBySemana(Integer semana, Integer planta) {
 		List<OtDoce> ots = new ArrayList<OtDoce>();
 		
 		try {
-			Workbook wb = WorkbookFactory.create(new FileInputStream(settings.getFileCna1()));
+			String path = planta == 4000 ? settings.getFileCna2() : settings.getFileCna1();
+			
+			Workbook wb = WorkbookFactory.create(new FileInputStream(path));
 			
 			Sheet sheet = wb.getSheetAt(0);
 			Row row;
@@ -45,8 +47,12 @@ public class OtDoceServiceImpl implements OtDoceService {
 		        if(row != null) {
 	                cell = row.getCell(col);
 	                if(cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK 
+	                		&& row.getCell(settings.getColSemana()) != null
 	                		&& row.getCell(settings.getColSemana()).getCellType() == Cell.CELL_TYPE_NUMERIC
-	                		&& (int)row.getCell(settings.getColSemana()).getNumericCellValue() == semana) {
+	                		&& (int)row.getCell(settings.getColSemana()).getNumericCellValue() == semana
+	                		&& row.getCell(settings.getColOrgMant()) != null
+	                		&& row.getCell(settings.getColOrgMant()).getCellType() == Cell.CELL_TYPE_STRING
+	                		&& row.getCell(settings.getColOrgMant()).getStringCellValue().startsWith("C")) {
 	                	
 	                	ots.add(rowToOtDoce(row));
 	                }
@@ -69,6 +75,10 @@ public class OtDoceServiceImpl implements OtDoceService {
 
 	    	if(row.getCell(settings.getColSemana()).getCellType() == Cell.CELL_TYPE_NUMERIC)
 	    		ot.setSemana((int)row.getCell(settings.getColSemana()).getNumericCellValue());
+	    	if(row.getCell(settings.getColComponente()).getCellType() == Cell.CELL_TYPE_STRING)
+	    		ot.setComponente(row.getCell(settings.getColComponente()).getStringCellValue());
+	    	if(row.getCell(settings.getColOrgMant()).getCellType() == Cell.CELL_TYPE_STRING)
+	    		ot.setOrgMant(row.getCell(settings.getColOrgMant()).getStringCellValue());
 	    	if(row.getCell(settings.getColObservaciones()).getCellType() == Cell.CELL_TYPE_STRING)
 	    		ot.setObservaciones(row.getCell(settings.getColObservaciones()).getStringCellValue());
 	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 

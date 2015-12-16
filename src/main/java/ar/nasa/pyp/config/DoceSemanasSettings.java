@@ -7,6 +7,8 @@ public class DoceSemanasSettings {
 	private Integer firstRow;
 	private Integer colNumOt;
 	private Integer colSemana;
+	private Integer colComponente;
+	private Integer colOrgMant;
 	private Integer colObservaciones;
 	private Integer colLu;
 	private Integer colMa;
@@ -15,6 +17,30 @@ public class DoceSemanasSettings {
 	private Integer colVi;
 	private Integer colSa;
 	private Integer colDo;
+	
+	public DoceSemanasSettings(String fileCna1, String fileCna2,
+			Integer firstRow, Integer colNumOt, Integer colSemana,
+			Integer colComponente, Integer colOrgMant,
+			Integer colObservaciones, Integer colLu, Integer colMa,
+			Integer colMi, Integer colJu, Integer colVi, Integer colSa,
+			Integer colDo) {
+		super();
+		this.fileCna1 = fileCna1;
+		this.fileCna2 = fileCna2;
+		this.firstRow = firstRow;
+		this.colNumOt = colNumOt;
+		this.colSemana = colSemana;
+		this.colComponente = colComponente;
+		this.colOrgMant = colOrgMant;
+		this.colObservaciones = colObservaciones;
+		this.colLu = colLu;
+		this.colMa = colMa;
+		this.colMi = colMi;
+		this.colJu = colJu;
+		this.colVi = colVi;
+		this.colSa = colSa;
+		this.colDo = colDo;
+	}
 	
 	public String getFileCna1() {
 		return fileCna1;
@@ -94,35 +120,29 @@ public class DoceSemanasSettings {
 	public void setColDo(Integer colDo) {
 		this.colDo = colDo;
 	}
-	
-	public DoceSemanasSettings(String fileCna1, String fileCna2,
-			Integer firstRow, Integer colNumOt, Integer colSemana,
-			Integer colObservaciones, Integer colLu, Integer colMa,
-			Integer colMi, Integer colJu, Integer colVi, Integer colSa,
-			Integer colDo) {
-		super();
-		this.fileCna1 = fileCna1;
-		this.fileCna2 = fileCna2;
-		this.firstRow = firstRow;
-		this.colNumOt = colNumOt;
-		this.colSemana = colSemana;
-		this.colObservaciones = colObservaciones;
-		this.colLu = colLu;
-		this.colMa = colMa;
-		this.colMi = colMi;
-		this.colJu = colJu;
-		this.colVi = colVi;
-		this.colSa = colSa;
-		this.colDo = colDo;
+	public Integer getColComponente() {
+		return colComponente;
 	}
+	public void setColComponente(Integer colComponente) {
+		this.colComponente = colComponente;
+	}
+	public Integer getColOrgMant() {
+		return colOrgMant;
+	}
+	public void setColOrgMant(Integer colOrgMant) {
+		this.colOrgMant = colOrgMant;
+	}
+
 	@Override
 	public String toString() {
 		return "DoceSemanasSettings [fileCna1=" + fileCna1 + ", fileCna2="
 				+ fileCna2 + ", firstRow=" + firstRow + ", colNumOt="
-				+ colNumOt + ", colSemana=" + colSemana + ", colObservaciones="
-				+ colObservaciones + ", colLu=" + colLu + ", colMa=" + colMa
-				+ ", colMi=" + colMi + ", colJu=" + colJu + ", colVi=" + colVi
-				+ ", colSa=" + colSa + ", colDo=" + colDo + "]";
+				+ colNumOt + ", colSemana=" + colSemana + ", colComponente="
+				+ colComponente + ", colOrgMant=" + colOrgMant
+				+ ", colObservaciones=" + colObservaciones + ", colLu=" + colLu
+				+ ", colMa=" + colMa + ", colMi=" + colMi + ", colJu=" + colJu
+				+ ", colVi=" + colVi + ", colSa=" + colSa + ", colDo=" + colDo
+				+ "]";
 	}
 	
 }

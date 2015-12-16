@@ -108,7 +108,7 @@ public class ProgramacionController {
 		model.addObject("planta", planta);
 		model.addObject("semana", semana);
 		model.addObject("estado", estado);
-		model.addObject("ots", otDoceService.findBySemana(semana));
+		model.addObject("ots", otDoceService.findBySemana(semana, planta));
 		
 		return model;
 	}
@@ -138,12 +138,5 @@ public class ProgramacionController {
 		programacionService.save(programacion);
 		
 		return new ModelAndView("redirect:/programacion");
-	}
-	
-	@RequestMapping(value = "/doce")
-	public ModelAndView poiBean() throws FileNotFoundException, IOException {
-		ModelAndView model = new ModelAndView("ProgramacionView");
-		otDoceService.findBySemana(1520);
-		return model;
 	}
 }

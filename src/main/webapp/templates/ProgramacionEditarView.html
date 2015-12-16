@@ -78,6 +78,8 @@
 					<thead>
 						<tr>
 							<th>Ot</th>
+							<th>Componente</th>
+							<th>Org Mant</th>
 							<th>Observaciones</th>
 							<th>Lu</th>
 							<th>Ma</th>
@@ -91,6 +93,8 @@
 					<tbody>
 						<tr th:each="ot : *{ots}">
 							<td th:text="*{ot.id}" />
+							<td th:text="*{ot.componente}" />
+							<td th:text="*{ot.orgMant}" />
 							<td th:text="*{ot.observaciones}" />
 							<td th:class="(*{ot.lunes}) ? 'danger' : 'active'" />
 							<td th:class="(*{ot.martes}) ? 'danger' : 'active'" />

@@ -16,6 +16,8 @@ public class DoceDataSourceConfig {
 	private Integer firstRow;
 	private Integer colNumOt;
 	private Integer colSemana;
+	private Integer colComponente;
+	private Integer colOrgMant;
 	private Integer colObservaciones;
 	private Integer colLu;
 	private Integer colMa;
@@ -27,7 +29,8 @@ public class DoceDataSourceConfig {
 
 	@Bean
 	public DoceSemanasSettings doceCna1Workbook() throws FileNotFoundException, IOException {
-		return new DoceSemanasSettings(fileCna1, fileCna2, firstRow, colNumOt, colSemana, colObservaciones, colLu, colMa, colMi, colJu, colVi, colSa, colDo);
+		return new DoceSemanasSettings(fileCna1, fileCna2, firstRow, colNumOt, colSemana, colComponente, colOrgMant,
+				colObservaciones, colLu, colMa, colMi, colJu, colVi, colSa, colDo);
 	}
 
 	public String getFileCna1() {
@@ -68,6 +71,22 @@ public class DoceDataSourceConfig {
 
 	public void setColSemana(Integer colSemana) {
 		this.colSemana = colSemana;
+	}
+	
+	public Integer getColComponente() {
+		return colComponente;
+	}
+
+	public void setColComponente(Integer colComponente) {
+		this.colComponente = colComponente;
+	}
+
+	public Integer getColOrgMant() {
+		return colOrgMant;
+	}
+
+	public void setColOrgMant(Integer colOrgMant) {
+		this.colOrgMant = colOrgMant;
 	}
 
 	public Integer getColObservaciones() {

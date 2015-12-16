@@ -4,6 +4,8 @@ public class OtDoce {
 
 	private Integer id;
 	private Integer semana;
+	private String componente;
+	private String orgMant;
 	private String observaciones;
 	private Boolean lunes = false;
 	private Boolean martes = false;
@@ -28,6 +30,12 @@ public class OtDoce {
 	}
 	public void setSemana(Integer semana) {
 		this.semana = semana;
+	}
+	public String getComponente() {
+		return componente;
+	}
+	public void setComponente(String componente) {
+		this.componente = componente;
 	}
 	public String getObservaciones() {
 		return observaciones;
@@ -77,14 +85,21 @@ public class OtDoce {
 	public void setDomingo(Boolean domingo) {
 		this.domingo = domingo;
 	}
+	public String getOrgMant() {
+		return orgMant;
+	}
+	public void setOrgMant(String orgMant) {
+		this.orgMant = orgMant;
+	}
 
 	@Override
 	public String toString() {
-		return "OtDoce [id=" + id + ", semana=" + semana + ", observaciones="
+		return "OtDoce [id=" + id + ", semana=" + semana + ", componente="
+				+ componente + ", orgMant=" + orgMant + ", observaciones="
 				+ observaciones + ", lunes=" + lunes + ", martes=" + martes
 				+ ", miercoles=" + miercoles + ", jueves=" + jueves
 				+ ", viernes=" + viernes + ", sabado=" + sabado + ", domingo="
 				+ domingo + "]";
 	}
-	
+
 }
