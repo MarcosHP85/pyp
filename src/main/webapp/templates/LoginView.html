@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>PyP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/resources/bootstrap-3.2.0-dist/css/bootstrap.min.css}" />
+<script th:src="@{/resources/jquery-2.1.1/jquery.min.js}"></script>
+<script th:src="@{/resources/bootstrap-3.2.0-dist/js/bootstrap.min.js}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div th:if="${param.error}">Invalid username and password.</div>
+		<div th:if="${param.logout}">You have been logged out.</div>
+		<form th:action="@{/login}" class="form-signin"
+			style="max-width: 330px; position: relative; margin: 0 auto" method="post">
+			<h2 class="form-signin-heading">Iniciar</h2>
+			
+			<label for="username" class="sr-only">Nombre de usuario</label>
+			<input
+				type="text" id="username" name="username" class="form-control"
+				placeholder="Usuario" style="margin-bottom: -1px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" />
+			
+			<label for="password" class="sr-only">Password</label>
+			<input type="password" id="password" name="password"
+				class="form-control" placeholder="Contraseña" style="margin-bottom: 10px; border-top-left-radius: 0; border-top-right-radius: 0" />            
+            <div class="checkbox">
+	            <label>
+	            	<input type="checkbox" id="checkbox" name="remember-me" />Remember me
+	            </label>
+            </div>
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+		</form>
+	</div>
+</body>
+</html>
