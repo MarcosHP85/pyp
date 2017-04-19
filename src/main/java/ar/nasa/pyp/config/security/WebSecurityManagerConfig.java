@@ -13,10 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -31,8 +29,6 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	UserServiceImpl userService;
-//	@Autowired
-//	DataSource dataSource;
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -63,29 +59,23 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) {
 		try {
-//			auth.authenticationProvider(ldapAuthProvider());
-//			auth.authenticationProvider(adAuthProvider());
+			auth.authenticationProvider(adAuthProvider());
 			auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-//	@Bean
-//	public LdapDbAuthenticationProvider ldapAuthProvider() {
-//		return new LdapDbAuthenticationProvider();
-//	}
-	
+
 	@Bean
 	public JwtLoginFilter jwtLoginFilter() throws Exception {
 		return new JwtLoginFilter(PATH_LOGIN, authenticationManager());
 	}
-	
+
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
 		return new JwtAuthenticationFilter();
 	}
-	
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer(){
 		return new WebMvcConfigurerAdapter() {
@@ -95,7 +85,7 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 			}
 		};
 	}
-	
+
 	@Bean
 	public ActiveDirectoryLdapAuthenticationProvider adAuthProvider() {
 		ActiveDirectoryLdapAuthenticationProvider activeDirectory = 
@@ -106,24 +96,12 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 		activeDirectory.setUserDetailsContextMapper(userDetailsContextMapper());
 		return activeDirectory;
 	}
-	
+
 	@Bean
 	public DbUserDetailsContextMapper userDetailsContextMapper() {
 		return new DbUserDetailsContextMapper();
 	}
-	
-//	@Bean
-//	public PersistentTokenBasedRememberMeServices rememberMeAuthenticationProvider() {
-//		return new PersistentTokenBasedRememberMeServices("springRocks",userService,tokenRepository());
-//	}
-//	
-//	@Bean
-//	public PersistentTokenRepository tokenRepository() {
-//		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-//		tokenRepository.setDataSource(dataSource);
-//		return tokenRepository;
-//	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

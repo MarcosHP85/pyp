@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-if="false">
+    <div v-if="autenticando">
       <h2>Validando usuario...</h2>
     </div>
     <div v-else>
-      <h2>Login page {{ redirectName }}</h2>
+      <h2>Login page</h2>
       <input v-model="username" placeholder="Username" />
       <input v-model="password" placeholder="password" type="password"/>
       <button @click="loginUser">login</button>
@@ -20,7 +20,8 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      autenticando: false
     }
   },
 
@@ -40,6 +41,8 @@ export default {
     }),
 
     loginUser () {
+      this.autenticando = true
+
       this.login({
         credentials: {
           username: this.username,

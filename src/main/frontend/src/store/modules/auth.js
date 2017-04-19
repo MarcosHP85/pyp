@@ -11,7 +11,8 @@ const state = {
 }
 
 const getters = {
-  user: state => state.user
+  user: state => state.user,
+  authenticated: state => state.user !== null
 }
 
 const actions = {
@@ -21,6 +22,8 @@ const actions = {
       // Si es correcto
       .then((response) => {
         localStorage.setItem('token', response.headers.authorization)
+        localStorage.setItem('user', JSON.stringify(response.data))
+
         commit(types.AUTH_USER, response.data)
         // Redirecciona a la página previa
         router.push({ name: redirectName })

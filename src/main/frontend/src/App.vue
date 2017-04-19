@@ -7,12 +7,23 @@
 </template>
 
 <script>
+import * as types from '@/store/mutation-types'
+import { mapMutations } from 'vuex'
 import appBar from '@/components/AppBar'
 
 export default {
   name: 'app',
   components: { appBar },
-  mounted: () => console.log(localStorage.getItem('token'))
+  mounted () {
+    if (localStorage.getItem('token') !== null) {
+      this.loadUser(JSON.parse(localStorage.getItem('user')))
+    }
+  },
+  methods: {
+    ...mapMutations('auth', {
+      loadUser: types.AUTH_USER
+    })
+  }
 }
 </script>
 

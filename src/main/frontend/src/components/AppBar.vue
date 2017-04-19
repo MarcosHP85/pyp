@@ -17,18 +17,14 @@ export default {
 
   data () {
     return {
-      authenticated: false,
-      isLoginPage: false
+      isLoginPage: router.currentRoute.name === 'Login'
     }
-  },
-
-  mounted () {
-    this.queMostrar(this.$route)
   },
 
   computed: {
     ...mapGetters('auth', {
-      user: 'user'
+      user: 'user',
+      authenticated: 'authenticated'
     })
   },
 
@@ -46,20 +42,14 @@ export default {
 
     logout () {
       this.userLogout()
-      this.queMostrar(this.$route)
 
-      router.push('/')
-    },
-
-    queMostrar (route) {
-      this.authenticated = this.user !== null
-      this.isLoginPage = route.name === 'Login'
+      router.push({ name: 'Home' })
     }
   },
 
   watch: {
     '$route' (to) {
-      this.queMostrar(to)
+      this.isLoginPage = to.name === 'Login'
     }
   }
 }
