@@ -36,7 +36,7 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	private UserServiceImpl userService;
 	@Autowired
 	private Environment environment;
-
+	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		
@@ -57,9 +57,9 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 				.disable()
 			.cors()
 				.and()
-			.addFilterBefore(jwtLoginFilter(), 
+			.addFilterBefore(new JwtLoginFilter(PATH_LOGIN, authenticationManager()), 
 					UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(jwtAuthenticationFilter(), 
+			.addFilterBefore(new JwtAuthenticationFilter(),
 					UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -77,16 +77,6 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Bean
-	public JwtLoginFilter jwtLoginFilter() throws Exception {
-		return new JwtLoginFilter(PATH_LOGIN, authenticationManager());
-	}
-
-	@Bean
-	public JwtAuthenticationFilter jwtAuthenticationFilter() {
-		return new JwtAuthenticationFilter();
 	}
 
 	@Bean

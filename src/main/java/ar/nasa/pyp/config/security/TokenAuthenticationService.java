@@ -51,7 +51,7 @@ public class TokenAuthenticationService {
 
 	public static Authentication getAuthentication(HttpServletRequest request) {
 		String token = request.getHeader(HEADER_STRING);
-		System.out.println("Decodificando: " + token + " " + request.getContentLength());
+		
 		if (token != null && token.startsWith(TOKEN_PREFIX)) {
 			
 			Claims body = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET))
