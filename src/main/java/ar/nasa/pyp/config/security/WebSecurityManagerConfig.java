@@ -3,6 +3,7 @@ package ar.nasa.pyp.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -26,10 +27,16 @@ import ar.nasa.pyp.service.UserServiceImpl;
 public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 
 	static String PATH_LOGIN = "/login";
+
+	static String LDAP_DOMAIN = "cna1.central.nasa";
+	static String LDAP_URL = "ldap://cna-ad0.cna1.central.nasa";
+	static String LDAP_ROOT_DN = "DC=cna1,DC=central,DC=nasa";
 	
 	@Autowired
-	UserServiceImpl userService;
-	
+	private UserServiceImpl userService;
+	@Autowired
+	private Environment environment;
+
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		
@@ -59,8 +66,14 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) {
 		try {
-			auth.authenticationProvider(adAuthProvider());
+			for (String profile : environment.getActiveProfiles()) {
+				if (profile.equals("ifs")) {
+					auth.authenticationProvider(adAuthProvider());
+					break;
+				}
+			}
 			auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,9 +103,9 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 	public ActiveDirectoryLdapAuthenticationProvider adAuthProvider() {
 		ActiveDirectoryLdapAuthenticationProvider activeDirectory = 
 				new ActiveDirectoryLdapAuthenticationProvider(
-						"cna1.central.nasa",
-						"ldap://cna-ad0.cna1.central.nasa",
-						"DC=cna1,DC=central,DC=nasa");
+						LDAP_DOMAIN,
+						LDAP_URL,
+						LDAP_ROOT_DN);
 		activeDirectory.setUserDetailsContextMapper(userDetailsContextMapper());
 		return activeDirectory;
 	}
