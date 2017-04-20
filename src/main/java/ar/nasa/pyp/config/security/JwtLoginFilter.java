@@ -43,9 +43,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter imple
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request,
 			HttpServletResponse response, FilterChain filter, Authentication auth) {
-		
-//		response.addHeader("Access-Control-Allow-Origin",request.getHeader("Origin"));
-		
+
 		// Se genera y agrega el Token al header
 		TokenAuthenticationService.addAuthentication(response, auth.getName(), auth.getAuthorities());
 		

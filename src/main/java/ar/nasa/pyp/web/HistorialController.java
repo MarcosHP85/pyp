@@ -33,7 +33,7 @@ public class HistorialController {
 	private OtIfsHistoricaService otIfsHistoricaService;
 	
 	@RequestMapping
-	public String historialForm(Model model){
+	public @ResponseBody String historialForm(Model model){
 		model.addAttribute("historicaForm", new OtIfsHistorica());
 		return "HistorialView";
 	}

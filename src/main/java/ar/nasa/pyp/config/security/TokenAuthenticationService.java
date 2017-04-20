@@ -1,18 +1,22 @@
 package ar.nasa.pyp.config.security;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -28,31 +32,34 @@ public class TokenAuthenticationService {
 		for (GrantedAuthority authority : authorities) {
 			roles.add(authority.getAuthority());
 		}
-		
+
+		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET);
+	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+	    
 		String jwt = Jwts.builder().setSubject(username)
 				.claim("roles", roles)
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
-				.signWith(SignatureAlgorithm.HS256, SECRET)//Base64.encode(SECRET.getBytes()))
+				.signWith(signatureAlgorithm, signingKey)
 				.compact();
 		
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + jwt);
+
 		// Hace publica la cabecera con el Token
 		response.addHeader("Access-Control-Expose-Headers", HEADER_STRING);
 	}
 
 	public static Authentication getAuthentication(HttpServletRequest request) {
 		String token = request.getHeader(HEADER_STRING);
-		
+		System.out.println("Decodificando: " + token + " " + request.getContentLength());
 		if (token != null && token.startsWith(TOKEN_PREFIX)) {
-			String user = Jwts.parser().setSigningKey(SECRET)
-					.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-					.getBody()
-					.getSubject();
 			
-			List<?> roles = (List<?>) Jwts.parser().setSigningKey(SECRET)
-					.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-					.getBody()
-					.get("roles");
+			Claims body = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET))
+					.parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody();
+			
+			String user = body.getSubject();
+			
+			List<?> roles = (List<?>) body.get("roles");
 			
 			Collection<GrantedAuthority> authorities = new ArrayList<>();
 			for(Object role: roles) {
