@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,9 +21,12 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import ar.nasa.pyp.config.AuditorAwareImpl;
+import ar.nasa.pyp.domain.User;
 import ar.nasa.pyp.service.UserServiceImpl;
 
 @Configuration
+@EnableJpaAuditing
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
@@ -79,6 +84,11 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 		}
 	}
 
+	@Bean
+	public AuditorAware<String> auditorProvider() {
+	    return new AuditorAwareImpl();
+	}
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer(){
 		return new WebMvcConfigurerAdapter() {

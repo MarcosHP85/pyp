@@ -9,6 +9,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "ar.nasa.pyp.domain",
 	entityManagerFactoryRef = "pypEntityManagerFactory",
 	transactionManagerRef = "pypTransactionManager")
+@EnableJpaAuditing
 public class PypDataSourceConfig {
 
 	@Bean(name = "pypTransactionManager")
