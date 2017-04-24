@@ -7,7 +7,7 @@
       <h2>Login page</h2>
       <input v-model="username" placeholder="Username" />
       <input v-model="password" placeholder="password" type="password"/>
-      <button @click="loginUser">login</button>
+      <button @click="loginUser">INICIAR</button>
     </div>
   </div>
 </template>
