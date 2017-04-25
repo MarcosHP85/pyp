@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    <side-bar></side-bar>
     <app-bar></app-bar>
-    <img src="./assets/logo.png">
+
     <router-view></router-view>
   </div>
 </template>
@@ -10,10 +11,11 @@
 import * as types from '@/store/mutation-types'
 import { mapMutations } from 'vuex'
 import appBar from '@/components/AppBar'
+import sideBar from '@/components/SideBar'
 
 export default {
   name: 'app',
-  components: { appBar },
+  components: { appBar, sideBar },
   mounted () {
     if (localStorage.getItem('token') !== null) {
       this.loadUser(JSON.parse(localStorage.getItem('user')))
@@ -34,5 +36,5 @@ export default {
     -moz-osx-font-smoothing: grayscale
     text-align: center
     color: #2c3e50
-    margin-top: 60px
+    //margin-top: 60px
 </style>

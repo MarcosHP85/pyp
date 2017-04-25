@@ -2,9 +2,14 @@
   <header id="bar-app">
     <div v-if="authenticated">
       <p>{{ user.apellido + ", " + user.nombre }}</p>
-      <button @click="logout()" class="button-raised">SALIR</button>
+      <el-button
+        size="small"
+        type="text"
+        @click="logout()"
+        class="button-raised">
+        SALIR
+      </el-button>
     </div>
-    <button v-else-if="!isLoginPage" @click="login()" class="button-flat">Acceder</button>
   </header>
 </template>
 
@@ -17,7 +22,6 @@ export default {
 
   data () {
     return {
-      isLoginPage: router.currentRoute.name === 'Login'
     }
   },
 
@@ -45,12 +49,6 @@ export default {
 
       router.push({ name: 'Home' })
     }
-  },
-
-  watch: {
-    '$route' (to) {
-      this.isLoginPage = to.name === 'Login'
-    }
   }
 }
 </script>
@@ -60,14 +58,17 @@ export default {
   $app_bar_padding: 15px
 
   #bar-app
-    background: $color_principal_oscuro
-    position: fixed
+    background: white
     top: 0
-    left: 0
-    width: 100%
+    left: 140.5px
+    width: 81vw
+    overflow: auto
+    margin-bottom: 30px
     padding: $app_bar_padding
     box-shadow: 0px 1px 6px #727272
-    & > button
+    & > div > p
+      display: inline-block
+    & > *
       float: right
       margin-right: $app_bar_padding * 2
 </style>

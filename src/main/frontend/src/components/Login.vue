@@ -1,14 +1,27 @@
 <template>
   <div>
-    <div v-if="autenticando">
-      <h2>Validando usuario...</h2>
-    </div>
-    <div v-else>
-      <h2>Login page</h2>
-      <input v-model="username" placeholder="Username" />
-      <input v-model="password" placeholder="password" type="password"/>
-      <button @click="loginUser">INICIAR</button>
-    </div>
+    <h2>Login page</h2>
+    <el-form :inline="true" :model="credentials">
+      <el-form-item>
+        <el-input
+          v-model="credentials.username"
+          placeholder="Username" />
+      </el-form-item>
+      <el-form-item>
+        <el-input
+          v-model="credentials.password"
+          placeholder="Password"
+          type="password"/>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          :loading="autenticando"
+          @click="loginUser">
+          INICIAR
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -19,8 +32,10 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      username: '',
-      password: '',
+      credentials: {
+        username: '',
+        password: ''
+      },
       autenticando: false
     }
   },
@@ -44,10 +59,7 @@ export default {
       this.autenticando = true
 
       this.login({
-        credentials: {
-          username: this.username,
-          password: this.password
-        },
+        credentials: this.credentials,
         redirectName: this.redirectName
       })
 
