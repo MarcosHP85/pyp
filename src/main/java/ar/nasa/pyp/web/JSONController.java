@@ -25,7 +25,7 @@ public class JSONController {
 	@RequestMapping(value="{ot}", method = RequestMethod.GET)
 	public @ResponseBody OtIfs getJSON(@PathVariable Integer ot){
 		OtIfs o = this.otIfsService.getByOtId(ot);
-		
+		System.out.println("hola");
 		this.template.convertAndSend("/topic/greetings", o.toString());
 		
 		return o;

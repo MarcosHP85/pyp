@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/frontend/dist"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/frontend/src"/>
         <property name="context-root" value="pyp"/>
         <property name="java-output-path" value="/pyp/target/classes"/>
     </wb-module>
