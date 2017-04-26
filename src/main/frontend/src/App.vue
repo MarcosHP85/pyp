@@ -1,21 +1,26 @@
 <template>
   <div id="app">
-    <side-bar></side-bar>
-    <app-bar></app-bar>
-
-    <router-view></router-view>
+    <el-row>
+      <el-col :span="4">
+          <side-bar></side-bar>
+      </el-col>
+      <el-col :span="20">
+          <top-bar></top-bar>
+          <router-view></router-view>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import * as types from '@/store/mutation-types'
 import { mapMutations } from 'vuex'
-import appBar from '@/components/AppBar'
+import topBar from '@/components/TopBar'
 import sideBar from '@/components/SideBar'
 
 export default {
   name: 'app',
-  components: { appBar, sideBar },
+  components: { topBar, sideBar },
   mounted () {
     if (localStorage.getItem('token') !== null) {
       this.loadUser(JSON.parse(localStorage.getItem('user')))
@@ -36,5 +41,4 @@ export default {
     -moz-osx-font-smoothing: grayscale
     text-align: center
     color: #2c3e50
-    //margin-top: 60px
 </style>

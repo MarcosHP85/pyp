@@ -1,8 +1,8 @@
 <template>
-  <el-col :span="4" class="side-bar">
-    <el-menu mode="vertical" :default-active="active" @select="menuSelect">
+  <el-col class="side-bar">
+    <el-menu mode="vertical" :default-active="active"  theme="dark" @select="menuSelect">
       <div class="logo">
-        
+
       </div>
       <el-menu-item index="Home">
         <i class="el-icon-menu"></i>Inicio</el-menu-item>
@@ -45,10 +45,13 @@ export default {
   @import "~@/styles/main"
   .side-bar
     top: 0
+    width: 100%
     text-align: left
   .el-menu
     min-height: 100vh
+  .is-active
+    border-right: 3px solid $el_color_blue
   .logo
-    height: 15vh
-    background: rgb(230,230,230) //$color_secundario_oscuro
+    height: 96px
+    background: $el_color_blue
 </style>

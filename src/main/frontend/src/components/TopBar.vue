@@ -18,7 +18,7 @@ import router from '@/router'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'app-bar',
+  name: 'top-bar',
 
   data () {
     return {
@@ -55,20 +55,19 @@ export default {
 
 <style lang="sass">
   @import "~@/styles/main"
-  $app_bar_padding: 15px
 
   #bar-app
-    background: white
+    background: $el_color_white
     top: 0
-    left: 140.5px
-    width: 81vw
-    overflow: auto
-    margin-bottom: 30px
-    padding: $app_bar_padding
-    box-shadow: 0px 1px 6px #727272
+    width: 100%
+    height: 36px
+    border-bottom: $el_border
+    box-shadow: $el_shadow
+    & + div
+      padding-top: 20px
     & > div > p
       display: inline-block
     & > *
       float: right
-      margin-right: $app_bar_padding * 2
+      margin-right: 40px
 </style>
