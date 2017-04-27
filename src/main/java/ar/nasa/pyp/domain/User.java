@@ -62,6 +62,16 @@ public class User implements UserDetails {
 		this.email = email;
 		this.roles = roles;
 	}
+	public User(String username, Boolean enabled, String nombre, 
+			String apellido, String email, Set<Role> roles) {
+		this.username = username;
+		this.password = "";
+		this.enabled = enabled;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.roles = roles;
+	}
 	
 	@Override
 	@Transient
