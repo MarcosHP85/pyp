@@ -53,6 +53,7 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/favicon.ico").permitAll()
 				.antMatchers("/static/**").permitAll()
+				.antMatchers("/json/**").permitAll()
 				.antMatchers("/report/**").permitAll()
 				.antMatchers("/historial").hasAnyRole("ADMIN")
 				.antMatchers(HttpMethod.POST, PATH_LOGIN).permitAll()

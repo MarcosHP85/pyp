@@ -1,6 +1,7 @@
 <template>
   <el-col class="side-bar">
-    <el-menu mode="vertical" :default-active="active"  theme="dark" @select="menuSelect">
+    <el-menu mode="vertical" :default-active="active"
+      @select="menuSelect">
       <div class="logo">
 
       </div>

@@ -1,5 +1,7 @@
 package ar.nasa.pyp.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -18,15 +20,24 @@ public class JSONController {
 
 	@Autowired
 	private OtIfsService otIfsService;
-	@Autowired
-	private SimpMessagingTemplate template;
+//	@Autowired
+//	private SimpMessagingTemplate template;
 	
 	@CrossOrigin
 	@RequestMapping(value="{ot}", method = RequestMethod.GET)
 	public @ResponseBody OtIfs getJSON(@PathVariable Integer ot){
 		OtIfs o = this.otIfsService.getByOtId(ot);
-		System.out.println("hola");
-		this.template.convertAndSend("/topic/greetings", o.toString());
+		
+//		this.template.convertAndSend("/topic/greetings", o.toString());
+		
+		return o;
+	}
+	
+	@RequestMapping("all")
+	public @ResponseBody List<OtIfs> getAllJSON(){
+		List<OtIfs> o = this.otIfsService.list();
+		
+//		this.template.convertAndSend("/topic/greetings", o.toString());
 		
 		return o;
 	}

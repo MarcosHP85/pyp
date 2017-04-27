@@ -23,6 +23,8 @@ public interface OtIfsRepository extends PagingAndSortingRepository<OtIfs, Integ
 //	@Procedure("IFSATA.CHECK_PRIVILEGIES")
 //	void getObject();
 
+	List<OtIfs> findAll();
+	
 	List<OtIfs> findByPlantaOtAndSemanaPlanAndPrioridadIn(Integer planta, String semana, Collection<Character> prioridades);
 	
 }

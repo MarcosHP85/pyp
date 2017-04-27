@@ -36,7 +36,7 @@ public class OtIfsServiceImpl implements OtIfsService {
 		}
 		System.out.println(unidadi + " - " + unidadii + "\n");
 		System.out.println(otIfsRepository.findAllMio().get(10));
-		return otIfsRepository.findAllMio();
+		return otIfsRepository.findAll();
 	}
 
 	@Override

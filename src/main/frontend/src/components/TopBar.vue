@@ -1,11 +1,18 @@
 <template>
   <header id="bar-app">
+    <el-input
+      class="bar-app-buscar"
+      icon="search"
+      size="small"
+      v-model="input"
+      :on-icon-click="buscar">
+    </el-input>
     <div v-if="authenticated">
       <p>{{ user.apellido + ", " + user.nombre }}</p>
       <el-button
         size="small"
         type="text"
-        @click="logout()"
+        @click="logout"
         class="button-raised">
         SALIR
       </el-button>
@@ -22,6 +29,7 @@ export default {
 
   data () {
     return {
+      input: ''
     }
   },
 
@@ -36,12 +44,12 @@ export default {
     ...mapActions('auth', {
       userLogout: 'logout'
     }),
+    ...mapActions({
+      buscarOtActiva: 'buscarOtActiva'
+    }),
 
-    login () {
-      router.push({
-        name: 'Login',
-        params: { redirectName: router.currentRoute.name }
-      })
+    buscar () {
+      this.buscarOtActiva(this.input)
     },
 
     logout () {
@@ -70,4 +78,7 @@ export default {
     & > *
       float: right
       margin-right: 40px
+
+  .bar-app-buscar
+    width: 200px
 </style>
