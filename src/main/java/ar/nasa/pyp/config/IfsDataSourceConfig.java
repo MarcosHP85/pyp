@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "ar.nasa.ifs.domain",
+@EnableJpaRepositories(basePackages = "ar.nasa.pyp.ifs.domain",
 	entityManagerFactoryRef = "ifsEntityManagerFactory",
 	transactionManagerRef = "ifsTransactionManager")
 public class IfsDataSourceConfig {
@@ -34,7 +34,7 @@ public class IfsDataSourceConfig {
 	    return builder
 	            .dataSource(ifsDataSource())
 	            .persistenceUnit("IfsDataSource")
-	            .packages("ar.nasa.ifs.domain")
+	            .packages("ar.nasa.pyp.ifs.domain")
 	            .build();
 	}
 	

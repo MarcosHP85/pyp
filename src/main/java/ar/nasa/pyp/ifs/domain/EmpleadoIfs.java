@@ -1,4 +1,4 @@
-package ar.nasa.ifs.domain;
+package ar.nasa.pyp.ifs.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

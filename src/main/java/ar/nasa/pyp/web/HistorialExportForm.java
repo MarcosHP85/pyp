@@ -2,7 +2,7 @@ package ar.nasa.pyp.web;
 
 import java.util.List;
 
-import ar.nasa.ifs.domain.OtIfsHistorica;
+import ar.nasa.pyp.ifs.domain.OtIfsHistorica;
 
 
 public class HistorialExportForm {

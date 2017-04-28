@@ -1,6 +1,6 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
-import ar.nasa.ifs.domain.OtActivaIfs;
+import ar.nasa.pyp.ifs.domain.OtActivaIfs;
 
 public interface OtActivaIfsService {
 

@@ -1,8 +1,8 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
 import java.util.List;
 
-import ar.nasa.ifs.domain.OtIfs;
+import ar.nasa.pyp.ifs.domain.OtIfs;
 
 
 public interface OtIfsService {

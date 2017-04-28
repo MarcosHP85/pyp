@@ -1,9 +1,9 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
 import javax.annotation.Resource;
 
-import ar.nasa.ifs.domain.EmpleadoIfs;
-import ar.nasa.ifs.domain.EmpleadoIfsRepository;
+import ar.nasa.pyp.ifs.domain.EmpleadoIfs;
+import ar.nasa.pyp.ifs.domain.EmpleadoIfsRepository;
 
 public class EmpleadoIfsServiceImpl implements EmpleadoIfsService {
 

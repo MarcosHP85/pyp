@@ -1,4 +1,4 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,8 +9,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import ar.nasa.ifs.domain.OtIfs;
-import ar.nasa.ifs.domain.OtIfsRepository;
+import ar.nasa.pyp.ifs.domain.OtIfs;
+import ar.nasa.pyp.ifs.domain.OtIfsRepository;
 
 
 @Service

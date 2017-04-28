@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ar.nasa.ifs.domain.OtIfsHistorica;
-import ar.nasa.ifs.service.OtIfsHistoricaService;
+import ar.nasa.pyp.ifs.domain.OtIfsHistorica;
+import ar.nasa.pyp.ifs.service.OtIfsHistoricaService;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 import fr.opensagres.xdocreport.converter.Options;

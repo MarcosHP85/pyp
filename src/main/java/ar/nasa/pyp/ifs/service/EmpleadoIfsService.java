@@ -1,6 +1,6 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
-import ar.nasa.ifs.domain.EmpleadoIfs;
+import ar.nasa.pyp.ifs.domain.EmpleadoIfs;
 
 public interface EmpleadoIfsService {
 

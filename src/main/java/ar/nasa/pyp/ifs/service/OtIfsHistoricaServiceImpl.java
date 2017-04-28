@@ -1,4 +1,4 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import ar.nasa.ifs.domain.OtIfsHistorica;
-import ar.nasa.ifs.domain.OtIfsHistoricaRepository;
+import ar.nasa.pyp.ifs.domain.OtIfsHistorica;
+import ar.nasa.pyp.ifs.domain.OtIfsHistoricaRepository;
 
 @Service
 public class OtIfsHistoricaServiceImpl implements OtIfsHistoricaService {

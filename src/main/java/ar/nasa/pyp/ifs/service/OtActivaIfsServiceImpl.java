@@ -1,9 +1,9 @@
-package ar.nasa.ifs.service;
+package ar.nasa.pyp.ifs.service;
 
 import javax.annotation.Resource;
 
-import ar.nasa.ifs.domain.OtActivaIfs;
-import ar.nasa.ifs.domain.OtActivaIfsRepository;
+import ar.nasa.pyp.ifs.domain.OtActivaIfs;
+import ar.nasa.pyp.ifs.domain.OtActivaIfsRepository;
 
 public class OtActivaIfsServiceImpl implements OtActivaIfsService {
 
