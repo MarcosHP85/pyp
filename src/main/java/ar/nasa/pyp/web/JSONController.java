@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.nasa.ifs.domain.OtIfs;
-import ar.nasa.pyp.service.OtIfsService;
+import ar.nasa.ifs.service.OtIfsService;
 
 @Controller
 @RequestMapping(value = "/json")
