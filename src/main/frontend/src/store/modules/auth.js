@@ -1,5 +1,4 @@
 import * as types from '@/store/mutation-types'
-import router from '@/router'
 import axios from 'axios'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -7,16 +6,18 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const state = {
-  user: null
+  user: null,
+  error: false
 }
 
 const getters = {
   user: state => state.user,
-  authenticated: state => state.user !== null
+  isLogin: state => state.user !== null,
+  authError: state => state.error
 }
 
 const actions = {
-  login ({ commit }, { credentials, redirectName }) {
+  login ({ commit }, credentials) {
     // Loguea usuario
     axios.post('/login', credentials)
       // Si es correcto
@@ -25,8 +26,10 @@ const actions = {
         localStorage.setItem('user', JSON.stringify(response.data))
 
         commit(types.AUTH_USER, response.data)
-        // Redirecciona a la página previa
-        router.push({ name: redirectName })
+        commit(types.AUTH_ERROR, false)
+      })
+      .catch(() => {
+        commit(types.AUTH_ERROR, true)
       })
   },
 
@@ -39,6 +42,10 @@ const actions = {
 const mutations = {
   [types.AUTH_USER] (state, user) {
     state.user = user
+  },
+
+  [types.AUTH_ERROR] (state, isError) {
+    state.error = isError
   },
 
   [types.LOGOUT_USER] (state, user) {

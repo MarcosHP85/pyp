@@ -26,7 +26,6 @@ export default {
 
   methods: {
     menuSelect (key, keyPath) {
-      console.log(key + ' ' + keyPath)
       router.push({
         name: key,
         params: { redirectName: router.currentRoute.name }

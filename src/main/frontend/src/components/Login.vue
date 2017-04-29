@@ -8,11 +8,13 @@
           <el-form-item label="Usuario">
             <el-input
               v-model="credentials.username"
+              :disabled="disabledInput"
               placeholder="usuario@na-sa.com.ar" />
           </el-form-item>
           <el-form-item label="Contraseña">
             <el-input
               v-model="credentials.password"
+              :disabled="disabledInput"
               placeholder="contraseña"
               type="password"/>
           </el-form-item>
@@ -26,51 +28,68 @@
           </el-form-item>
         </el-form>
       </el-card>
+      <el-alert v-if="authError"
+        title="Usuario y/o contraseña incorrecta"
+        type="error"
+        :closable="false">
+      </el-alert>
     </el-col>
 
   </div>
 </template>
 
 <script>
-// import router from '../router'
+import router from '@/router'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
+      autenticando: false,
+      disabledInput: false,
       credentials: {
         username: '',
         password: ''
-      },
-      autenticando: false
+      }
     }
   },
 
-  props: {
-    redirectName: String
-  },
+  props: ['redirect'],
 
   computed: {
-    ...mapGetters('auth', {
-      user: 'user'
-    })
+    ...mapGetters('auth', [
+      'user',
+      'authError',
+      'isLogin'
+    ])
   },
 
   methods: {
-    ...mapActions('auth', {
-      login: 'login'
-    }),
+    ...mapActions('auth', [
+      'login'
+    ]),
 
     loginUser () {
       this.autenticando = true
+      this.login(this.credentials)
 
-      this.login({
-        credentials: this.credentials,
-        redirectName: this.redirectName
-      })
+      this.disabledInput = true
+    }
+  },
 
-      this.username = ''
-      this.password = ''
+  watch: {
+    isLogin: function () {
+      this.redirect === undefined
+        ? router.go(-1)
+        : router.push(this.redirect)
+    },
+
+    authError: function (isError) {
+      if (isError) {
+        this.credentials.password = ''
+        this.disabledInput = false
+        this.autenticando = false
+      }
     }
   }
 }

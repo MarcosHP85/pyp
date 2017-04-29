@@ -7,7 +7,7 @@
       v-model="input"
       :on-icon-click="buscar">
     </el-input>
-    <div v-if="authenticated">
+    <div v-if="isLogin">
       <p>{{ user.apellido + ", " + user.nombre }}</p>
       <el-button
         size="small"
@@ -36,7 +36,7 @@ export default {
   computed: {
     ...mapGetters('auth', {
       user: 'user',
-      authenticated: 'authenticated'
+      isLogin: 'isLogin'
     })
   },
 
