@@ -6,9 +6,9 @@
 
       </div>
       <el-menu-item index="Home">
-        <i class="el-icon-menu"></i>Inicio</el-menu-item>
+        <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Inicio</el-menu-item>
       <el-menu-item index="Login">
-        <i class="el-icon-setting"></i>Acceder</el-menu-item>
+        <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp; Acceder</el-menu-item>
     </el-menu>
   </el-col>
 </template>
@@ -43,6 +43,7 @@ export default {
 
 <style lang="sass">
   @import "~@/styles/main"
+  @import "~@/styles/font-awesome/font-awesome"
   .side-bar
     top: 0
     width: 100%

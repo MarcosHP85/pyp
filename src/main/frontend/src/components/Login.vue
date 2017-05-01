@@ -4,6 +4,10 @@
 
     <el-col :span="8" :offset="8">
       <el-card>
+        <div slot="header" style="font-size:14px;">
+          <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>
+          Utilice su usuario y contraseña de Windows. El mismo de su correo electrónico usuario@na-sa.com.ar
+        </div>
         <el-form :model="credentials" class="login-form" label-width="90px">
           <el-form-item label="Usuario">
             <el-input
