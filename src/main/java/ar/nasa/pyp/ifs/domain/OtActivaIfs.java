@@ -13,6 +13,10 @@ public class OtActivaIfs {
 	private String componente;
 	private String tarea;
 	private Character prioridad;
+	private String orgCode;
+	private String estado;
+	private String tipoTrabajo;
+	private String comentarioPla;
 
 	@Id
 	@Column(name = "WO_NO")
@@ -45,5 +49,37 @@ public class OtActivaIfs {
 	}
 	public void setPrioridad(Character prioridad) {
 		this.prioridad = prioridad;
+	}
+	
+	@Column(name = "ORG_CODE")
+	public String getOrgCode() {
+		return orgCode;
+	}
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
+	
+	@Column(name = "WO_STATUS_ID")
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	@Column(name = "WORK_TYPE_ID")
+	public String getTipoTrabajo() {
+		return tipoTrabajo;
+	}
+	public void setTipoTrabajo(String tipoTrabajo) {
+		this.tipoTrabajo = tipoTrabajo;
+	}
+	
+	@Column(name = "COM_INT_PLA")
+	public String getComentarioPla() {
+		return comentarioPla;
+	}
+	public void setComentarioPla(String comentarioPla) {
+		this.comentarioPla = comentarioPla;
 	}
 }

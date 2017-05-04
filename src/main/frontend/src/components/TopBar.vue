@@ -34,27 +34,25 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', {
-      user: 'user',
-      isLogin: 'isLogin'
-    })
+    ...mapGetters('auth', [
+      'user',
+      'isLogin'
+    ])
   },
 
   methods: {
     ...mapActions('auth', {
       userLogout: 'logout'
     }),
-    ...mapActions({
-      buscarOtActiva: 'buscarOtActiva'
-    }),
 
     buscar () {
-      this.buscarOtActiva(this.input)
+      router.push({ name: 'OtsActivas',
+        query: { ots: this.input.replace(/;/g, ',') }
+      })
     },
 
     logout () {
       this.userLogout()
-
       router.push({ name: 'Home' })
     }
   }

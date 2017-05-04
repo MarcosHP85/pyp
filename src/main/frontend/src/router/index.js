@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import Home from '@/components/Home'
+import ListaOtsActivas from '@/components/ListaOtsActivas'
 import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 
@@ -19,6 +20,12 @@ const router = new Router({
       name: 'Login',
       component: Login,
       props: route => ({ redirect: route.query.redirect })
+    },
+    {
+      path: '/ots_activas',
+      name: 'OtsActivas',
+      component: ListaOtsActivas,
+      props: route => ({ ots: route.query.ots })
     },
     {
       path: '/hello',
