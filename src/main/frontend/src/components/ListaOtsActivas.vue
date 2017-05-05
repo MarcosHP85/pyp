@@ -9,12 +9,12 @@
         <el-table-column
           prop="numOt"
           label="OT"
-          width="80">
+          width="100">
         </el-table-column>
         <el-table-column
           prop="componente"
           label="Componente"
-          width="100">
+          width="140">
         </el-table-column>
         <el-table-column
           prop="tarea"
