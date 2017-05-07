@@ -1,5 +1,7 @@
 package ar.nasa.pyp.ifs.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,6 +19,8 @@ public class OtActivaIfs {
 	private String estado;
 	private String tipoTrabajo;
 	private String comentarioPla;
+	private String directiva;
+	private Date fechaRegistro;
 
 	@Id
 	@Column(name = "WO_NO")
@@ -81,5 +85,21 @@ public class OtActivaIfs {
 	}
 	public void setComentarioPla(String comentarioPla) {
 		this.comentarioPla = comentarioPla;
+	}
+	
+	@Column(name = "ERR_DESCR")
+	public String getDirectiva() {
+		return directiva;
+	}
+	public void setDirectiva(String directiva) {
+		this.directiva = directiva;
+	}
+	
+	@Column(name = "REG_DATE")
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
 }

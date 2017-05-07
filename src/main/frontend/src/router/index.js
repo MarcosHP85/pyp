@@ -22,7 +22,7 @@ const router = new Router({
       props: route => ({ redirect: route.query.redirect })
     },
     {
-      path: '/ots_activas',
+      path: '/search',
       name: 'OtsActivas',
       component: ListaOtsActivas,
       props: route => ({ ots: route.query.ots })
