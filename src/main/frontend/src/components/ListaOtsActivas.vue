@@ -1,49 +1,38 @@
 <template>
-  <el-row>
-    <el-col :span="12">
-      <el-table
-        :data="listaOtsActivas"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-        style="width: 100%; text-align: left">
-        <el-table-column
-          prop="numOt"
-          label="OT"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="componente"
-          label="Componente"
-          width="140">
-        </el-table-column>
-        <el-table-column
-          prop="tarea"
-          label="Tarea">
-        </el-table-column>
-      </el-table>
-    </el-col>
-    <el-col :span="12">
-      <ot-preview :ot="otSelect"></ot-preview>
-    </el-col>
-  </el-row>
+  <div>
+    <el-row id="buscar-ot-filtro">
+      <el-col :span="24">
+        <h2>Filtro</h2>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="8" id="buscar-ot-lista">
+        <lista-de-ots :ots="listaOtsActivas" @ot-selecionada="mostrarOt"></lista-de-ots>
+      </el-col>
+      <el-col :span="16">
+        <ot-preview :ot="otSeleccionada"></ot-preview>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import listaDeOts from '@/components/ListaDeOts'
 import otPreview from '@/components/OtPreview'
 
 export default {
   name: 'lista-ots-activas',
-  components: { otPreview },
+  components: { otPreview, listaDeOts },
   props: ['ots'],
 
   data () {
     return {
-      otSelect: null
+      otSeleccionada: null
     }
   },
   mounted () {
-    this.cargaTabla()
+    this.cargaLista()
   },
 
   computed: {
@@ -56,22 +45,31 @@ export default {
     ...mapActions('ifs', [
       'buscarOtsActivas'
     ]),
-    cargaTabla () {
+    cargaLista () {
       this.buscarOtsActivas(this.ots)
     },
-    handleCurrentChange (val) {
-      this.otSelect = val
-      console.log(val)
+    mostrarOt (ot) {
+      this.otSeleccionada = ot
     }
   },
 
   watch: {
     '$route' (to, from) {
-      this.cargaTabla()
+      this.cargaLista()
     }
   }
 }
 </script>
 
 <style lang="sass">
+  @import "~@/styles/main"
+
+  #buscar-ot-filtro
+    border-bottom: $el_border
+
+  #buscar-ot-lista
+    padding: 12px
+    border-right: $el-border
+    ::after
+      width: 0
 </style>
