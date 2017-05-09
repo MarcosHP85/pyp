@@ -66,16 +66,18 @@ export default {
     background: $el_color_white
     top: 0
     width: 100%
-    height: 36px
+    height: $top_bar_height
     border-bottom: $el_border
-    box-shadow: $el_shadow
-    & + div
-      padding-top: 20px
+    // box-shadow: $el_shadow
+    // -webkit-transform-style: preserve-3d
+    // -moz-transform-style: preserve-3d
+    // transform-style: preserve-3d
     & > div > p
       display: inline-block
     & > *
       float: right
       margin-right: 40px
+      @include vertical-align-middle
 
   .bar-app-buscar
     width: 200px
