@@ -64,12 +64,16 @@ export default {
 <style lang="sass">
   @import "~@/styles/main"
 
+  $buscar_ot_filtro_height: 64px
+
   #buscar-ot-filtro
     border-bottom: $el_border
+    height: 64px
 
   #buscar-ot-lista
     padding: 12px
     border-right: $el-border
+    height: 100vh
     ::after
       width: 0
 </style>

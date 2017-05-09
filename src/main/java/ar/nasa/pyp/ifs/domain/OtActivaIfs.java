@@ -14,6 +14,7 @@ public class OtActivaIfs {
 	private Long numOt;
 	private String componente;
 	private String tarea;
+	private String error;
 	private Character prioridad;
 	private String orgCode;
 	private String estado;
@@ -39,7 +40,7 @@ public class OtActivaIfs {
 		this.componente = componente;
 	}
 	
-	@Column(name = "ERR_DESCR_LO")
+	@Column(name = "WORK_DESCR_LO")
 	public String getTarea() {
 		return tarea;
 	}
@@ -101,5 +102,13 @@ public class OtActivaIfs {
 	}
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+	
+	@Column(name = "ERR_DESCR_LO")
+	public String getError() {
+		return error;
+	}
+	public void setError(String error) {
+		this.error = error;
 	}
 }

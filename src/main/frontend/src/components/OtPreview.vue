@@ -8,6 +8,7 @@
     <div style="font-size: 14px;text-align: left;padding-bottom: 12px">{{ fechaRegistro }}</div>
     <div style="font-size: 14px;text-align: left;padding-bottom: 12px">{{ ot.directiva }}</div>
     <div style="font-size: 14px;text-align: left;padding-bottom: 12px">{{ ot.tarea }}</div>
+    <div style="font-size: 14px;text-align: left;padding-bottom: 12px">{{ ot.error }}</div>
     <div style="font-size: 14px;text-align: left;padding-bottom: 12px">{{ ot.comentarioPla }}</div>
   </div>
 </template>
