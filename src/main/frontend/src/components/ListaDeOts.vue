@@ -4,24 +4,17 @@
       <el-dropdown trigger="click" @command="commandOrdenar" size="mini">
         <span>
           Ordenar por {{ labelOrdenerPor }}
-          <i v-show="ordenarPor !== ''"
-            class="fa fa-fw"
-            :class="[ ordenAsc
-              ? 'fa-arrow-down'
-              : 'fa-arrow-up' ]">
-          </i>|<i class="fa fa-caret-down fa-fw"></i>
+          <icono-orden-asc-desc :ordenAsc="ordenAsc"></icono-orden-asc-desc>
+          |<i class="fa fa-caret-down fa-fw"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-for="item in listaOrdenarPor"
             :command="item.key" :key="item.key">
             <p>
               {{ item.label }}
-              <i v-show="item.key === ordenarPor"
-                class="fa fa-fw"
-                :class="[ ordenAsc
-                  ? 'fa-arrow-up'
-                  : 'fa-arrow-down' ]">
-              </i>
+              <icono-orden-asc-desc v-show="item.key === ordenarPor"
+                :ordenAsc="!ordenAsc">
+              </icono-orden-asc-desc>
             </p>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -39,11 +32,8 @@
         prop="numOt">
         <template scope="scope">
           <p>
-            <span class="fa-stack fa-lg">
-              <i class="fa fa-file-o fa-stack-1x"></i>
-              <i class="fa fa-exclamation-circle fa-stack-1x" style="font-size: 12px"></i>
-            </span>
-            <i class="fa fa-bookmark fa-fw"></i>
+            <icono-tipo-trabajo :code="scope.row.tipoTrabajo"></icono-tipo-trabajo>
+            <icono-prioridad :code="scope.row.prioridad"></icono-prioridad>
             {{ scope.row.orgCode }}-{{ scope.row.numOt }}
           </p>
           <p>
@@ -56,9 +46,14 @@
 </template>
 
 <script>
+import iconoOrdenAscDesc from '@/components/iconos/OrdenAscDesc'
+import iconoTipoTrabajo from '@/components/iconos/TipoTrabajo'
+import iconoPrioridad from '@/components/iconos/Prioridad'
+
 export default {
   name: 'lista-de-ots',
   props: ['ots'],
+  components: { iconoOrdenAscDesc, iconoTipoTrabajo, iconoPrioridad },
 
   data () {
     return {
@@ -73,7 +68,7 @@ export default {
         label: 'Componente',
         key: 'componente'
       }],
-      ordenarPor: '',
+      ordenarPor: 'prioridad',
       ordenAsc: true
     }
   },

@@ -19,7 +19,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json', '.sass'],
+    extensions: ['.js', '.vue', '.json', '.sass', '.scss'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src')
@@ -47,7 +47,7 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.sass$/,
+        test: /\.(sass|scss)$/,
         use: [{
           loader: 'style-loader'
         }, {
