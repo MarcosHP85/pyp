@@ -1,0 +1,42 @@
+<template>
+  <span v-if="code === 'PRE'" class="fa-stack stack-inline fa-lg">
+    <i class="fa fa-square fa-stack-1x" style="color: rgba(75,173,232,1)"></i>
+    <i class="fa fa-check fa-stack-1x" style="font-size: .6em;color: white"></i>
+  </span>
+  <span v-else-if="code === 'COR'" class="fa-stack stack-inline fa-lg">
+    <i class="fa fa-square fa-stack-1x" style="color: rgba(229,73,58,1)"></i>
+    <i class="fa fa-circle fa-stack-1x" style="font-size: .5em;color: white"></i>
+  </span>
+  <span v-else-if="code === 'OTR'" class="fa-stack stack-inline fa-lg">
+    <i class="fa fa-square fa-stack-1x" style="color: rgba(99,186,60,1)"></i>
+    <i class="fa fa-bookmark fa-stack-1x" style="font-size: .57em;color: white"></i>
+  </span>
+  <span v-else-if="code === 'TAP'" class="fa-stack stack-inline fa-lg">
+    <i class="fa fa-square fa-stack-1x" style="color: rgba(255,170,68,1)"></i>
+    <i class="fa fa-clone fa-stack-1x" style="font-size: .5em;color: white"></i>
+  </span>
+  <span v-else class="fa-stack stack-inline fa-lg">
+    <i class="fa fa-square fa-stack-1x" style="color: rgba(144,78,226,1)"></i>
+    <i class="fa fa-flash fa-stack-1x" style="font-size: .7em;color: white"></i>
+  </span>
+</template>
+
+<script>
+export default {
+  name: 'tipo-trabajo',
+  props: ['code']
+}
+</script>
+
+<style lang="sass">
+  @import "~@/styles/font-awesome/font-awesome"
+
+  .stack-inline
+    width: 1em!important
+    height: 1em!important
+    line-height: 1em!important
+
+  .tipo-trabajo-simbol
+    font-size: .6em!important
+    color: white
+</style>
