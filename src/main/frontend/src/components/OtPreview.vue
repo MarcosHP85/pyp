@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 16px" v-if="ot !== null">
+  <div style="padding: 16px" v-if="ot !== null && ot !== undefined">
     <div style="font-size: 18px;text-align: left;padding-bottom: 12px">{{ ot.numOt }}</div>
     <div style="font-size: 18px;text-align: left;padding-bottom: 12px">{{ ot.componente }}</div>
     <div style="font-size: 16px;text-align: left;padding-bottom: 12px">{{ ot.orgCode }}</div>

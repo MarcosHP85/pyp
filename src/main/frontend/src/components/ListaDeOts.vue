@@ -1,18 +1,26 @@
 <template>
   <div>
-    <div id="orden-lista-de-ots">
-      <el-dropdown trigger="click" @command="commandOrdenar" size="mini">
+    <div id="ot-lista-orden">
+      <el-dropdown
+        trigger="click"
+        @command="commandOrdenar"
+        size="mini">
         <span>
           Ordenar por {{ labelOrdenerPor }}
-          <icono-orden-asc-desc :ordenAsc="ordenAsc"></icono-orden-asc-desc>
+          <icono-orden-asc-desc
+            :ordenAsc="ordenAsc">
+          </icono-orden-asc-desc>
           |<i class="fa fa-caret-down fa-fw"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in listaOrdenarPor"
-            :command="item.key" :key="item.key">
+          <el-dropdown-item
+            v-for="item in listaOrdenarPor"
+            :command="item.value"
+            :key="item.value">
             <p>
               {{ item.label }}
-              <icono-orden-asc-desc v-show="item.key === ordenarPor"
+              <icono-orden-asc-desc
+                v-show="item.value === ordenarPor"
                 :ordenAsc="!ordenAsc">
               </icono-orden-asc-desc>
             </p>
@@ -20,28 +28,25 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-table
-      v-loading="ots.length === 0"
-      :data="ots"
-      highlight-current-row
-      @current-change="handleCurrentChange"
-      id="lista-de-ots"
-      :show-header="false">
-      <el-table-column
-        label="Tarea"
-        prop="numOt">
-        <template scope="scope">
-          <p>
-            <icono-tipo-trabajo :code="scope.row.tipoTrabajo"></icono-tipo-trabajo>
-            <icono-prioridad :code="scope.row.prioridad"></icono-prioridad>
-            {{ scope.row.orgCode }}-{{ scope.row.numOt }}
-          </p>
-          <p>
-            {{ scope.row.componente }} - {{ scope.row.directiva }}
-          </p>
-        </template>
-      </el-table-column>
-    </el-table>
+    <ul class="ot-lista">
+      <li v-for="ot in ots"
+        class="ot-lista-item"
+        :class="{ 'ot-lista-item-selecciondo': ot === otSelecionada }"
+        @click="nuevaOtSeleccionada(ot)">
+        <p>
+          <icono-tipo-trabajo
+            :code="ot.tipoTrabajo">
+          </icono-tipo-trabajo>
+          <icono-prioridad
+            :code="ot.prioridad">
+          </icono-prioridad>
+          {{ ot.componente }} - {{ ot.numOt }}
+        </p>
+        <p>
+          {{ ot.orgCode }} - {{ ot.directiva }}
+        </p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -60,13 +65,13 @@ export default {
       otSelecionada: null,
       listaOrdenarPor: [{
         label: 'Ot',
-        key: 'numOt'
+        value: 'numOt'
       }, {
         label: 'Prioridad',
-        key: 'prioridad'
+        value: 'prioridad'
       }, {
         label: 'Componente',
-        key: 'componente'
+        value: 'componente'
       }],
       ordenarPor: 'prioridad',
       ordenAsc: true
@@ -75,25 +80,30 @@ export default {
 
   computed: {
     labelOrdenerPor: function () {
-      return this.ordenarPor === '' ? ''
-        : this.listaOrdenarPor.find(x => x.key === this.ordenarPor).label
+      return this.listaOrdenarPor
+        .find(x => x.value === this.ordenarPor)
+        .label
     }
   },
 
   methods: {
-    handleCurrentChange (ot) {
+    nuevaOtSeleccionada (ot) {
       this.otSelecionada = ot
       this.$emit('ot-selecionada', ot)
     },
-    commandOrdenar (key) {
-      if (this.ordenarPor === key) {
-        this.ots.reverse()
-        this.ordenAsc = !this.ordenAsc
-      } else {
-        this.ordenAsc = true
-        this.ordenarPor = key
-        this.ots.sort((a, b) => { return a[key] > b[key] })
-      }
+    commandOrdenar (value) {
+      this.ordenarPor === value
+        ? this.invertirOrden()
+        : this.ordenarAscPor(value)
+    },
+    ordenarAscPor (value) {
+      this.ordenAsc = true
+      this.ordenarPor = value
+      this.ots.sort((a, b) => { return a[value] > b[value] })
+    },
+    invertirOrden () {
+      this.ots.reverse()
+      this.ordenAsc = !this.ordenAsc
     }
   }
 }
@@ -103,18 +113,25 @@ export default {
   @import "~@/styles/main"
   @import "~@/styles/font-awesome/font-awesome"
 
-  #lista-de-ots
+  .ot-lista
     text-align: left
-    border: 0
-    ::before
-      height: 0
-    ::after
-      width: 0
-    .cell
+    .ot-lista-item-selecciondo
+      background-color: rgb(235,242,259)
+    .ot-lista-item
+      color: #1F2D3D
+      font-size: 14px
+      border-bottom: $el_border
+      transition: background-color .25s ease
       padding-top: 12px
       padding-bottom: 12px
+      padding-left: 18px
+      padding-right: 18px
+      &:hover
+        background-color: rgb(238,241,246)
+      p
+        line-height: 24px
 
-  #orden-lista-de-ots
+  #ot-lista-orden
     text-align: left
     padding: 18px
 </style>
