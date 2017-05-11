@@ -4,7 +4,7 @@
       <el-col :span="4">
           <side-bar></side-bar>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="20" class="app-main">
           <top-bar></top-bar>
           <router-view></router-view>
       </el-col>
@@ -36,9 +36,13 @@ export default {
 
 <style lang="sass">
   #app
-    font-family: 'Avenir', Helvetica, Arial, sans-serif
+    // font-family: 'Avenir', Helvetica, Arial, sans-serif
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
-    text-align: center
+    // text-align: center
     color: #2c3e50
+
+  .app-main
+    height: 100vh
 </style>
