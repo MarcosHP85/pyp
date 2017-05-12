@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div
+    v-loading="cargando">
     <div id="ot-lista-orden">
       <el-dropdown
         trigger="click"
@@ -57,7 +58,7 @@ import iconoPrioridad from '@/components/iconos/Prioridad'
 
 export default {
   name: 'lista-de-ots',
-  props: ['ots'],
+  props: ['ots', 'cargando'],
   components: { iconoOrdenAscDesc, iconoTipoTrabajo, iconoPrioridad },
 
   data () {
@@ -122,10 +123,7 @@ export default {
       font-size: 14px
       border-bottom: $el_border
       transition: background-color .25s ease
-      padding-top: 12px
-      padding-bottom: 12px
-      padding-left: 18px
-      padding-right: 18px
+      padding: 12px 18px
       &:hover
         background-color: rgb(238,241,246)
       p
@@ -133,5 +131,5 @@ export default {
 
   #ot-lista-orden
     text-align: left
-    padding: 18px
+    padding: 12px 18px
 </style>

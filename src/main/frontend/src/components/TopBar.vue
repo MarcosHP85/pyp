@@ -63,6 +63,7 @@ export default {
   @import "~@/styles/main"
 
   #bar-app
+    box-sizing: border-box
     background: $el_color_white
     top: 0
     width: 100%

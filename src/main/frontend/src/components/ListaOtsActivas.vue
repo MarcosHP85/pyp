@@ -1,16 +1,29 @@
 <template>
-  <div class="app-page">
-    <el-row id="buscar-ot-filtro">
-      <el-col :span="24">
+  <div
+    class="app-page">
+    <el-row
+      id="buscar-ot-filtro">
+      <el-col
+        :span="24">
         <h2>Filtro</h2>
       </el-col>
     </el-row>
-    <el-row id="buscar-ot">
-      <el-col :span="8" id="buscar-ot-lista">
-        <lista-de-ots :ots="listaOtsActivas" @ot-selecionada="mostrarOt"></lista-de-ots>
+    <el-row
+      id="buscar-ot">
+      <el-col
+        id="buscar-ot-lista"
+        :span="6">
+        <lista-de-ots
+          :ots="listaOtsActivas"
+          :cargando="cargando"
+          @ot-selecionada="mostrarOt">
+        </lista-de-ots>
       </el-col>
-      <el-col :span="16">
-        <ot-preview :ot="otSeleccionada"></ot-preview>
+      <el-col
+        :span="18">
+        <ot-preview
+          :ot="otSeleccionada">
+        </ot-preview>
       </el-col>
     </el-row>
   </div>
@@ -28,11 +41,12 @@ export default {
 
   data () {
     return {
-      otSeleccionada: null
+      otSeleccionada: null,
+      cargando: false
     }
   },
   mounted () {
-    this.cargaLista()
+    this.cargarLista()
   },
 
   computed: {
@@ -45,7 +59,8 @@ export default {
     ...mapActions('ifs', [
       'buscarOtsActivas'
     ]),
-    cargaLista () {
+    cargarLista () {
+      this.cargando = true
       this.buscarOtsActivas(this.ots)
     },
     mostrarOt (ot) {
@@ -54,8 +69,11 @@ export default {
   },
 
   watch: {
+    listaOtsActivas: function (val) {
+      this.cargando = false
+    },
     '$route' (to, from) {
-      this.cargaLista()
+      this.cargarLista()
     }
   }
 }
@@ -68,9 +86,9 @@ export default {
 
   .app-page
     box-sizing: border-box
-    height: calc(100% - #{$top_bar_height} - 1px)
-    height: -moz-calc(100% - #{$top_bar_height} - 1px)
-    height: -webkit-calc(100% - #{$top_bar_height} - 1px)
+    height: calc(100% - #{$top_bar_height})
+    height: -moz-calc(100% - #{$top_bar_height})
+    height: -webkit-calc(100% - #{$top_bar_height})
   #buscar-ot-filtro
     border-bottom: $el_border
     height: $buscar_ot_filtro_height
