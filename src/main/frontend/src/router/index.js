@@ -4,7 +4,7 @@ import store from '@/store'
 import Home from '@/components/Home'
 import ListaOtsActivas from '@/components/ListaOtsActivas'
 import Hello from '@/components/Hello'
-import Login from '@/components/Login'
+import Login from '@/pages/Login'
 
 Vue.use(Router)
 

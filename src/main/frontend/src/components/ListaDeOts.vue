@@ -1,6 +1,5 @@
 <template>
-  <div
-    v-loading="cargando">
+  <div>
     <div id="ot-lista-orden">
       <el-dropdown
         trigger="click"
@@ -9,6 +8,7 @@
         <span>
           Ordenar por {{ labelOrdenerPor }}
           <icono-orden-asc-desc
+            v-show="ordenarPor !== ''"
             :ordenAsc="ordenAsc">
           </icono-orden-asc-desc>
           |<i class="fa fa-caret-down fa-fw"></i>
@@ -58,7 +58,7 @@ import iconoPrioridad from '@/components/iconos/Prioridad'
 
 export default {
   name: 'lista-de-ots',
-  props: ['ots', 'cargando'],
+  props: ['ots'],
   components: { iconoOrdenAscDesc, iconoTipoTrabajo, iconoPrioridad },
 
   data () {
@@ -74,16 +74,17 @@ export default {
         label: 'Componente',
         value: 'componente'
       }],
-      ordenarPor: 'prioridad',
+      ordenarPor: '',
       ordenAsc: true
     }
   },
 
   computed: {
     labelOrdenerPor: function () {
-      return this.listaOrdenarPor
-        .find(x => x.value === this.ordenarPor)
-        .label
+      return this.ordenarPor === '' ? ''
+        : this.listaOrdenarPor
+          .find(x => x.value === this.ordenarPor)
+          .label
     }
   },
 

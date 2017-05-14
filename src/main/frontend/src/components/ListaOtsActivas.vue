@@ -12,14 +12,15 @@
       id="buscar-ot">
       <el-col
         id="buscar-ot-lista"
+        v-loading="cargando"
         :span="6">
         <lista-de-ots
           :ots="listaOtsActivas"
-          :cargando="cargando"
           @ot-selecionada="mostrarOt">
         </lista-de-ots>
       </el-col>
       <el-col
+        id="ot-preview"
         :span="18">
         <ot-preview
           :ot="otSeleccionada">
@@ -99,6 +100,10 @@ export default {
   #buscar-ot-lista
     padding: 12px
     border-right: $el_border
+    height: 100%
+    overflow-x: auto
+  #ot-preview
+    padding: 12px
     height: 100%
     overflow-x: auto
 </style>
