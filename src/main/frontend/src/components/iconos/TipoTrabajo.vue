@@ -33,8 +33,6 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/font-awesome/font-awesome"
-
   .stack-inline
     width: 1em!important
     height: 1em!important

@@ -35,13 +35,16 @@ export default {
 </script>
 
 <style lang="sass">
+  @import "~sass"
+
   #app
-    // font-family: 'Avenir', Helvetica, Arial, sans-serif
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
+    font-family: $base-font-family
+    font-size: $base-font-size
+    font-weight: $base-font-weight
+    line-height: $base-line-height
+    color: $base-color
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
-    // text-align: center
-    color: #2c3e50
 
   .app-main
     height: 100vh

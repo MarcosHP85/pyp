@@ -14,5 +14,4 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/font-awesome/font-awesome"
 </style>

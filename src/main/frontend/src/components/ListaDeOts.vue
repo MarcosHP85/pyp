@@ -112,8 +112,7 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/main"
-  @import "~@/styles/font-awesome/font-awesome"
+  @import "~sass"
 
   .ot-lista
     text-align: left

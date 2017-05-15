@@ -1,19 +1,18 @@
 <template>
   <div id="login-view">
-    <h2>Login page</h2>
-
-    <el-col :span="8" :offset="8">
+    <el-col :span="11">
       <el-card>
-        <div slot="header" style="font-size:14px;">
-          <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>
-          Utilice su usuario y contraseña de Windows. El mismo de su correo electrónico usuario@na-sa.com.ar
+        <div slot="header" style="font-size:11pt;">
+          <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+          Utilice su usuario y contraseña de Windows.<br />
+          El mismo de su correo electrónico usuario@na-sa.com.ar
         </div>
-        <el-form :model="credentials" class="login-form" label-width="90px">
+        <el-form :model="credentials" class="login-form" label-width="120px">
           <el-form-item label="Usuario">
             <el-input
               v-model="credentials.username"
               :disabled="disabledInput"
-              placeholder="usuario@na-sa.com.ar" />
+              placeholder="usuario" />
           </el-form-item>
           <el-form-item label="Contraseña">
             <el-input
@@ -101,13 +100,13 @@ export default {
 
 <style lang="sass">
   #login-view
-    margin-top: 20px
-  h2
-    margin-bottom: 20px !important
-  .login-form
-    margin-top: 16px
-    & > div:last-child
-      margin-bottom: 0
-    & > div > div > button
-      float: right
+    margin: 24px
+
+  .el-form
+    width: 420px
+    margin-top: 18px
+    margin-bottom: 24px
+
+  .el-form-item:last-child
+    margin-bottom: 0
 </style>

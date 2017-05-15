@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/main"
+  @import "~sass"
 
   #bar-app
     box-sizing: border-box

@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/main"
+  @import "~sass"
 
   $buscar_ot_filtro_height: 64px
 

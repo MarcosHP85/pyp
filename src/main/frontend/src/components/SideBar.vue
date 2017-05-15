@@ -1,6 +1,7 @@
 <template>
   <el-col class="side-bar">
-    <el-menu mode="vertical" :default-active="active"
+    <el-menu mode="vertical"
+      :default-active="active"
       @select="menuSelect">
       <div class="logo">
 
@@ -42,8 +43,8 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~@/styles/main"
-  @import "~@/styles/font-awesome/font-awesome"
+  @import "~sass"
+  @import "~sass"
   .side-bar
     top: 0
     width: 100%
