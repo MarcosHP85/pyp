@@ -1,11 +1,11 @@
 <template>
   <div id="app">
+    <top-bar></top-bar>
     <el-row>
       <el-col :span="4">
           <side-bar></side-bar>
       </el-col>
       <el-col :span="20" class="app-main">
-          <top-bar></top-bar>
           <router-view></router-view>
       </el-col>
     </el-row>

@@ -64,15 +64,10 @@ export default {
 
   #bar-app
     box-sizing: border-box
-    background: $el_color_white
+    background: $el_color_dark_blue
     top: 0
     width: 100%
     height: $top_bar_height
-    border-bottom: $el_border
-    // box-shadow: $el_shadow
-    // -webkit-transform-style: preserve-3d
-    // -moz-transform-style: preserve-3d
-    // transform-style: preserve-3d
     & > div > p
       display: inline-block
     & > *
