@@ -87,9 +87,7 @@ export default {
 
   .app-page
     box-sizing: border-box
-    height: calc(100% - #{$top_bar_height})
-    height: -moz-calc(100% - #{$top_bar_height})
-    height: -webkit-calc(100% - #{$top_bar_height})
+    height: 100%
   #buscar-ot-filtro
     border-bottom: $el_border
     height: $buscar_ot_filtro_height

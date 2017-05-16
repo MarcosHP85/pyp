@@ -43,9 +43,12 @@ export default {
     font-weight: $base-font-weight
     line-height: $base-line-height
     color: $base-color
+    -moz-font-smoothing: antialiased
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
 
   .app-main
-    height: 100vh
+    height: calc(100vh - #{$top_bar_height})
+    height: -moz-calc(100vh - #{$top_bar_height})
+    height: -webkit-calc(100vh - #{$top_bar_height})
 </style>
