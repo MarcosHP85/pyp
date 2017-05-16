@@ -1,1 +1,15 @@
 @import "../modules/all"
+
+$font-color: #48576A
+
+%font
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",SimSun,sans-serif
+  font-weight: $regular-weight
+  color: $font-color
+  line-height: 1.5em
+
+.font-body
+  @extend %font
+  font-size: 14px
+  line-height: 1.2em
+  color: lighten($font-color, 25%)

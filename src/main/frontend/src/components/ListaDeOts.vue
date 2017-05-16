@@ -38,9 +38,6 @@
           <icono-tipo-trabajo
             :code="ot.tipoTrabajo">
           </icono-tipo-trabajo>
-          <icono-prioridad
-            :code="ot.prioridad">
-          </icono-prioridad>
           {{ ot.componente }} - {{ ot.numOt }}
         </p>
         <p>
@@ -54,12 +51,11 @@
 <script>
 import iconoOrdenAscDesc from '@/components/iconos/OrdenAscDesc'
 import iconoTipoTrabajo from '@/components/iconos/TipoTrabajo'
-import iconoPrioridad from '@/components/iconos/Prioridad'
 
 export default {
   name: 'lista-de-ots',
   props: ['ots'],
-  components: { iconoOrdenAscDesc, iconoTipoTrabajo, iconoPrioridad },
+  components: { iconoOrdenAscDesc, iconoTipoTrabajo },
 
   data () {
     return {

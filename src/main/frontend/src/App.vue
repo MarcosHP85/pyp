@@ -47,5 +47,7 @@ export default {
     -moz-osx-font-smoothing: grayscale
 
   .app-main
-    height: 100vh
+    height: calc(100vh - #{$top_bar_height})
+    height: -moz-calc(100vh - #{$top_bar_height})
+    height: -webkit-calc(100vh - #{$top_bar_height})
 </style>
