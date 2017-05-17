@@ -1,6 +1,6 @@
 <template>
   <i v-if="code === '2'"
-    class="fa fa-arrow-up fa-fw" style="color: rgb(189,20,5)">
+    class="fa fa-arrow-up fa-fw" style="color: rgb(199,43,28)">
   </i>
   <i v-else-if="code === '3'"
     class="fa fa-arrow-up fa-fw" style="color: rgb(247,146,50)">

@@ -54,10 +54,7 @@
           </div>
           <div id="ot-view-descripcion" class="ot-view-bloque">
             <p>Descripcion &nbsp;<hr /></p>
-            <p>
-              {{ ot.tarea }}
-              {{ ot.error }}
-            </p>
+            <pre>{{ ot.tarea }}{{ ot.error }}</pre>
           </div>
           <div id="ot-view-relacionadas" class="ot-view-bloque">
             <p>Relacionadas &nbsp;<hr /></p>
@@ -126,8 +123,9 @@ export default {
       padding-bottom: $vertical-spacing-s
     & > hr
       position: relative
-      top: -22px
+      top: -16px
+      font-size: 0
       border-bottom: 0
-      border-top: 1px solid lighten($font-dark-color, 58%)
+      border-top: $el_border
       z-index: -999
 </style>

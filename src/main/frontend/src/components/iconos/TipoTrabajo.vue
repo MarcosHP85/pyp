@@ -9,7 +9,7 @@
   </span>
   <span v-else-if="code === 'OTR'" class="fa-stack stack-inline fa-lg">
     <i class="fa fa-square fa-stack-1x" style="color: rgb(255,180,78)"></i>
-    <i class="fa fa-asterisk fa-stack-1x" style="font-size: .55em;color: white"></i>
+    <i class="fa fa-circle-o fa-stack-1x" style="font-size: .7em;color: white"></i>
   </span>
   <span v-else-if="code === 'ELE'" class="fa-stack stack-inline fa-lg">
     <i class="fa fa-square fa-stack-1x" style="color: rgb(99,186,60)"></i>
