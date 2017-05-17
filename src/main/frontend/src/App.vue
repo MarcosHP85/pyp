@@ -38,13 +38,7 @@ export default {
   @import "~sass"
 
   #app
-    font-family: $base-font-family
-    font-size: $base-font-size
-    font-weight: $base-font-weight
-    line-height: $base-line-height
-    color: $base-color
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
+    @extend %base-font
 
   .app-main
     height: calc(100vh - #{$top_bar_height})
