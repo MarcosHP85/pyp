@@ -28,23 +28,39 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-tooltip content="Multi seleccion">
+        <el-switch
+          v-model="multiSelect"
+          on-text=""
+          off-text="">
+        </el-switch>
+      </el-tooltip>
     </div>
-    <ul class="ot-lista">
-      <li v-for="ot in ots"
-        class="ot-lista-item"
-        :class="{ 'ot-lista-item-selecciondo': ot === otSelecionada }"
-        @click="nuevaOtSeleccionada(ot)">
-        <p>
-          <icono-tipo-trabajo
-            :code="ot.tipoTrabajo">
-          </icono-tipo-trabajo>
-          {{ ot.componente }} - {{ ot.numOt }}
-        </p>
-        <p>
-          {{ ot.orgCode }} - {{ ot.directiva }}
-        </p>
-      </li>
-    </ul>
+    <el-checkbox-group v-model="checkList">
+      <ul class="ot-lista">
+        <li v-for="(ot, index) in ots"
+          class="ot-lista-item"
+          :class="{ 'ot-lista-item-selecciondo': ot === otSelecionada }"
+          @click="nuevaOtSeleccionada(ot)">
+          <div
+            class="ot-lista-cell"
+            :class="{ invisible: !multiSelect }">
+            <el-checkbox :label="ot.numOt" :key="ot.numOt"></el-checkbox>
+          </div>
+          <div class="ot-lista-cell">
+            <p>
+              <icono-tipo-trabajo
+                :code="ot.tipoTrabajo">
+              </icono-tipo-trabajo>
+              {{ ot.componente }} - {{ ot.numOt }}
+            </p>
+            <p>
+              {{ ot.orgCode }} - {{ ot.directiva }}
+            </p>
+          </div>
+        </li>
+      </ul>
+    </el-checkbox-group>
   </div>
 </template>
 
@@ -71,7 +87,9 @@ export default {
         value: 'componente'
       }],
       ordenarPor: '',
-      ordenAsc: true
+      ordenAsc: true,
+      checkList: [],
+      multiSelect: false
     }
   },
 
@@ -114,6 +132,12 @@ export default {
     text-align: left
     .ot-lista-item-selecciondo
       background-color: rgb(235,242,259)
+    .ot-lista-cell
+      display: table-cell
+      padding-right: 8px
+      // vertical-align: middle
+      span.el-checkbox__label
+        display: none
     .ot-lista-item
       color: #1F2D3D
       font-size: 14px

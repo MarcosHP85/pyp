@@ -1,6 +1,6 @@
 <template>
   <span v-if="code === 'PRE'" class="fa-stack stack-inline fa-lg">
-    <i class="fa fa-square fa-stack-1x" style="color: rgb(75,173,232)"></i>
+    <i class="fa fa-square fa-stack-1x" style="color: rgb(0,117,198)"></i>
     <i class="fa fa-check fa-stack-1x" style="font-size: .6em;color: white"></i>
   </span>
   <span v-else-if="code === 'COR'" class="fa-stack stack-inline fa-lg">
