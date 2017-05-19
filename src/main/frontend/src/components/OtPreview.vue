@@ -73,6 +73,8 @@
             <p>
               <pre>{{ ot.comentarioPla }}</pre>
             </p>
+            <Vueditor></Vueditor>
+            <vue-html5-editor :content="content" :height="500"></vue-html5-editor>
           </div>
         </div>
       </el-col>
@@ -103,6 +105,12 @@ export default {
   props: ['ot'],
   components: { iconoPrioridad, iconoTipoTrabajo },
 
+  data () {
+    return {
+      myHTML: ''
+    }
+  },
+
   computed: {
     fechaRegistro () {
       let d = new Date(this.ot.fechaRegistro)
@@ -128,7 +136,7 @@ export default {
       padding-bottom: $vertical-spacing-s
     & > hr
       position: relative
-      top: -16px
+      top: -19px
       font-size: 0
       border-bottom: 0
       border-top: $el_border

@@ -96,12 +96,12 @@ export default {
     height: -moz-calc(100% - #{$buscar_ot_filtro_height})
     height: -webkit-calc(100% - #{$buscar_ot_filtro_height})
   #buscar-ot-lista
-    padding: 12px
+    padding: 16px
     border-right: $el_border
     height: 100%
     overflow-x: auto
   #ot-preview
-    padding: 12px
+    // padding: 16px
     height: 100%
     overflow-x: auto
 </style>

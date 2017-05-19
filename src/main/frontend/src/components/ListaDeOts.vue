@@ -86,8 +86,18 @@ export default {
 
   methods: {
     nuevaOtSeleccionada (event, ot) {
-      if (event.ctrlKey) {
+      if (event.ctrlKey || event.metaKey) {
         this.otSelecionada.push(ot)
+      } else if (event.shiftKey) {
+        let i = this.ots.indexOf(
+          this.otSelecionada[this.otSelecionada.length - 1])
+        let j = this.ots.indexOf(ot)
+
+        let temp = i < j
+          ? this.ots.slice(i, ++j)
+          : this.ots.slice(j, ++i)
+
+        this.otSelecionada = this.otSelecionada.concat(temp)
       } else {
         this.otSelecionada = [ot]
         this.$emit('ot-selecionada', ot)
@@ -119,17 +129,21 @@ export default {
     .ot-lista-item-selecciondo
       background-color: rgb(235,242,259)
     .ot-lista-item
-      color: #1F2D3D
-      font-size: 14px
+      color: $font-link-color
       border-bottom: $el_border
       transition: background-color .25s ease
-      padding: 12px 18px
+      padding: 8px
+      cursor: pointer
       &:hover
         background-color: rgb(238,241,246)
       p
         line-height: 24px
+        -webkit-user-select: none
+        -moz-user-select: none
+        -ms-user-select: none
+        user-select: none
 
   #ot-lista-orden
     text-align: left
-    padding: 12px 18px
+    padding: 0 8px 4px 8px
 </style>
