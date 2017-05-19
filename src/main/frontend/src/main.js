@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import VueHtml5Editor from 'vue-html5-editor'
 import Vueditor from 'vueditor'
 import 'vueditor/dist/css/vueditor.min.css'
 import App from './App'
@@ -12,7 +11,6 @@ import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-Vue.use(VueHtml5Editor, {})
 
 let config = {
   toolbar: [
@@ -22,8 +20,6 @@ let config = {
     'insertOrderedList', 'insertUnorderedList', '|', 'emoji', 'picture', 'tables', '|', 'switchView'
   ],
   fontName: [
-    {val: '宋体, SimSun', abbr: '宋体'}, {val: '黑体, SimHei', abbr: '黑体'},
-    {val: '楷体, SimKai', abbr: '楷体'}, {val: '微软雅黑, \'Microsoft YaHei\'', abbr: '微软雅黑'},
     {val: 'arial black'}, {val: 'times new roman'}, {val: 'Courier New'}
   ],
   fontSize: [
@@ -38,7 +34,7 @@ let config = {
     '1f626', '1f627', '1f628', '1f629', '1f62c', '1f630', '1f631', '1f633', '1f635', '1f621', '1f620',
     '1f607', '1f920', '1f921', '1f925', '1f637', '1f912', '1f915', '1f922', '1f927'
   ],
-  lang: 'cn',
+  lang: 'en',
   mode: 'default',
   iframePath: '',
   fileuploadUrl: '',

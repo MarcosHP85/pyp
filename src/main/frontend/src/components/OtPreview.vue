@@ -73,8 +73,7 @@
             <p>
               <pre>{{ ot.comentarioPla }}</pre>
             </p>
-            <Vueditor></Vueditor>
-            <vue-html5-editor :content="content" :height="500"></vue-html5-editor>
+            <vueditor></vueditor>
           </div>
         </div>
       </el-col>
