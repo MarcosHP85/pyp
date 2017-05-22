@@ -73,7 +73,9 @@
             <p>
               <pre>{{ ot.comentarioPla }}</pre>
             </p>
-            <vueditor></vueditor>
+            <vueditor ref="vueditor"></vueditor>
+            <el-button @click="save">save</el-button>
+            <p v-html="texto"></p>
           </div>
         </div>
       </el-col>
@@ -106,7 +108,7 @@ export default {
 
   data () {
     return {
-      myHTML: ''
+      texto: ''
     }
   },
 
@@ -114,6 +116,13 @@ export default {
     fechaRegistro () {
       let d = new Date(this.ot.fechaRegistro)
       return d.getDay() + '/' + (1 + d.getMonth()) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes()
+    }
+  },
+
+  methods: {
+    save () {
+      console.log(this.$refs.vueditor.getContent())
+      this.texto = this.$refs.vueditor.getContent()
     }
   }
 }
