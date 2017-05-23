@@ -2,17 +2,40 @@
   <div class="comentario-editor">
     <div class="ce-toolbar">
       <el-button-group>
-        <el-button @click="textEdit('bold')">bold</el-button>
+        <el-button @click="addBold">bold</el-button>
         <el-button @click="textEdit('italic')">italic</el-button>
         <el-button @click="textEdit('strikeThrough')">tachar</el-button>
       </el-button-group>
     </div>
-    <div
-      ref="ceTextarea"
-      class="el-textarea__inner ce-textarea"
-      contenteditable="true"
-      v-html="texto">
-    </div>
+    <el-row>
+      <el-col :span="12">
+        <!-- <el-input
+          ref="textarea"
+          type="textarea"
+          :rows="5"
+          v-model="textarea">
+        </el-input> -->
+        <textarea
+          ref="textarea"
+          class="el-textarea__inner"
+          :value="textarea">
+        </textarea>
+      </el-col>
+      <el-col :span="12">
+        <p v-html="textareaMarked"></p>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <div
+          id="ceTextarea"
+          ref="ceTextarea"
+          class="el-textarea__inner ce-textarea"
+          contenteditable="true"
+          v-html="texto">
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -34,16 +57,32 @@ marked.setOptions({
 export default {
   name: 'comentario-editor',
 
+  data () {
+    return {
+      textarea: ''
+    }
+  },
+
   computed: {
     texto () {
-      return marked('No **necesitas** ser experto para crear interfaces web interactivas, Vue.js te ayuda a escribir código de forma fácil, entendible y sostenible. \n\n`que se yo`\n\n1. list\n1. jfb\n\n> quote acbdsh\nkndsiom\n\n+ tip\n+ tip\n\n---\n\nt1 | t2 | t3\n--- | --- | ---\nf1 | f2 | f3\n')
+      return marked('No **necesitas** ser experto')
+    },
+    textareaMarked () {
+      return marked(this.textarea)
     }
   },
 
   methods: {
+    addBold () {
+      console.log('start ' + this.$refs.textarea.selectionStart)
+      console.log('end ' + this.$refs.textarea.selectionEnd)
+    },
     textEdit (val) {
       document.execCommand(val, false)
-      console.log(toMarkdown(this.$refs.ceTextarea.innerHTML, { gfm: true }))
+    },
+    textoMarkdown () {
+      console.log(toMarkdown(this.$refs.ceTextarea.innerHTML,
+        { gfm: true }))
     }
   }
 }
@@ -55,7 +94,7 @@ export default {
     b, strong
       font-weight: $bold-weight!important
 
-    i
+    i, em
       font-style: italic!important
 
     ol

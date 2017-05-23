@@ -14,6 +14,4 @@ export default {
 </script>
 
 <style lang="sass">
-  .home-view
-    display: inline-block
 </style>
