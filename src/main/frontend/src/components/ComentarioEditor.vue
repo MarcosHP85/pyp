@@ -9,31 +9,15 @@
     </div>
     <el-row>
       <el-col :span="12">
-        <!-- <el-input
-          ref="textarea"
-          type="textarea"
-          :rows="5"
-          v-model="textarea">
-        </el-input> -->
         <textarea
+          id="ceTextarea"
           ref="textarea"
           class="el-textarea__inner"
-          :value="textarea">
+          v-model="textRaw">
         </textarea>
       </el-col>
       <el-col :span="12">
-        <p v-html="textareaMarked"></p>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div
-          id="ceTextarea"
-          ref="ceTextarea"
-          class="el-textarea__inner ce-textarea"
-          contenteditable="true"
-          v-html="texto">
-        </div>
+        <p v-html="textHtml"></p>
       </el-col>
     </el-row>
   </div>
@@ -41,7 +25,6 @@
 
 <script>
 import marked from 'marked'
-import toMarkdown from 'to-markdown'
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -59,30 +42,56 @@ export default {
 
   data () {
     return {
-      textarea: ''
+      textRaw: '**hola** mundo !!!'
     }
   },
 
   computed: {
-    texto () {
-      return marked('No **necesitas** ser experto')
-    },
-    textareaMarked () {
-      return marked(this.textarea)
+    textHtml () {
+      return marked(this.textRaw)
     }
   },
 
   methods: {
     addBold () {
-      console.log('start ' + this.$refs.textarea.selectionStart)
-      console.log('end ' + this.$refs.textarea.selectionEnd)
+      let sel = this._seleccion()
+      this.textRaw = sel.pre + this._textoEntre(sel.in, '**') + sel.pos
+      this.$refs.textarea.focus()
     },
-    textEdit (val) {
-      document.execCommand(val, false)
+    _seleccion () {
+      let {start, end} = this._startEndSeleccion()
+
+      return {
+        pre: this.textRaw.substring(0, start),
+        in: this.textRaw.substring(start, end),
+        pos: this.textRaw.substring(end, this.textRaw.lenght)
+      }
     },
-    textoMarkdown () {
-      console.log(toMarkdown(this.$refs.ceTextarea.innerHTML,
-        { gfm: true }))
+    _startEndSeleccion () {
+      let start = this.$refs.textarea.selectionStart
+      let end = this.$refs.textarea.selectionEnd
+
+      if (start === end) {
+        while (start > 0 &&
+          this.textRaw.charAt(start - 1) !== ' ' &&
+          this.textRaw.charAt(start - 1) !== '\n') {
+          --start
+        }
+        while (end < this.textRaw.length &&
+          this.textRaw.charAt(end) !== ' ' &&
+          this.textRaw.charAt(end) !== '\n') {
+          ++end
+        }
+      }
+      return {start, end}
+    },
+    _textoEntre (texto, symbol) {
+      if (texto.substring(0, symbol.length) === symbol &&
+        texto.substring(texto.length - symbol.length, texto.length) === symbol) {
+        return texto.substring(symbol.length, texto.length - symbol.length)
+      } else {
+        return symbol + texto + symbol
+      }
     }
   }
 }
