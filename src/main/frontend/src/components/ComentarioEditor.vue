@@ -78,14 +78,36 @@ export default {
     findTable (event) {
       setTimeout(_ => {
         let tmp = event.target.value
+
         if (tmp.indexOf('\t') !== -1) {
-          tmp = tmp.replace(/\t/g, ' | ')
-          tmp = tmp.replace('\n', '\n---|---\n')
+          let lineas = tmp.split('\n')
+          console.log('ini\n' + tmp)
+
+          tmp = ''
+          let thead = false
+          for (var i = 0; i < lineas.length; i++) {
+            let cols = lineas[i].split('\t').length
+
+            if (cols > 1) {
+              tmp += lineas[i].replace(/\t/g, ' | ')
+              if (!thead) {
+                tmp += '\n--- '
+                for (var j = 1; j < cols; j++) {
+                  tmp += '| ---'
+                }
+                thead = true
+              }
+            } else {
+              tmp += lineas[i]
+            }
+            tmp += '\n'
+          }
+
           this.vmdEditor.value = tmp
-          console.log(this.vmdEditor.value)
+          this.__updateInput()
+          console.log('fin\n' + tmp)
         }
       }, 100)
-      this.__updateInput()
     },
     __addEntre (chars) {
       let chunk
