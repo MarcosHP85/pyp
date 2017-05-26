@@ -2,21 +2,26 @@
   <div class="comentario-editor">
     <div class="ce-toolbar">
       <el-button-group>
-        <el-button @click="addBold">bold</el-button>
-        <el-button @click="textEdit('italic')">italic</el-button>
-        <el-button @click="textEdit('strikeThrough')">tachar</el-button>
+        <el-button size="small" @click="addBold" title="Ctrl + B">
+          <i class="fa fa-bold" aria-hidden="true"></i></el-button>
+        <el-button size="small" @click="addItalic" title="Ctrl + I">
+          <i class="fa fa-italic" aria-hidden="true"></i></el-button>
+        <el-button size="small" @click="addStrikethrough" title="Ctrl + S">
+          <i class="fa fa-strikethrough" aria-hidden="true"></i></el-button>
       </el-button-group>
     </div>
     <el-row>
       <el-col :span="12">
-        <textarea
-          id="ceTextarea"
-          ref="textarea"
-          class="el-textarea__inner"
-          v-model="textRaw">
+        <textarea class="el-textarea__inner" ref="vmdEditor" rows="5"
+          :value="vmdInput"
+          @input="textInput"
+          @paste="findTable"
+          @keydown.ctrl.b.prevent="addBold"
+          @keydown.ctrl.i.prevent="addItalic"
+          @keydown.ctrl.s.prevent="addStrikethrough">
         </textarea>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="12" style="padding: 5px 7px">
         <p v-html="textHtml"></p>
       </el-col>
     </el-row>
@@ -42,56 +47,127 @@ export default {
 
   data () {
     return {
-      textRaw: '**hola** mundo !!!'
+      vmdInput: 'hola mundo !!!',
+      vmdEditor: null
     }
+  },
+
+  mounted () {
+    this.vmdEditor = this.$refs.vmdEditor
   },
 
   computed: {
     textHtml () {
-      return marked(this.textRaw)
+      return marked(this.vmdInput)
     }
   },
 
   methods: {
+    textInput (event) {
+      this.__updateInput()
+    },
     addBold () {
-      let sel = this._seleccion()
-      this.textRaw = sel.pre + this._textoEntre(sel.in, '**') + sel.pos
-      this.$refs.textarea.focus()
+      this.__addEntre('**')
     },
-    _seleccion () {
-      let {start, end} = this._startEndSeleccion()
-
-      return {
-        pre: this.textRaw.substring(0, start),
-        in: this.textRaw.substring(start, end),
-        pos: this.textRaw.substring(end, this.textRaw.lenght)
-      }
+    addItalic () {
+      this.__addEntre('_')
     },
-    _startEndSeleccion () {
-      let start = this.$refs.textarea.selectionStart
-      let end = this.$refs.textarea.selectionEnd
-
-      if (start === end) {
-        while (start > 0 &&
-          this.textRaw.charAt(start - 1) !== ' ' &&
-          this.textRaw.charAt(start - 1) !== '\n') {
-          --start
+    addStrikethrough () {
+      this.__addEntre('~~')
+    },
+    findTable (event) {
+      setTimeout(_ => {
+        let tmp = event.target.value
+        if (tmp.indexOf('\t') !== -1) {
+          tmp = tmp.replace(/\t/g, ' | ')
+          tmp = tmp.replace('\n', '\n---|---\n')
+          this.vmdEditor.value = tmp
+          console.log(this.vmdEditor.value)
         }
-        while (end < this.textRaw.length &&
-          this.textRaw.charAt(end) !== ' ' &&
-          this.textRaw.charAt(end) !== '\n') {
-          ++end
-        }
-      }
-      return {start, end}
+      }, 100)
+      this.__updateInput()
     },
-    _textoEntre (texto, symbol) {
-      if (texto.substring(0, symbol.length) === symbol &&
-        texto.substring(texto.length - symbol.length, texto.length) === symbol) {
-        return texto.substring(symbol.length, texto.length - symbol.length)
+    __addEntre (chars) {
+      let chunk
+      let cursor
+      let selected = this.__getSelection()
+      let content = this.__getContent()
+      let cLength = chars.length
+
+      if (selected.length === 0) {
+        // 提供额外的内容
+        chunk = 'texto'
       } else {
-        return symbol + texto + symbol
+        chunk = selected.text
       }
+
+      // 替换选择内容并将光标设置到chunk内容前
+      if (content.substr(selected.start - cLength, cLength) === chars &&
+        content.substr(selected.end, cLength) === chars) {
+        this.__setSelection(selected.start - cLength, selected.end + cLength)
+        this.__replaceSelection(chunk)
+        cursor = selected.start - cLength
+      } else {
+        this.__replaceSelection(chars + chunk + chars)
+        cursor = selected.start + cLength
+      }
+
+      // 设置选择内容
+      this.__setSelection(cursor, cursor + chunk.length)
+      this.__updateInput()
+    },
+    __getSelection () {
+      let e = this.vmdEditor
+      return (
+        ('selectionStart' in e && function () {
+          let l = e.selectionEnd - e.selectionStart
+          return {start: e.selectionStart, end: e.selectionEnd, length: l, text: e.value.substr(e.selectionStart, l)}
+        }) ||
+
+        /* 如果浏览器不支持 */
+        function () {
+          return null
+        }
+      )()
+    },
+    __setSelection (start, end) {
+      let e = this.vmdEditor
+      return (
+        ('selectionStart' in e && function () {
+          e.selectionStart = start
+          e.selectionEnd = end
+          return null
+        }) ||
+
+        /* 如果浏览器不支持 */
+        function () {
+          return null
+        }
+      )()
+    },
+    __replaceSelection (text) {
+      let e = this.vmdEditor
+      return (
+        ('selectionStart' in e && function () {
+          e.value = e.value.substr(0, e.selectionStart) + text + e.value.substr(e.selectionEnd, e.value.length)
+          // Set cursor to the last replacement end
+          e.selectionStart = e.value.length
+          return null
+        }) ||
+
+        /* 如果浏览器不支持 */
+        function () {
+          e.value += text
+          return null
+        }
+      )()
+    },
+    __getContent () {
+      return this.vmdEditor.value
+    },
+    __updateInput () {
+      this.vmdInput = this.vmdEditor.value
+      this.vmdEditor.focus()
     }
   }
 }
