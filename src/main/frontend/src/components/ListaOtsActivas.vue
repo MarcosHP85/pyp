@@ -6,6 +6,32 @@
       <el-col
         :span="24">
         <h2>Filtro</h2>
+        <el-select
+          v-model="filtroComponentes"
+          multiple
+          filterable
+          allow-create
+          placeholder="componente">
+          <el-option
+            v-for="item in optionComponentes"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+        <el-select
+          v-model="filtroPrioridad"
+          multiple
+          filterable
+          allow-create
+          placeholder="prioridad">
+          <el-option
+            v-for="item in optionPrioridad"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
       </el-col>
     </el-row>
     <el-row
@@ -15,7 +41,7 @@
         v-loading="cargando"
         :span="6">
         <lista-de-ots
-          :ots="listaOtsActivas"
+          :ots="listaOts"
           @ot-selecionada="mostrarOt">
         </lista-de-ots>
       </el-col>
@@ -31,6 +57,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mapGetters, mapActions } from 'vuex'
 import listaDeOts from '@/components/ListaDeOts'
 import otPreview from '@/components/OtPreview'
@@ -42,8 +69,13 @@ export default {
 
   data () {
     return {
+      listaOts: [],
       otSeleccionada: null,
-      cargando: false
+      cargando: false,
+      // optionComponentes: [],
+      filtroComponentes: [],
+      // optionPrioridad: [],
+      filtroPrioridad: []
     }
   },
   mounted () {
@@ -53,7 +85,27 @@ export default {
   computed: {
     ...mapGetters('ifs', [
       'listaOtsActivas'
-    ])
+    ]),
+    optionPrioridad () {
+      let tmp = []
+      _.forEach(
+        _.groupBy(this.listaOts, 'prioridad'),
+        (value, key) => {
+          tmp.push(key)
+        }
+      )
+      return tmp
+    },
+    optionComponentes () {
+      let tmp = []
+      _.forEach(
+        _.groupBy(this.listaOts, 'componente'),
+        (value, key) => {
+          tmp.push(key)
+        }
+      )
+      return tmp
+    }
   },
 
   methods: {
@@ -64,6 +116,20 @@ export default {
       this.cargando = true
       this.buscarOtsActivas(this.ots)
     },
+    // cargarFiltros () {
+    //   _.forEach(
+    //     _.groupBy(this.listaOts, 'componente'),
+    //     (value, key) => {
+    //       this.optionComponentes.push(key)
+    //     }
+    //   )
+      // _.forEach(
+      //   _.groupBy(this.listaOts, 'prioridad'),
+      //   (value, key) => {
+      //     this.optionPrioridad.push(key)
+      //   }
+      // )
+    // },
     mostrarOt (ot) {
       this.otSeleccionada = ot
     }
@@ -71,7 +137,23 @@ export default {
 
   watch: {
     listaOtsActivas: function (val) {
+      this.listaOts = val
+      // this.cargarFiltros()
       this.cargando = false
+    },
+    filtroComponentes: function (val) {
+      this.listaOts = (this.filtroComponentes.length > 0)
+        ? _.filter(this.listaOtsActivas, (ot) => {
+          return this.filtroComponentes.indexOf(ot.componente) !== -1
+        })
+        : this.listaOts
+    },
+    filtroPrioridad: function (val) {
+      this.listaOts = (this.filtroPrioridad.length > 0)
+        ? _.filter(this.listaOtsActivas, (ot) => {
+          return this.filtroPrioridad.indexOf(ot.prioridad) !== -1
+        })
+        : this.listaOts
     },
     '$route' (to, from) {
       this.cargarLista()

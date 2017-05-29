@@ -30,7 +30,7 @@
       </el-dropdown>
     </div>
     <ul class="ot-lista">
-      <li v-for="ot in ots"
+      <li v-for="ot in listaOts"
         class="ot-lista-item"
         :class="{ 'ot-lista-item-selecciondo': otSelecionada.indexOf(ot) !== -1 }"
         @click="nuevaOtSeleccionada($event,ot)">
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import iconoOrdenAscDesc from '@/components/iconos/OrdenAscDesc'
 import iconoTipoTrabajo from '@/components/iconos/TipoTrabajo'
 
@@ -59,6 +60,7 @@ export default {
 
   data () {
     return {
+      listaOts: [],
       otSelecionada: [],
       listaOrdenarPor: [{
         label: 'Ot',
@@ -89,13 +91,13 @@ export default {
       if (event.ctrlKey || event.metaKey) {
         this.otSelecionada.push(ot)
       } else if (event.shiftKey) {
-        let i = this.ots.indexOf(
+        let i = this.listaOts.indexOf(
           this.otSelecionada[this.otSelecionada.length - 1])
-        let j = this.ots.indexOf(ot)
+        let j = this.listaOts.indexOf(ot)
 
         let temp = i < j
-          ? this.ots.slice(i, ++j)
-          : this.ots.slice(j, ++i)
+          ? this.listaOts.slice(i, ++j)
+          : this.listaOts.slice(j, ++i)
 
         this.otSelecionada = this.otSelecionada.concat(temp)
       } else {
@@ -111,11 +113,19 @@ export default {
     ordenarAscPor (value) {
       this.ordenAsc = true
       this.ordenarPor = value
-      this.ots.sort((a, b) => { return a[value] > b[value] })
+      // this.listaOts.sort((a, b) => { return a[value] > b[value] })
+      let otro = (value === 'numOt') ? 'componente' : 'numOt'
+      this.listaOts = _.sortBy(this.listaOts, [value, otro])
     },
     invertirOrden () {
-      this.ots.reverse()
+      this.listaOts.reverse()
       this.ordenAsc = !this.ordenAsc
+    }
+  },
+
+  watch: {
+    ots: function (val) {
+      this.listaOts = val
     }
   }
 }
