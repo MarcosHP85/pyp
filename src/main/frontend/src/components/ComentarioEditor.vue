@@ -76,36 +76,56 @@ export default {
       this.__addEntre('~~')
     },
     findTable (event) {
+      let e = this.vmdEditor
+      let start = e.selectionStart
       setTimeout(_ => {
-        let tmp = event.target.value
+        let end = e.selectionStart
+        let value = e.value.substring(start, end)
+        if ((value.match(/\t/mg) || []).length > 1 &&
+          (value.match(/\n/mg) || []).length > 0) {
+          let lineas = value.split('\n')
 
-        if (tmp.indexOf('\t') !== -1) {
-          let lineas = tmp.split('\n')
-          console.log('ini\n' + tmp)
-
-          tmp = ''
-          let thead = false
-          for (var i = 0; i < lineas.length; i++) {
-            let cols = lineas[i].split('\t').length
-
-            if (cols > 1) {
-              tmp += lineas[i].replace(/\t/g, ' | ')
-              if (!thead) {
-                tmp += '\n--- '
-                for (var j = 1; j < cols; j++) {
-                  tmp += '| ---'
-                }
-                thead = true
+          value = ''
+          let continua = false
+          let head = true
+          for (var i = 0; i < lineas.length - 1; i++) {
+            value += (!continua) ? '|' : ''
+            let columnas = lineas[i].split('\t')
+            for (var j = 0; j < columnas.length; j++) {
+              // si es el fin de la linea y la celda es multilinea
+              if (j === columnas.length - 1 &&
+                columnas[j][0] === '"') {
+                columnas[j] = columnas[j].substring(1, columnas[j].length)
+                continua = true
               }
-            } else {
-              tmp += lineas[i]
+              if (j === 0 &&
+                continua &&
+                columnas[j][columnas[j].length - 1] === '"') {
+                columnas[j] = columnas[j].substring(0, columnas[j].length - 1)
+                continua = false
+              }
+              value += ' ' + columnas[j]
+              value += (!continua) ? ' |' : ''
             }
-            tmp += '\n'
+            value += (!continua) ? '\n' : '<br>'
+            if (head && !continua) {
+              value += '| -\n'
+              head = false
+            }
           }
-
-          this.vmdEditor.value = tmp
+          // Agrega una linea en blanco antes de la tabla
+          if (start !== 0) {
+            if (e.value[start - 1] !== '\n') {
+              value = '\n\n' + value
+            } else {
+              if (e.value[start - 2] !== '\n') {
+                value = '\n' + value
+              }
+            }
+          }
+          e.value = e.value.substring(0, start) +
+            value + e.value.substring(end, e.value.length)
           this.__updateInput()
-          console.log('fin\n' + tmp)
         }
       }, 100)
     },
@@ -126,11 +146,11 @@ export default {
       // 替换选择内容并将光标设置到chunk内容前
       if (content.substr(selected.start - cLength, cLength) === chars &&
         content.substr(selected.end, cLength) === chars) {
-        this.__setSelection(selected.start - cLength, selected.end + cLength)
-        this.__replaceSelection(chunk)
+        // this.__setSelection(selected.start - cLength, selected.end + cLength)
+        this.__replaceSelection(selected.start - cLength, selected.end + cLength, chunk)
         cursor = selected.start - cLength
       } else {
-        this.__replaceSelection(chars + chunk + chars)
+        this.__replaceSelection(selected.start, selected.end, chars + chunk + chars)
         cursor = selected.start + cLength
       }
 
@@ -140,10 +160,21 @@ export default {
     },
     __getSelection () {
       let e = this.vmdEditor
+      let i = e.selectionStart
+      let j = e.selectionEnd
+
+      if (i === j) {
+        for (; i > 0 &&
+          e.value[i - 1] !== ' ' &&
+          e.value[i - 1] !== '\n'; i--) { }
+        for (; j < e.value.length - 1 &&
+          e.value[j] !== ' ' &&
+          e.value[j] !== '\n'; j++) { }
+      }
       return (
         ('selectionStart' in e && function () {
-          let l = e.selectionEnd - e.selectionStart
-          return {start: e.selectionStart, end: e.selectionEnd, length: l, text: e.value.substr(e.selectionStart, l)}
+          let l = j - i
+          return {start: i, end: j, length: l, text: e.value.substr(i, l)}
         }) ||
 
         /* 如果浏览器不支持 */
@@ -161,23 +192,21 @@ export default {
           return null
         }) ||
 
-        /* 如果浏览器不支持 */
         function () {
           return null
         }
       )()
     },
-    __replaceSelection (text) {
+    __replaceSelection (start, end, text) {
       let e = this.vmdEditor
       return (
         ('selectionStart' in e && function () {
-          e.value = e.value.substr(0, e.selectionStart) + text + e.value.substr(e.selectionEnd, e.value.length)
+          e.value = e.value.substr(0, start) + text + e.value.substr(end, e.value.length)
           // Set cursor to the last replacement end
-          e.selectionStart = e.value.length
+          // e.selectionStart = e.value.length
           return null
         }) ||
 
-        /* 如果浏览器不支持 */
         function () {
           e.value += text
           return null
@@ -222,4 +251,30 @@ export default {
       margin: 1em .5em!important
       &>p
         padding-left: .5em
+
+    table
+      max-width: 100%
+      margin: 1em 0
+      border: $el_border
+      tr
+        border: $el_border
+      th
+        padding: 0 18px
+      td
+        padding: 0 18px
+      thead
+        background-color: #eef1f6
+        & > tr > th
+          text-align: center
+        & :first-child
+          text-align: left
+        & :last-child
+          text-align: right
+      tbody
+        & > tr > td
+          text-align: center
+        & :first-child
+          text-align: left
+        & :last-child
+          text-align: right
 </style>
