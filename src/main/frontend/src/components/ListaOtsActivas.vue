@@ -42,6 +42,18 @@
             :value="item">
           </el-option>
         </el-select>
+        <el-select
+          v-model="filtroTipo"
+          multiple
+          filterable
+          placeholder="trabajo">
+          <el-option
+            v-for="item in optionTipo"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
         <el-button
           type="text"
           @click="reset">
@@ -89,7 +101,8 @@ export default {
       cargando: false,
       filtroComponentes: [],
       filtroPrioridad: [],
-      filtroOrgMant: []
+      filtroOrgMant: [],
+      filtroTipo: []
     }
   },
   mounted () {
@@ -101,34 +114,20 @@ export default {
       'listaOtsActivas'
     ]),
     optionPrioridad () {
-      let tmp = []
-      _.forEach(
-        _.groupBy(this.listaOtsActivas, 'prioridad'),
-        (value, key) => {
-          tmp.push(key)
-        }
-      )
-      return tmp
+      return _.uniq(
+        _.map(this.listaOtsActivas, 'prioridad'))
     },
     optionComponentes () {
-      let tmp = []
-      _.forEach(
-        _.groupBy(this.listaOtsActivas, 'componente'),
-        (value, key) => {
-          tmp.push(key)
-        }
-      )
-      return tmp
+      return _.uniq(
+        _.map(this.listaOtsActivas, 'componente'))
     },
     optionOrgMant () {
-      let tmp = []
-      _.forEach(
-        _.groupBy(this.listaOtsActivas, 'orgCode'),
-        (value, key) => {
-          tmp.push(key)
-        }
-      )
-      return tmp
+      return _.uniq(
+        _.map(this.listaOtsActivas, 'orgCode'))
+    },
+    optionTipo () {
+      return _.uniq(
+        _.map(this.listaOtsActivas, 'tipoTrabajo'))
     }
   },
 
@@ -167,18 +166,27 @@ export default {
         return orgMant.indexOf(ot.orgCode) !== -1
       })
 
+      let tipo = (this.filtroTipo.length > 0)
+        ? this.filtroTipo
+        : this.optionTipo
+      tmp = _.filter(tmp, (ot) => {
+        return tipo.indexOf(ot.tipoTrabajo) !== -1
+      })
+
       this.listaOts = tmp
     },
     reset () {
       this.filtroComponentes = []
       this.filtroPrioridad = []
       this.filtroOrgMant = []
+      this.filtroTipo = []
     }
   },
 
   watch: {
     listaOtsActivas: function (val) {
       this.listaOts = val
+      this.reset()
       this.cargando = false
     },
     filtroComponentes: function (val) {
@@ -188,6 +196,9 @@ export default {
       this.aplicarFiltros()
     },
     filtroOrgMant: function (val) {
+      this.aplicarFiltros()
+    },
+    filtroTipo: function (val) {
       this.aplicarFiltros()
     },
     '$route' (to, from) {
@@ -205,6 +216,7 @@ export default {
   .app-page
     box-sizing: border-box
     height: 100%
+    padding-right: 12px
   #buscar-ot-filtro
     border-bottom: $el_border
     height: $buscar_ot_filtro_height

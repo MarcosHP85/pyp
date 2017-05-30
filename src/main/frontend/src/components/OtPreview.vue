@@ -11,18 +11,18 @@
             {{ ot.componente }} - {{ ot.directiva }}
           </div>
           <div>
-            <el-button size="small">
-              <i class="fa fa-comment-o fa-fw"></i> Comentar
-            </el-button>
             <el-button-group>
-              <el-button size="small">Asignar</el-button>
-              <el-button size="small">Mas</el-button>
+              <el-button>
+                <i class="fa fa-comment-o fa-fw"></i> Comentar
+              </el-button>
+              <el-button>Asignar</el-button>
+              <el-button>Mas</el-button>
             </el-button-group>
             <el-button-group style="float: right">
-              <el-button size="small">
+              <el-button>
                 <i class="fa fa-share-square-o fa-fw"></i> Compartir
               </el-button>
-              <el-button size="small">
+              <el-button>
                 <i class="fa fa-download fa-fw"></i>Exportar
               </el-button>
             </el-button-group>

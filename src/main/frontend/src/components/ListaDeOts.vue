@@ -89,7 +89,14 @@ export default {
   methods: {
     nuevaOtSeleccionada (event, ot) {
       if (event.ctrlKey || event.metaKey) {
-        this.otSelecionada.push(ot)
+        let indexSeleccion = this.otSelecionada.indexOf(ot)
+        if (indexSeleccion === -1) {
+          this.otSelecionada.push(ot)
+        } else {
+          let pre = this.otSelecionada.slice(0, indexSeleccion)
+          let post = this.otSelecionada.slice(indexSeleccion + 1, this.otSelecionada.length)
+          this.otSelecionada = pre.concat(post)
+        }
       } else if (event.shiftKey) {
         let i = this.listaOts.indexOf(
           this.otSelecionada[this.otSelecionada.length - 1])
