@@ -1,71 +1,93 @@
 <template>
   <div
     class="app-page">
+    <div class="page-header">
+      <el-row>
+        <el-col
+          :span="24">
+          <span>Tareas abiertas
+            <span
+              @click="filtrosVisible = !filtrosVisible">
+              &nbsp; Filtros
+              <i class="fa fa-fw"
+                :class="{
+                  'fa-caret-down': !filtrosVisible,
+                  'fa-caret-up': filtrosVisible }">
+              </i>
+            </span>
+          </span>
+        </el-col>
+      </el-row>
+      <transition name="el-zoom-in-top">
+        <el-row
+          id="buscar-ot-filtro"
+          v-show="filtrosVisible">
+          <el-col
+            :span="24">
+            <p class="font-small-title">Filtrar por &nbsp;</p>
+            <el-select
+              v-model="filtroComponentes"
+              multiple
+              filterable
+              placeholder="componente">
+              <el-option
+                v-for="item in optionComponentes"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+            <el-select
+              v-model="filtroPrioridad"
+              multiple
+              filterable
+              placeholder="prioridad">
+              <el-option
+                v-for="item in optionPrioridad"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+            <el-select
+              v-model="filtroOrgMant"
+              multiple
+              filterable
+              placeholder="mantenimiento">
+              <el-option
+                v-for="item in optionOrgMant"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+            <el-select
+              v-model="filtroTipo"
+              multiple
+              filterable
+              placeholder="trabajo">
+              <el-option
+                v-for="item in optionTipo"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+            <el-button
+              type="text"
+              @click="reset">
+              Borrar
+            </el-button>
+          </el-col>
+        </el-row>
+      </transition>
+    </div>
     <el-row
-      id="buscar-ot-filtro">
+      id="buscar-ot"
+      :class="{ 'alto-filtro-visible': filtrosVisible }">
       <el-col
-        :span="24">
-        <p class="font-title">Filtrar por &nbsp;</p>
-        <el-select
-          v-model="filtroComponentes"
-          multiple
-          filterable
-          placeholder="componente">
-          <el-option
-            v-for="item in optionComponentes"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-select
-          v-model="filtroPrioridad"
-          multiple
-          filterable
-          placeholder="prioridad">
-          <el-option
-            v-for="item in optionPrioridad"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-select
-          v-model="filtroOrgMant"
-          multiple
-          filterable
-          placeholder="mantenimiento">
-          <el-option
-            v-for="item in optionOrgMant"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-select
-          v-model="filtroTipo"
-          multiple
-          filterable
-          placeholder="trabajo">
-          <el-option
-            v-for="item in optionTipo"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-button
-          type="text"
-          @click="reset">
-          Borrar
-        </el-button>
-      </el-col>
-    </el-row>
-    <el-row
-      id="buscar-ot">
-      <el-col
-        id="buscar-ot-lista"
         v-loading="cargando"
+        style="height: 100%"
         :span="6">
         <lista-de-ots
           :ots="listaOts"
@@ -99,6 +121,7 @@ export default {
       listaOts: [],
       otSeleccionada: null,
       cargando: false,
+      filtrosVisible: false,
       filtroComponentes: [],
       filtroPrioridad: [],
       filtroOrgMant: [],
@@ -116,18 +139,22 @@ export default {
     optionPrioridad () {
       return _.uniq(
         _.map(this.listaOtsActivas, 'prioridad'))
+        .sort()
     },
     optionComponentes () {
       return _.uniq(
         _.map(this.listaOtsActivas, 'componente'))
+        .sort()
     },
     optionOrgMant () {
       return _.uniq(
         _.map(this.listaOtsActivas, 'orgCode'))
+        .sort()
     },
     optionTipo () {
       return _.uniq(
         _.map(this.listaOtsActivas, 'tipoTrabajo'))
+        .sort()
     }
   },
 
@@ -211,35 +238,47 @@ export default {
 <style lang="sass">
   @import "~sass"
 
-  $buscar_ot_filtro_height: 64px
-
   .app-page
     box-sizing: border-box
     height: 100%
-    padding-right: 12px
-  #buscar-ot-filtro
+    // padding-right: 12px
+  .page-header
+    padding: 24px
+    font-size: 28px
+    box-sizing: border-box
+    min-height: $page_header_height
+    font-weight: $regular-weight
     border-bottom: $el_border
-    height: $buscar_ot_filtro_height
+    & > div > div > span
+      vertical-align: middle
+    & > div > div > span > span
+      color: $font-link-color
+      cursor: pointer
+      font-size: .6em
+  #buscar-ot-filtro
+    height: 38px
+    margin-top: 24px
     & > div
-      padding: 8px 40px 8px 24px
-      @include vertical-align-middle
+      // @include vertical-align-middle
       & > p
         display: inline-block
         padding: 0
+        font-weight: $regular-weight
       & > button
         float: right
 
   #buscar-ot
-    height: calc(100% - #{$buscar_ot_filtro_height})
-    height: -moz-calc(100% - #{$buscar_ot_filtro_height})
-    height: -webkit-calc(100% - #{$buscar_ot_filtro_height})
-  #buscar-ot-lista
-    padding: 16px
-    border-right: $el_border
-    height: 100%
-    overflow-x: auto
+    height: calc(100% - #{$page_header_height})
+    height: -moz-calc(100% - #{$page_header_height})
+    height: -webkit-calc(100% - #{$page_header_height})
+
   #ot-preview
     // padding: 16px
     height: 100%
     overflow-x: auto
+
+  .alto-filtro-visible
+    height: calc(100% - #{$page_header_height} - 60px)!important
+    height: -moz-calc(100% - #{$page_header_height} - 60px)!important
+    height: -webkit-calc(100% - #{$page_header_height} - 60px)!important
 </style>

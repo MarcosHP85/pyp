@@ -5,6 +5,7 @@
       icon="search"
       size="small"
       v-model="input"
+      @keydown.enter.pevent="buscar"
       :on-icon-click="buscar">
     </el-input>
     <div v-if="isLogin">

@@ -1,50 +1,55 @@
 <template>
-  <div>
-    <div id="ot-lista-orden">
-      <el-dropdown
-        trigger="click"
-        @command="commandOrdenar"
-        size="mini">
-        <span>
-          Ordenar por {{ labelOrdenerPor }}
-          <icono-orden-asc-desc
-            v-show="ordenarPor !== ''"
-            :ordenAsc="ordenAsc">
-          </icono-orden-asc-desc>
-          |<i class="fa fa-caret-down fa-fw"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            v-for="item in listaOrdenarPor"
-            :command="item.value"
-            :key="item.value">
-            <p>
-              {{ item.label }}
-              <icono-orden-asc-desc
-                v-show="item.value === ordenarPor"
-                :ordenAsc="!ordenAsc">
-              </icono-orden-asc-desc>
-            </p>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+  <div class="submenu-vertical">
+    <div id="buscar-ot-lista">
+      <div id="ot-lista-orden">
+        <el-dropdown
+          trigger="click"
+          @command="commandOrdenar"
+          size="mini">
+          <span>
+            Ordenar por {{ labelOrdenerPor }}
+            <icono-orden-asc-desc
+              v-show="ordenarPor !== ''"
+              :ordenAsc="ordenAsc">
+            </icono-orden-asc-desc>
+            |<i class="fa fa-caret-down fa-fw"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="item in listaOrdenarPor"
+              :command="item.value"
+              :key="item.value">
+              <p>
+                {{ item.label }}
+                <icono-orden-asc-desc
+                  v-show="item.value === ordenarPor"
+                  :ordenAsc="!ordenAsc">
+                </icono-orden-asc-desc>
+              </p>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+      <ul class="ot-lista">
+        <li v-for="ot in listaOts"
+          class="ot-lista-item"
+          :class="{ 'ot-lista-item-selecciondo': otSelecionada.indexOf(ot) !== -1 }"
+          @click="nuevaOtSeleccionada($event,ot)">
+          <p>
+            <icono-tipo-trabajo
+              :code="ot.tipoTrabajo">
+            </icono-tipo-trabajo>
+            {{ ot.componente }} - {{ ot.numOt }}
+          </p>
+          <p>
+            {{ ot.orgCode }} - {{ ot.directiva }}
+          </p>
+        </li>
+      </ul>
     </div>
-    <ul class="ot-lista">
-      <li v-for="ot in listaOts"
-        class="ot-lista-item"
-        :class="{ 'ot-lista-item-selecciondo': otSelecionada.indexOf(ot) !== -1 }"
-        @click="nuevaOtSeleccionada($event,ot)">
-        <p>
-          <icono-tipo-trabajo
-            :code="ot.tipoTrabajo">
-          </icono-tipo-trabajo>
-          {{ ot.componente }} - {{ ot.numOt }}
-        </p>
-        <p>
-          {{ ot.orgCode }} - {{ ot.directiva }}
-        </p>
-      </li>
-    </ul>
+    <div id="ot-lista-total">
+      <p><i class="fa fa-refresh fa-fw"></i>Total {{ listaOts.length }}</p>
+    </div>
   </div>
 </template>
 
@@ -140,6 +145,7 @@ export default {
 
 <style lang="sass">
   @import "~sass"
+  $ot-lista-total-height: 40px
 
   .ot-lista
     text-align: left
@@ -159,6 +165,26 @@ export default {
         -moz-user-select: none
         -ms-user-select: none
         user-select: none
+
+  #buscar-ot-lista
+    padding: 16px
+    box-sizing: border-box
+    height: calc(100% - #{$ot-lista-total-height})
+    height: -moz-calc(100% - #{$ot-lista-total-height})
+    height: -webkit-calc(100% - #{$ot-lista-total-height})
+    overflow-x: auto
+
+  .submenu-vertical
+    border-right: $el_border
+    height: 100%
+
+  #ot-lista-total
+    height: $ot-lista-total-height
+    padding: 0 16px 0 16px
+    & > p
+      @extend .font-body
+      @include vertical-align-middle
+      font-size: 14px
 
   #ot-lista-orden
     text-align: left
