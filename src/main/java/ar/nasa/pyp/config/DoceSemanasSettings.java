@@ -10,6 +10,8 @@ public class DoceSemanasSettings {
 	private Integer colComponente;
 	private Integer colOrgMant;
 	private Integer colObservaciones;
+	private Integer colFInicio;
+	private Integer colFFin;
 	private Integer colLu;
 	private Integer colMa;
 	private Integer colMi;
@@ -17,30 +19,6 @@ public class DoceSemanasSettings {
 	private Integer colVi;
 	private Integer colSa;
 	private Integer colDo;
-	
-	public DoceSemanasSettings(String fileCna1, String fileCna2,
-			Integer firstRow, Integer colNumOt, Integer colSemana,
-			Integer colComponente, Integer colOrgMant,
-			Integer colObservaciones, Integer colLu, Integer colMa,
-			Integer colMi, Integer colJu, Integer colVi, Integer colSa,
-			Integer colDo) {
-		super();
-		this.fileCna1 = fileCna1;
-		this.fileCna2 = fileCna2;
-		this.firstRow = firstRow;
-		this.colNumOt = colNumOt;
-		this.colSemana = colSemana;
-		this.colComponente = colComponente;
-		this.colOrgMant = colOrgMant;
-		this.colObservaciones = colObservaciones;
-		this.colLu = colLu;
-		this.colMa = colMa;
-		this.colMi = colMi;
-		this.colJu = colJu;
-		this.colVi = colVi;
-		this.colSa = colSa;
-		this.colDo = colDo;
-	}
 	
 	public String getFileCna1() {
 		return fileCna1;
@@ -132,17 +110,40 @@ public class DoceSemanasSettings {
 	public void setColOrgMant(Integer colOrgMant) {
 		this.colOrgMant = colOrgMant;
 	}
+	public Integer getColFInicio() {
+		return colFInicio;
+	}
+	public void setColFInicio(Integer colFInicio) {
+		this.colFInicio = colFInicio;
+	}
+	public Integer getColFFin() {
+		return colFFin;
+	}
+	public void setColFFin(Integer colFFin) {
+		this.colFFin = colFFin;
+	}
 
-	@Override
-	public String toString() {
-		return "DoceSemanasSettings [fileCna1=" + fileCna1 + ", fileCna2="
-				+ fileCna2 + ", firstRow=" + firstRow + ", colNumOt="
-				+ colNumOt + ", colSemana=" + colSemana + ", colComponente="
-				+ colComponente + ", colOrgMant=" + colOrgMant
-				+ ", colObservaciones=" + colObservaciones + ", colLu=" + colLu
-				+ ", colMa=" + colMa + ", colMi=" + colMi + ", colJu=" + colJu
-				+ ", colVi=" + colVi + ", colSa=" + colSa + ", colDo=" + colDo
-				+ "]";
+	public DoceSemanasSettings(String fileCna1, String fileCna2, Integer firstRow, Integer colNumOt, Integer colSemana,
+			Integer colComponente, Integer colOrgMant, Integer colObservaciones, Integer colFInicio, Integer colFFin,
+			Integer colLu, Integer colMa, Integer colMi, Integer colJu, Integer colVi, Integer colSa, Integer colDo) {
+		super();
+		this.fileCna1 = fileCna1;
+		this.fileCna2 = fileCna2;
+		this.firstRow = firstRow;
+		this.colNumOt = colNumOt;
+		this.colSemana = colSemana;
+		this.colComponente = colComponente;
+		this.colOrgMant = colOrgMant;
+		this.colObservaciones = colObservaciones;
+		this.colFInicio = colFInicio;
+		this.colFFin = colFFin;
+		this.colLu = colLu;
+		this.colMa = colMa;
+		this.colMi = colMi;
+		this.colJu = colJu;
+		this.colVi = colVi;
+		this.colSa = colSa;
+		this.colDo = colDo;
 	}
 	
 }

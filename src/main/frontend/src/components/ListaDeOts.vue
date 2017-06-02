@@ -138,6 +138,8 @@ export default {
   watch: {
     ots: function (val) {
       this.listaOts = val
+      this.ordenarPor = ''
+      this.ordenAsc = true
     }
   }
 }

@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.format.CellTextFormatter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -46,13 +46,9 @@ public class OtDoceServiceImpl implements OtDoceService {
 		        row = sheet.getRow(r);
 		        if(row != null) {
 	                cell = row.getCell(col);
-	                if(cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK 
-	                		&& row.getCell(settings.getColSemana()) != null
-	                		&& row.getCell(settings.getColSemana()).getCellType() == Cell.CELL_TYPE_NUMERIC
-	                		&& (int)row.getCell(settings.getColSemana()).getNumericCellValue() == semana
-	                		&& row.getCell(settings.getColOrgMant()) != null
-	                		&& row.getCell(settings.getColOrgMant()).getCellType() == Cell.CELL_TYPE_STRING
-	                		&& row.getCell(settings.getColOrgMant()).getStringCellValue().startsWith("C")) {
+	                if(cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK &&
+	                		laColumnaEsIgual(row, settings.getColSemana(), semana) &&
+	                		laColumnaEmpiezaCon(row, settings.getColOrgMant(), "C")) {
 	                	
 	                	ots.add(rowToOtDoce(row));
 	                }
@@ -66,6 +62,31 @@ public class OtDoceServiceImpl implements OtDoceService {
 		return ots;
 	}
 
+	private boolean laColumnaEs(Row row, Integer columna) {
+		return row.getCell(columna) != null &&
+				row.getCell(columna).getCellType() == Cell.CELL_TYPE_NUMERIC;
+	}
+	
+	private boolean laColumnaEsIgual(Row row, Integer columna, Integer valor) {
+		return laColumnaEs(row, columna) && 
+				(int)row.getCell(columna).getNumericCellValue() == valor;
+	}
+	
+	private boolean laColumnaEs(Row row, Integer columna, String valor) {
+		return row.getCell(columna) != null &&
+				row.getCell(columna).getCellType() == Cell.CELL_TYPE_STRING;
+	}
+	
+	private boolean laColumnaEsIgual(Row row, Integer columna, String valor) {
+		return laColumnaEs(row, columna, valor) &&
+				row.getCell(columna).getStringCellValue().equals(valor);
+	}
+	
+	private boolean laColumnaEmpiezaCon(Row row, Integer columna, String valor) {
+		return laColumnaEs(row, columna, valor) &&
+				row.getCell(columna).getStringCellValue().startsWith(valor);
+	}
+	
 	private OtDoce rowToOtDoce(Row row) {
 		OtDoce ot = new OtDoce();
     	
@@ -81,6 +102,10 @@ public class OtDoceServiceImpl implements OtDoceService {
 	    		ot.setOrgMant(row.getCell(settings.getColOrgMant()).getStringCellValue());
 	    	if(row.getCell(settings.getColObservaciones()).getCellType() == Cell.CELL_TYPE_STRING)
 	    		ot.setObservaciones(row.getCell(settings.getColObservaciones()).getStringCellValue());
+	    	if(HSSFDateUtil.isCellDateFormatted(row.getCell(settings.getColFInicio())))
+	    		ot.setFechaInicio(row.getCell(settings.getColFInicio()).getDateCellValue());
+	    	if(HSSFDateUtil.isCellDateFormatted(row.getCell(settings.getColFFin())))
+	    		ot.setFechaFin(row.getCell(settings.getColFFin()).getDateCellValue());
 	    	if(row.getCell(settings.getColLu()).getCellType() == Cell.CELL_TYPE_STRING 
 	    			&& row.getCell(settings.getColLu()).getStringCellValue().equals("X"))
 	    		ot.setLunes(true);

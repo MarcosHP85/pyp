@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "doce.colFFin",
+    "type": "java.lang.Integer",
+    "description": "A description for 'doce.colFFin'"
+  },
+  {
+    "name": "doce.colFInicio",
+    "type": "java.lang.Integer",
+    "description": "A description for 'doce.colFInicio'"
+  }
+]}

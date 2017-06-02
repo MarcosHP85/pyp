@@ -249,8 +249,10 @@ export default {
     min-height: $page_header_height
     font-weight: $regular-weight
     border-bottom: $el_border
+    // & > div > div
+    //   @include vertical-align-middle
     & > div > div > span
-      vertical-align: middle
+      vertical-align: text-bottom
     & > div > div > span > span
       color: $font-link-color
       cursor: pointer
@@ -278,7 +280,10 @@ export default {
     overflow-x: auto
 
   .alto-filtro-visible
-    height: calc(100% - #{$page_header_height} - 60px)!important
-    height: -moz-calc(100% - #{$page_header_height} - 60px)!important
-    height: -webkit-calc(100% - #{$page_header_height} - 60px)!important
+    height: calc(100% - #{$page_header_height} - 62px)!important
+    height: -moz-calc(100% - #{$page_header_height} - 62px)!important
+    height: -webkit-calc(100% - #{$page_header_height} - 62px)!important
+
+  .el-select__tags
+    line-height: inherit
 </style>

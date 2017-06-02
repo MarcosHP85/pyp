@@ -1,5 +1,7 @@
 package ar.nasa.pyp.domain;
 
+import java.util.Date;
+
 public class OtDoce {
 
 	private Integer id;
@@ -7,6 +9,8 @@ public class OtDoce {
 	private String componente;
 	private String orgMant;
 	private String observaciones;
+	private Date fechaInicio;
+	private Date fechaFin;
 	private Boolean lunes = false;
 	private Boolean martes = false;
 	private Boolean miercoles = false;
@@ -91,15 +95,25 @@ public class OtDoce {
 	public void setOrgMant(String orgMant) {
 		this.orgMant = orgMant;
 	}
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
 
 	@Override
 	public String toString() {
-		return "OtDoce [id=" + id + ", semana=" + semana + ", componente="
-				+ componente + ", orgMant=" + orgMant + ", observaciones="
-				+ observaciones + ", lunes=" + lunes + ", martes=" + martes
-				+ ", miercoles=" + miercoles + ", jueves=" + jueves
-				+ ", viernes=" + viernes + ", sabado=" + sabado + ", domingo="
-				+ domingo + "]";
+		return "OtDoce [id=" + id + ", semana=" + semana + ", componente=" + componente + ", orgMant=" + orgMant
+				+ ", observaciones=" + observaciones + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
+				+ ", lunes=" + lunes + ", martes=" + martes + ", miercoles=" + miercoles + ", jueves=" + jueves
+				+ ", viernes=" + viernes + ", sabado=" + sabado + ", domingo=" + domingo + "]";
 	}
 
 }
