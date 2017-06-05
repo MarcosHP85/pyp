@@ -1,11 +1,9 @@
-package ar.nasa.pyp.service;
+package ar.nasa.pyp.domain;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -15,48 +13,42 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import ar.nasa.pyp.config.DoceSemanasSettings;
-import ar.nasa.pyp.domain.OtDoce;
-import ar.nasa.pyp.domain.OtDoceRepository;
 
-@Service
-public class OtDoceServiceImpl implements OtDoceService {
+@Component
+public class OtDoceRepository {
 
 	@Autowired
 	private DoceSemanasSettings settings;
-	@Resource
-	private OtDoceRepository otDoceRepository;
-		
-	@Override
-	public List<OtDoce> findBySemana(Integer semana, Integer planta) {
-		otDoceRepository.findByPlantaAndSemana(2000, 1724);
+	
+	public List<OtDoce> findByPlantaAndSemana(Integer planta, Integer semana) {
+		return null;
+	}
+	
+	private List<OtDoce> findBy(Integer planta, Criterio criterio) {
 		List<OtDoce> ots = new ArrayList<OtDoce>();
-		
 		try {
-			String path = planta == 4000 ? settings.getFileCna2() : settings.getFileCna1();
+			String path = planta == 2000
+					? settings.getFileCna1() 
+					: settings.getFileCna2();
 			
 			Workbook wb = WorkbookFactory.create(new FileInputStream(path));
-			
 			Sheet sheet = wb.getSheetAt(0);
-			Row row;
-		    Cell cell;
-			
+
 		    int rowHead = settings.getFirstRow(); // Numero de fila con los titulos
 		    int rows = sheet.getPhysicalNumberOfRows(); // Total de filas
 
-		    int col = settings.getColNumOt(); // Columna con los numeros de ot
-
-		    for(int r = rowHead; r < rows; r++) {
+		    Row row;
+		    
+		    for (int r = rowHead; r < rows; r++) {
 		        row = sheet.getRow(r);
-		        if(row != null) {
-	                cell = row.getCell(col);
-	                if(cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK &&
-	                		laColumnaEsIgual(row, settings.getColSemana(), semana) &&
-	                		laColumnaEmpiezaCon(row, settings.getColOrgMant(), "C")) {
-	                	
-	                	ots.add(rowToOtDoce(row));
+		        if (row != null) {
+	                Cell cellNumOt = row.getCell(settings.getColNumOt());
+	                if (cellNumOt != null && cellNumOt.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+	                	if (criterio.run(row))
+	                		ots.add(rowToOtDoce(row));
 	                }
 		        }
 		    }
@@ -66,31 +58,6 @@ public class OtDoceServiceImpl implements OtDoceService {
 			e.printStackTrace();
 		}
 		return ots;
-	}
-
-	private boolean laColumnaEs(Row row, Integer columna) {
-		return row.getCell(columna) != null &&
-				row.getCell(columna).getCellType() == Cell.CELL_TYPE_NUMERIC;
-	}
-	
-	private boolean laColumnaEsIgual(Row row, Integer columna, Integer valor) {
-		return laColumnaEs(row, columna) && 
-				(int)row.getCell(columna).getNumericCellValue() == valor;
-	}
-	
-	private boolean laColumnaEs(Row row, Integer columna, String valor) {
-		return row.getCell(columna) != null &&
-				row.getCell(columna).getCellType() == Cell.CELL_TYPE_STRING;
-	}
-	
-	private boolean laColumnaEsIgual(Row row, Integer columna, String valor) {
-		return laColumnaEs(row, columna, valor) &&
-				row.getCell(columna).getStringCellValue().equals(valor);
-	}
-	
-	private boolean laColumnaEmpiezaCon(Row row, Integer columna, String valor) {
-		return laColumnaEs(row, columna, valor) &&
-				row.getCell(columna).getStringCellValue().startsWith(valor);
 	}
 	
 	private OtDoce rowToOtDoce(Row row) {
@@ -136,5 +103,11 @@ public class OtDoceServiceImpl implements OtDoceService {
     	}
     	
     	return ot;
+	}
+	
+	private class Criterio {
+		public boolean run(Row row) {
+			return true;
+		}
 	}
 }
