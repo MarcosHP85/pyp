@@ -16,8 +16,18 @@ public class OtDoceServiceImpl implements OtDoceService {
 	private OtDoceRepository otDoceRepository;
 		
 	@Override
-	public List<OtDoce> findBySemana(Integer semana, Integer planta) {
+	public List<OtDoce> findBySemana(Integer semana) {
 		return otDoceRepository.findBySemana(semana);
+	}
+
+	@Override
+	public List<OtDoce> findByPlantaAndSemana(Integer planta, Integer semana) {
+		return otDoceRepository.findByPlantaAndSemana(planta, semana);
+	}
+
+	@Override
+	public List<OtDoce> findByOtIn(List<Long> ots) {
+		return otDoceRepository.findByOtIn(ots);
 	}
 
 }

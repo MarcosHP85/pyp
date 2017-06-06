@@ -52,7 +52,7 @@ public class OtDoceRepository {
 		return tmp;
 	}
 	
-	public OtDoce findByPlantaAndOt(Integer planta, Integer ot) {
+	public OtDoce findByPlantaAndOt(Integer planta, Long ot) {
 		Row row;
 		Cell cellOt;
 		Sheet sheet = sheetPlanta(planta);
@@ -73,9 +73,37 @@ public class OtDoceRepository {
 		return null;
 	}
 	
-	public OtDoce findByOt(Integer ot) {
+	public OtDoce findByOt(Long ot) {
 		OtDoce tmp = findByPlantaAndOt(2000, ot);
 		return (tmp == null) ? findByPlantaAndOt(4000, ot) : tmp;
+	}
+	
+	public List<OtDoce> findByPlantaAndOtIn(Integer planta, List<Long> ots) {
+		List<OtDoce> tmp = new ArrayList<OtDoce>();
+		Row row;
+		Cell cellOt;
+		Sheet sheet = sheetPlanta(planta);
+		for (int r = settings.getFirstRow(); r < sheet.getPhysicalNumberOfRows(); r++) {
+			row = sheet.getRow(r);
+			if (row == null)
+				continue;
+			
+			cellOt = row.getCell(settings.getColNumOt());
+			if (cellOt == null)
+				continue;
+			
+			if (cellOt.getCellType() == Cell.CELL_TYPE_NUMERIC && 
+					ots.contains((long)cellOt.getNumericCellValue())) {
+				tmp.add(rowToOtDoce(row));
+			}
+		}
+		return tmp;
+	}
+	
+	public List<OtDoce> findByOtIn(List<Long> ots) {
+		List<OtDoce> tmp = findByPlantaAndOtIn(2000, ots);
+		tmp.addAll(findByPlantaAndOtIn(4000, ots));
+		return tmp;
 	}
 	
 	public List<OtDoce> findByPlantaAndComponente(Integer planta, String componente) {
