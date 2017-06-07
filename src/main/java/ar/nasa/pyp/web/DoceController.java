@@ -30,7 +30,7 @@ public class DoceController {
 		if (semana != null)
 			tmp.addAll(otDoceService.findBySemana(semana));
 		
-		if (ots != null && tmp.size() >= ots.length()) {
+		if (ots != null) {
 			List<Long> numOts = new ArrayList<Long>();
 			String[] stringNumOts = ots.split(",");
 			

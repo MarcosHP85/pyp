@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import Home from '@/components/Home'
-import ListaOtsActivas from '@/components/ListaOtsActivas'
 import Hello from '@/components/Hello'
 import Login from '@/pages/Login'
+import OtsActivas from '@/pages/OtsActivas'
 
 Vue.use(Router)
 
@@ -24,7 +24,7 @@ const router = new Router({
     {
       path: '/search',
       name: 'OtsActivas',
-      component: ListaOtsActivas,
+      component: OtsActivas,
       props: route => ({ ots: route.query.ots })
     },
     {

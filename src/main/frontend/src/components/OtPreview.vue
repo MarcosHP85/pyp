@@ -4,7 +4,7 @@
       <el-col :span="24">
         <div id="ot-view-cabecera" class="ot-view-bloque">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>Semana 1720</el-breadcrumb-item>
+            <el-breadcrumb-item v-if="otDoce != null">Semana {{ otDoce.semana }}</el-breadcrumb-item>
             <el-breadcrumb-item>{{ ot.numOt }}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="font-main-title">
@@ -73,6 +73,12 @@
             <p>
               <pre>{{ ot.comentarioPla }}</pre>
             </p>
+            <div v-if="otDoce != null">
+              <p>Observaciones</p>
+              <p>
+                <pre>{{ otDoce.observaciones }}</pre>
+              </p>
+            </div>
           </div>
         </div>
       </el-col>
@@ -85,7 +91,18 @@
             <p>Fechas &nbsp;<hr /></p>
             <el-row>
               <el-col :span="8">Creacion</el-col>
-              <el-col :span="16" class="font-val">{{ fechaRegistro }}</el-col>
+              <el-col :span="16" class="font-val">
+                {{ ot.fechaRegistro | fecha }}</el-col>
+            </el-row>
+            <el-row v-if="otDoce != null">
+              <el-col :span="8">Inicio</el-col>
+              <el-col :span="16" class="font-val">
+                {{ otDoce.fechaInicio | fecha }}</el-col>
+            </el-row>
+            <el-row v-if="otDoce != null">
+              <el-col :span="8">Fin</el-col>
+              <el-col :span="16" class="font-val">
+                {{ otDoce.fechaFin | fecha }}</el-col>
             </el-row>
           </div>
         </div>
@@ -100,7 +117,7 @@ import iconoTipoTrabajo from '@/components/iconos/TipoTrabajo'
 
 export default {
   name: 'ot-view',
-  props: ['ot'],
+  props: ['ot', 'otDoce'],
   components: { iconoPrioridad, iconoTipoTrabajo },
 
   data () {
@@ -109,10 +126,12 @@ export default {
     }
   },
 
-  computed: {
-    fechaRegistro () {
-      let d = new Date(this.ot.fechaRegistro)
-      return d.getDay() + '/' + (1 + d.getMonth()) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes()
+  filters: {
+    fecha (value) {
+      let d = new Date(value)
+      let min = d.getMinutes()
+      min = (min < 10) ? '0' + min : min
+      return d.getDay() + '/' + (1 + d.getMonth()) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + min
     }
   }
 }

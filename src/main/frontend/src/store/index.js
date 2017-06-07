@@ -5,6 +5,7 @@ import { getters } from './getters'
 import { mutations } from './mutations'
 import auth from './modules/auth'
 import ifs from './modules/ifs'
+import doce from './modules/doce'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   mutations,
   modules: {
     auth,
-    ifs
+    ifs,
+    doce
   }
 })

@@ -98,7 +98,8 @@
         id="ot-preview"
         :span="18">
         <ot-preview
-          :ot="otSeleccionada">
+          :ot="otActivaSelec"
+          :otDoce="otDoceSelec">
         </ot-preview>
       </el-col>
     </el-row>
@@ -119,7 +120,8 @@ export default {
   data () {
     return {
       listaOts: [],
-      otSeleccionada: null,
+      otActivaSelec: null,
+      otDoceSelec: null,
       cargando: false,
       filtrosVisible: false,
       filtroComponentes: [],
@@ -135,6 +137,9 @@ export default {
   computed: {
     ...mapGetters('ifs', [
       'listaOtsActivas'
+    ]),
+    ...mapGetters('doce', [
+      'listaOtsDoce'
     ]),
     optionPrioridad () {
       return _.uniq(
@@ -162,12 +167,17 @@ export default {
     ...mapActions('ifs', [
       'buscarOtsActivas'
     ]),
+    ...mapActions('doce', [
+      'buscarOtsDoce'
+    ]),
     cargarLista () {
       this.cargando = true
       this.buscarOtsActivas(this.ots)
+      this.buscarOtsDoce(this.ots)
     },
     mostrarOt (ot) {
-      this.otSeleccionada = ot
+      this.otActivaSelec = ot
+      this.otDoceSelec = _.find(this.listaOtsDoce, { 'id': ot.numOt })
     },
     aplicarFiltros () {
       let tmp = this.listaOtsActivas
