@@ -131,7 +131,7 @@ export default {
       let d = new Date(value)
       let min = d.getMinutes()
       min = (min < 10) ? '0' + min : min
-      return d.getDay() + '/' + (1 + d.getMonth()) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + min
+      return d.getDate() + '/' + (1 + d.getMonth()) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + min
     }
   }
 }

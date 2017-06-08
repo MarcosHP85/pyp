@@ -121,7 +121,7 @@ export default {
     return {
       listaOts: [],
       otActivaSelec: null,
-      otDoceSelec: null,
+      // otDoceSelec: null,
       cargando: false,
       filtrosVisible: false,
       filtroComponentes: [],
@@ -141,6 +141,11 @@ export default {
     ...mapGetters('doce', [
       'listaOtsDoce'
     ]),
+    otDoceSelec () {
+      return this.otActivaSelec !== null
+        ? _.find(this.listaOtsDoce, { 'id': this.otActivaSelec.numOt })
+        : null
+    },
     optionPrioridad () {
       return _.uniq(
         _.map(this.listaOtsActivas, 'prioridad'))
@@ -177,7 +182,7 @@ export default {
     },
     mostrarOt (ot) {
       this.otActivaSelec = ot
-      this.otDoceSelec = _.find(this.listaOtsDoce, { 'id': ot.numOt })
+      // this.otDoceSelec = _.find(this.listaOtsDoce, { 'id': ot.numOt })
     },
     aplicarFiltros () {
       let tmp = this.listaOtsActivas
