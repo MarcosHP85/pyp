@@ -25,4 +25,9 @@ public class OtActivaIfsServiceImpl implements OtActivaIfsService {
 		return otActivaIfsRepository.findByNumOtIn(numOts);
 	}
 
+	@Override
+	public OtActivaIfs actualizarOt(OtActivaIfs ot) {
+		return otActivaIfsRepository.save(ot);
+	}
+
 }

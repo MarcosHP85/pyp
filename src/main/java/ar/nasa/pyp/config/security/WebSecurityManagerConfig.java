@@ -22,7 +22,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import ar.nasa.pyp.config.AuditorAwareImpl;
-import ar.nasa.pyp.domain.User;
 import ar.nasa.pyp.service.UserServiceImpl;
 
 @Configuration
@@ -54,6 +53,7 @@ public class WebSecurityManagerConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/favicon.ico").permitAll()
 				.antMatchers("/static/**").permitAll()
 				.antMatchers("/api/**").permitAll()
+				.antMatchers("/api/ot_activa/save/**").hasAnyRole("ADMIN")
 				.antMatchers("/json/**").permitAll()
 				.antMatchers("/report/**").permitAll()
 				.antMatchers("/historial").hasAnyRole("ADMIN")

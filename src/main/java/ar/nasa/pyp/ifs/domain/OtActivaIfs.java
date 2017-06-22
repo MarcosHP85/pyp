@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "ACTIVE_WORK_ORDER_TAB", schema = "IFSATA", catalog = "IFSATA")
+@DynamicUpdate
 public class OtActivaIfs {
 
 	private Long numOt;
@@ -22,6 +25,7 @@ public class OtActivaIfs {
 	private String comentarioPla;
 	private String directiva;
 	private Date fechaRegistro;
+	private String planifica;
 
 	@Id
 	@Column(name = "WO_NO")
@@ -110,5 +114,13 @@ public class OtActivaIfs {
 	}
 	public void setError(String error) {
 		this.error = error;
+	}
+	
+	@Column(name = "PREPARED_BY_ID")
+	public String getPlanifica() {
+		return planifica;
+	}
+	public void setPlanifica(String planifica) {
+		this.planifica = planifica;
 	}
 }

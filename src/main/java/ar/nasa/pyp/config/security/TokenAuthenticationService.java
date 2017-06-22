@@ -16,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ar.nasa.pyp.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,7 +30,7 @@ public class TokenAuthenticationService {
 	static final String TOKEN_PREFIX = "Bearer";
 	static final String HEADER_STRING = "Authorization";
 	
-	public static void addAuthentication(HttpServletResponse response, String username, Collection<? extends GrantedAuthority> authorities) {
+	public static void addAuthentication(HttpServletResponse response, User user, Collection<? extends GrantedAuthority> authorities) {
 		List<String> roles = new ArrayList<String>();
 		for (GrantedAuthority authority : authorities) {
 			roles.add(authority.getAuthority());
@@ -37,8 +40,9 @@ public class TokenAuthenticationService {
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET);
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 	    
-		String jwt = Jwts.builder().setSubject(username)
+		String jwt = Jwts.builder().setSubject(user.getUsername())
 				.claim("roles", roles)
+				.claim("principal", user)
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
 				.signWith(signatureAlgorithm, signingKey)
 				.compact();
@@ -58,7 +62,8 @@ public class TokenAuthenticationService {
 					.parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody();
 			
 			String user = body.getSubject();
-			
+			ObjectMapper mapper = new ObjectMapper();
+			User principal = mapper.convertValue(body.get("principal"), User.class);
 			List<?> roles = (List<?>) body.get("roles");
 			
 			Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -68,7 +73,7 @@ public class TokenAuthenticationService {
 			}
 			
 			return user != null ? 
-					new UsernamePasswordAuthenticationToken(user, null, authorities) : null;
+					new UsernamePasswordAuthenticationToken(principal, null, authorities) : null;
 		}
 	
 		return null;

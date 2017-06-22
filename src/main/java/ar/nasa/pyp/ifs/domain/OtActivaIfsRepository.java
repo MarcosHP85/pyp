@@ -7,4 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface OtActivaIfsRepository extends PagingAndSortingRepository<OtActivaIfs, Long> {
 
 	public List<OtActivaIfs> findByNumOtIn(List<Long> numOts);
+	@SuppressWarnings("unchecked")
+	public OtActivaIfs save(OtActivaIfs ot);
 }

@@ -18,6 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ar.nasa.pyp.domain.User;
+
 
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter implements Filter {
 
@@ -45,7 +47,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter imple
 			HttpServletResponse response, FilterChain filter, Authentication auth) {
 
 		// Se genera y agrega el Token al header
-		TokenAuthenticationService.addAuthentication(response, auth.getName(), auth.getAuthorities());
+		TokenAuthenticationService.addAuthentication(response, (User)auth.getPrincipal(), auth.getAuthorities());
 		
 		// Se agrega el usuario JSON al response
 		response.setContentType("text/x-json;charset=UTF-8");

@@ -36,6 +36,7 @@ public class User implements UserDetails {
 	private String nombre;
 	private String apellido;
 	private String email;
+	private String ifsUser;
 	private Set<Role> roles;
 	
 	public User() {
@@ -172,6 +173,14 @@ public class User implements UserDetails {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Column(name = "ifs_user")
+	public String getIfsUser() {
+		return ifsUser;
+	}
+	public void setIfsUser(String ifsUser) {
+		this.ifsUser = ifsUser;
 	}
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
