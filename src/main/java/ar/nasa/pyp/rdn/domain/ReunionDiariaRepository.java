@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ReunionDiariaRepository extends CrudRepository<ReunionDiaria, Long> {
 
-	@Query("select r.reunionId.idReunion,r.idUnidad,r.fechaHora,max(r.reunionId.revision) as revision from ReunionDiaria r group by r.reunionId.idReunion,r.idUnidad,r.fechaHora")
+	@Query(value = "SELECT top 2 Id,max(Revision) as Revision,IdUnidad,FechaHora FROM Reunion left join Novedades on Reunion.Id = Novedades and Reunion.Revision = Novedades.Revision group by Id,IdUnidad,FechaHora order by FechaHora desc", //SELECT top 2 Id,max(Revision) as Revision,IdUnidad,FechaHora FROM Reunion group by Id,IdUnidad,FechaHora order by FechaHora desc",
+			nativeQuery = true)
 	List<ReunionDiaria> findUltimasReuniones();
 }
