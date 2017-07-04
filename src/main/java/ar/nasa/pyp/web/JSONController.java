@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.nasa.pyp.ifs.domain.OtIfs;
 import ar.nasa.pyp.ifs.service.OtIfsService;
+import ar.nasa.pyp.rdn.domain.ReunionDiaria;
+import ar.nasa.pyp.rdn.service.ReunionDiariaService;
 
 @Controller
 @RequestMapping(value = "/json")
@@ -20,6 +22,8 @@ public class JSONController {
 
 	@Autowired
 	private OtIfsService otIfsService;
+	@Autowired
+	private ReunionDiariaService reunionDiariaService;
 //	@Autowired
 //	private SimpMessagingTemplate template;
 	
@@ -40,5 +44,11 @@ public class JSONController {
 //		this.template.convertAndSend("/topic/greetings", o.toString());
 		
 		return o;
+	}
+	
+	@RequestMapping("reunion")
+	public @ResponseBody List<ReunionDiaria> getReunion(){
+		
+		return reunionDiariaService.ultimasReuniones();
 	}
 }
