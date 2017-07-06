@@ -31,4 +31,31 @@ class ReunionId implements Serializable {
 		this.id = id;
 		this.revision = revision;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		ReunionId reunion = (ReunionId) obj;
+		if (revision != reunion.revision)
+			return false;
+		if (id != reunion.id)
+			return false;
+		
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 1;
+		hash = 31 * hash + revision.hashCode();
+		hash = 31 * hash + id.hashCode();
+		
+		return hash;
+	}
 }

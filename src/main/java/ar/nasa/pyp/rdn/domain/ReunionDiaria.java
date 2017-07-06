@@ -3,6 +3,7 @@ package ar.nasa.pyp.rdn.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -27,6 +28,7 @@ public class ReunionDiaria {
 	}
 	
 	@Id
+	@Column(name = "Id")
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +37,7 @@ public class ReunionDiaria {
 	}
 	
 	@Id
+	@Column(name = "Revision")
 	public Integer getRevision() {
 		return revision;
 	}
@@ -42,6 +45,7 @@ public class ReunionDiaria {
 		this.revision = revision;
 	}
 	
+	@Column(name = "IdUnidad")
 	public Integer getIdUnidad() {
 		return idUnidad;
 	}
@@ -49,6 +53,7 @@ public class ReunionDiaria {
 		this.idUnidad = unidad;
 	}
 	
+	@Column(name = "FechaHora")
 	public Date getFechaHora() {
 		return fechaHora;
 	}
