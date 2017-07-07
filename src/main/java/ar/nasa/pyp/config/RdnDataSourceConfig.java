@@ -32,7 +32,7 @@ public class RdnDataSourceConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 	        EntityManagerFactoryBuilder builder) {
 	    return builder
-	            .dataSource(ifsDataSource())
+	            .dataSource(rdnDataSource())
 	            .persistenceUnit("RdnDataSource")
 	            .packages("ar.nasa.pyp.rdn.domain")
 	            .build();
@@ -40,7 +40,7 @@ public class RdnDataSourceConfig {
 	
 	@Bean
 	@ConfigurationProperties(prefix="spring.datasource.rdn")
-	public DataSource ifsDataSource() {
+	public DataSource rdnDataSource() {
 	    return DataSourceBuilder.create().build();
 	}
 }

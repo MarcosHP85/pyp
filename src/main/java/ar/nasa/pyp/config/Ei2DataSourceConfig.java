@@ -32,15 +32,15 @@ public class Ei2DataSourceConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 	        EntityManagerFactoryBuilder builder) {
 	    return builder
-	            .dataSource(ifsDataSource())
-	            .persistenceUnit("ei2DataSource")
+	            .dataSource(ei2DataSource())
+	            .persistenceUnit("Ei2DataSource")
 	            .packages("ar.nasa.pyp.ei2.domain")
 	            .build();
 	}
 	
 	@Bean
 	@ConfigurationProperties(prefix="spring.datasource.ei2")
-	public DataSource ifsDataSource() {
+	public DataSource ei2DataSource() {
 	    return DataSourceBuilder.create().build();
 	}
 }
