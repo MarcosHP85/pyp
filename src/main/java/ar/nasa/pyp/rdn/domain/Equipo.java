@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Datos_IFS.dbo.Equipos")
+@Table(name = "Equipos", schema = "dbo", catalog = "Datos_IFS")
 public class Equipo {
 
 	private String objId;

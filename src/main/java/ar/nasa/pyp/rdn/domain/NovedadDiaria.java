@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ReunionDiaria.dbo.Novedades")
+@Table(name = "Novedades", schema = "dbo", catalog = "ReunionDiaria")
 public class NovedadDiaria {
 
 	private Long id;
