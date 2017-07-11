@@ -3,13 +3,16 @@ package ar.nasa.pyp.rdn.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Novedades")
+@Table(name = "ReunionDiaria.dbo.Novedades")
 public class NovedadDiaria {
 
 	private Long id;
+	private Equipo equipo;
 	private String descripcion;
 	private Long ot;
 	
@@ -38,5 +41,15 @@ public class NovedadDiaria {
 		this.ot = ot;
 	}
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "IdEquipo",
+			updatable = false,
+			insertable = false,
+			referencedColumnName = "OBJID")
+	public Equipo getEquipo() {
+		return equipo;
+	}
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
+	}
 }

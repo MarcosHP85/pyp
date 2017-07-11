@@ -2,6 +2,7 @@ package ar.nasa.pyp.ifs.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -44,7 +45,7 @@ public class OtIfs {
 		this.semanaPlan = semanaPlan;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ORG_CODE")
 	public OrgMantIfs getOrgMant() {
 		return orgMant;

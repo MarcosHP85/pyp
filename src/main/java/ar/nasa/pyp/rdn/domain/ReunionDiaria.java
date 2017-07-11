@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Reunion")
+@Table(name = "ReunionDiaria.dbo.Reunion")
 @IdClass(ReunionId.class)
 public class ReunionDiaria {
 
